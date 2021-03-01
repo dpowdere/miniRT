@@ -1,9 +1,8 @@
 miniRT
 .*
 !.gitignore
-*.a
-*.d
+*.[ado]
 *.dSYM
 *.gch
-*.o
 *.out
+*~
