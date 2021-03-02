@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,6 +25,6 @@ typedef struct	s_scene
 	void *window;
 }				t_scene;
 
-int32_t		ft_get_color(int alpha, int red, int green, int blue);
+int32_t			ft_get_color(int alpha, int red, int green, int blue);
 
 #endif

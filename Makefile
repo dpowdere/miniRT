@@ -25,11 +25,11 @@ ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
   LIB	:=	-lmlx -lXext -lX11
 endif
 
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean norm re run
 
-$(NAME): $(NAME).c color.c
+$(NAME): minirt.c color.c
 	$(MAKE) -C $(LIBX)
-	$(CC) $(CFLAGS) $(HDIR) $(LDIR) $< color.c $(LIB) -o $@
+	$(CC) $(CFLAGS) $(HDIR) $(LDIR) $^ $(LIB) -o $@
 
 all: $(NAME)
 
@@ -44,3 +44,6 @@ re: fclean all
 
 run: all
 	./miniRT
+
+norm:
+	~/norm.sh *.[ch]
