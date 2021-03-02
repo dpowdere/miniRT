@@ -20,8 +20,8 @@ LIB		:=	-lmlx -framework OpenGL -framework AppKit -lz
 LDIR	:=	-L$(LIBX) -L$(LIBFT)
 HDIR	:=	-I$(LIBX) -I$(LIBFT)
 
-ifneq ($(findstring "linux",$(shell $(CC) -dumpmachine)),)
-  # if on Linux
+# if on Linux
+ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
   LIB	:=	-lmlx -lXext -lX11
 endif
 
