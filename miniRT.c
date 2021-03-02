@@ -13,6 +13,8 @@
 #include <stddef.h>
 #include <mlx.h>
 
+#include "miniRT.h"
+
 int	main(void)
 {
 	void *x;
@@ -25,6 +27,8 @@ int	main(void)
 	if (window == NULL)
 		return (2);
 	mlx_clear_window(x, window);
+	mlx_pixel_put(x, window, 100, 100, ft_get_color(128, 255, 0, 0));
+	mlx_string_put(x, window, 10, 20, ft_get_color(255, 128, 128, 0), "Pixel");
 	while (1)
 		;
 	mlx_destroy_window(x, window);

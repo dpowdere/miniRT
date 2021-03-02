@@ -15,17 +15,21 @@ NAME := miniRT
 LIBX	:=	./minilibx
 LIBFT	:=	./libft
 
-CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror
-LIB		:=	-lmlx -lXext -lX11
-LIBINC	:=	-L $(LIBX)
-INC		:=	-I $(LIBX)
+LIB		:=	-lmlx -framework OpenGL -framework AppKit -lz
+LDIR	:=	-L$(LIBX) -L$(LIBFT)
+HDIR	:=	-I$(LIBX) -I$(LIBFT)
 
-.PHONY: all clean fclean re
+ifneq ($(findstring "linux",$(shell $(CC) -dumpmachine)),)
+  # if on Linux
+  LIB	:=	-lmlx -lXext -lX11
+endif
 
-$(NAME): $(NAME).c
+.PHONY: all clean fclean re run
+
+$(NAME): $(NAME).c color.c
 	$(MAKE) -C $(LIBX)
-	$(CC) $(CFLAGS) $(INC) $(LIBINC) $< $(LIB) -o $@
+	$(CC) $(CFLAGS) $(HDIR) $(LDIR) $< color.c $(LIB) -o $@
 
 all: $(NAME)
 
@@ -37,3 +41,6 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+run: all
+	./miniRT
