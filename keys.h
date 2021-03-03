@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/03 23:03:25 by dpowdere         ###   ########.fr       */
+/*   Created: 2021/03/03 23:01:39 by dpowdere          #+#    #+#             */
+/*   Updated: 2021/03/03 23:08:16 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef KEYS_H
+# define KEYS_H
 
-# include <stdint.h>
-# include "keys.h"
+# ifdef __APPLE__
+#  define KEY_ENTER	36
+#  define KEY_ESQ	53
+#  define KEY_Q		12
+# endif
 
-typedef struct	s_scene
-{
-	void *mlx;
-	void *window;
-}				t_scene;
-
-int32_t			ft_get_color(int alpha, int red, int green, int blue);
+# ifdef __linux__
+#  define KEY_ENTER	65293
+#  define KEY_ESQ	65307
+#  define KEY_Q		113
+# endif
 
 #endif
