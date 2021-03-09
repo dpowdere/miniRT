@@ -61,6 +61,8 @@ ssize_t			ft_write(int fd, const void *buf, size_t count);
 ** Additional functions
 ** ====================
 */
+int				ft_get_next_line(int fd, char **line);
+
 char			*ft_itoa(int n);
 char			*ft_ji_base(intmax_t n, int base, int use_upper_case);
 char			*ft_ju_base(uintmax_t n, int base, int use_upper_case);

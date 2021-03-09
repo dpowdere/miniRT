@@ -41,6 +41,7 @@ CONTENTS := \
 	ft_wctomb.c \
 	ft_write.c \
 \
+	ft_get_next_line.c \
 	ft_itoa.c \
 	ft_jbase.c \
 	ft_putchar_fd.c \
@@ -96,6 +97,10 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+ft_get_next_line.o: ft_get_next_line.c ft_get_next_line_utils.c \
+                    ft_get_next_line.h
+	$(CC) $(CFLAGS) -include $(word 2,$^) -o $@ $<
 
 all: $(NAME)
 
