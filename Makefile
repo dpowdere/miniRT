@@ -28,19 +28,21 @@ DEPFT	:=	$(shell find $(LIBFT) -name '*.[ch]')
 SRCDIR := src
 INCDIR := include
 OBJDIR := .o
+OBJLST := $(addprefix $(OBJDIR)/,$(OBJS))
 
 VPATH := $(OBJDIR):$(SRCDIR):$(INCDIR)
 
-CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror
 DFLAGS	:=	-MMD -MP
-LIBS	:=	-lmlx -framework OpenGL -framework AppKit -lz
-LDIR	:=	-L$(LIBX) -L$(LIBFT)
-HDIR	:=	-I$(INCDIR) -I$(LIBX) -I$(LIBFT)
+HPATHS	:=	-I$(INCDIR) -I$(LIBX) -I$(LIBFT)
+
+CC		:=	gcc
+CFLAGS	:=	-Wall -Wextra -Werror $(DFLAGS) $(HPATHS) -c
+LDLIBS	:=	-lmlx -framework OpenGL -framework AppKit -lz
+LDFLAGS	:=	-L$(LIBX) -L$(LIBFT)
 
 # if on Linux
 ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
-  LIBS	:=	-lft -lmlx -lXext -lX11
+  LDLIBS := -lft -lmlx -lXext -lX11
 endif
 
 $(shell mkdir -p $(OBJDIR))
@@ -48,10 +50,10 @@ $(shell mkdir -p $(OBJDIR))
 .PHONY: all clean fclean norm re run
 
 $(NAME): $(OBJS) .ft .mlx
-	$(CC) $(CFLAGS) $(HDIR) $(LDIR) $(addprefix $(OBJDIR)/,$(OBJS)) $(LIBS) -o $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(DFLAGS) $(HDIR) $(LDIR) -c $< $(LIBS) -o $(OBJDIR)/$@
+	$(CC) $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 .mlx: $(DEPX)
 	$(MAKE) -C $(LIBX)
@@ -70,7 +72,7 @@ clean:
 	$(RM) -r $(OBJDIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) *.dSYM
 
 re: fclean all
 
@@ -78,6 +80,9 @@ run: all
 	./miniRT
 
 norm:
-	~/norm.sh *.[ch]
+	~/norm.sh $(SRCDIR) $(INCDIR)
+	#norminette -R CheckForbiddenSourceHeader $(SRCDIR) $(INCDIR)
+	#norminette -R CheckDefine $(SRCDIR) $(INCDIR)
+	#norminette $(SRCDIR) $(INCDIR)
 
 -include $(DEPS)
