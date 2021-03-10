@@ -14,14 +14,16 @@
 # define MINIRT_H
 
 # include <stdint.h>
-# include "keys.h"
+# include "rt_keys.h"
 
 typedef struct	s_scene
 {
-	void *mlx;
-	void *window;
+	void	*mlx;
+	void	*window;
+	int		width;
+	int		height;
 }				t_scene;
 
-int32_t			ft_get_color(int alpha, int red, int green, int blue);
+int32_t			rt_get_color(int alpha, int red, int green, int blue);
 
 #endif

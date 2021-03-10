@@ -12,7 +12,7 @@
 
 #include <stdint.h>
 
-static inline int	ft_normalize(int x)
+static inline int	_rt_normalize(int x)
 {
 	if (x < 0)
 		x = 0;
@@ -21,14 +21,14 @@ static inline int	ft_normalize(int x)
 	return (x);
 }
 
-int32_t				ft_get_color(int alpha, int red, int green, int blue)
+int32_t				rt_get_color(int alpha, int red, int green, int blue)
 {
 	uint32_t color;
 
 	color = 0u;
-	color |= ft_normalize(alpha) << 24;
-	color |= ft_normalize(red) << 16;
-	color |= ft_normalize(green) << 8;
-	color |= ft_normalize(blue);
+	color |= _rt_normalize(alpha) << 24;
+	color |= _rt_normalize(red) << 16;
+	color |= _rt_normalize(green) << 8;
+	color |= _rt_normalize(blue);
 	return (*(int32_t *)&color);
 }

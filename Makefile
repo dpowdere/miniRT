@@ -14,7 +14,7 @@ NAME := miniRT
 
 SRCS := \
 	minirt.c \
-	color.c
+	rt_color.c
 
 OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
@@ -56,18 +56,18 @@ $(NAME): $(OBJS) .ft .mlx
 	$(CC) $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 .mlx: $(DEPX)
-	$(MAKE) -C $(LIBX)
+	@$(MAKE) -C $(LIBX)
 	@touch $@
 
 .ft: $(DEPFT)
-	$(MAKE) -C $(LIBFT)
+	@$(MAKE) -C $(LIBFT)
 	@touch $@
 
 all: $(NAME)
 
 clean:
-	$(MAKE) -C $(LIBX) clean
-	$(MAKE) -C $(LIBFT) fclean
+	@$(MAKE) -C $(LIBX) clean
+	@$(MAKE) -C $(LIBFT) fclean
 	$(RM) .ft .mlx
 	$(RM) -r $(OBJDIR)
 
