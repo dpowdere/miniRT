@@ -96,7 +96,7 @@ void			ft_putstr_fd(char *s, int fd);
 # define ft_print(s)	ft_putstr_fd(s, 1)
 # define ft_eprint(s)	ft_putstr_fd(s, 2)
 # define ft_println(s)	ft_putendl_fd(s, 1)
-# define ft_eprintln(s)	ft_purendl_fd(s, 2)
+# define ft_eprintln(s)	ft_putendl_fd(s, 2)
 
 size_t			ft_wcstombs_len(const wchar_t *s);
 int				ft_wctomb_len(wchar_t wc);
