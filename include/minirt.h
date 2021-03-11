@@ -24,11 +24,15 @@
 # define RT_ERROR_XLOOP			3
 # define RT_ERROR_XSERVER		4
 # define RT_ERROR_XWINDOW		5
+# define RT_ERROR_LINEREAD		6
+# define RT_ERROR_NORTFILE		7
 
 # define RT_ERROR_ARGS_MSG		"Invalid arguments"
 # define RT_ERROR_XLOOP_MSG		"Can't enter the main loop"
 # define RT_ERROR_XSERVER_MSG	"Can't establish connection with display server"
 # define RT_ERROR_XWINDOW_MSG	"Can't display a window"
+# define RT_ERROR_LINEREAD_MSG	"Reading lines of the file failed"
+# define RT_ERROR_NORTFILE_MSG	"Can parse *.rt files only"
 
 # ifdef __APPLE__
 #  define RT_O_FLAGS	O_RDONLY | O_SYMLINK
@@ -50,6 +54,7 @@ void			rt_error(int error_code, char *error_msg);
 int32_t			rt_get_color(int alpha, int red, int green, int blue);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
+void			rt_parse_line(const char *line, t_scene *scene);
 void			rt_perror(void);
 
 #endif

@@ -16,6 +16,7 @@ SRCS := \
 	minirt.c \
 	rt_color.c \
 	rt_error.c \
+	rt_parse.c \
 	rt_scene.c
 
 OBJS := $(SRCS:.c=.o)
@@ -71,7 +72,7 @@ clean:
 	@$(MAKE) -C $(LIBX) clean
 	@$(MAKE) -C $(LIBFT) fclean
 	$(RM) .ft .mlx
-	$(RM) -r $(OBJDIR)
+	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
 	$(RM) $(NAME) *.dSYM

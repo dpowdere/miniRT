@@ -31,7 +31,7 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 	return (0);
 }
 
-void	rt_render(t_scene *scene)
+void	rt_render_scene(t_scene *scene)
 {
 	scene->mlx = mlx_init();
 	if (scene->mlx == NULL)
@@ -57,6 +57,6 @@ int		main(int argc, char **argv)
 	if (argc != 2)
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
 	rt_load_scene(argv[1], &scene);
-	rt_render(&scene);
+	rt_render_scene(&scene);
 	return (0);
 }

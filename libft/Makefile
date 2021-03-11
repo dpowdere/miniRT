@@ -53,6 +53,7 @@ CONTENTS := \
 	ft_strjoin.c \
 	ft_strmapi.c \
 	ft_strtrim.c \
+	ft_str_xwith.c \
 	ft_substr.c \
 	ft_wcstombs_len.c \
 	ft_wctomb_len.c \

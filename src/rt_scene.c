@@ -12,13 +12,17 @@
 
 #include <fcntl.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 /*
 ** fcntl.h  - open
-** unistd.h - close
 ** stddef.h - NULL
+** stdlib.h - free
+** unistd.h - close
 */
+
+#include <libft.h>
 
 #include "minirt.h"
 
@@ -33,13 +37,32 @@ t_scene	rt_init_scene(void)
 	return (scene);
 }
 
+void	rt_read_scene(int fd, t_scene *scene)
+{
+	char	*line;
+	int		retcode;
+
+	line = NULL;
+	while ((retcode = ft_get_next_line(fd, &line)) > 0)
+	{
+		rt_parse_line(line, scene);
+		free(line);
+		line = NULL;
+	}
+	if (retcode < 0)
+		rt_error(RT_ERROR_LINEREAD, RT_ERROR_LINEREAD_MSG);
+}
+
 void	rt_load_scene(const char *pathname, t_scene *scene)
 {
 	int	fd;
 
-	(void)scene;
+	if (!ft_str_endswith(pathname, ".rt"))
+		rt_error(RT_ERROR_NORTFILE, RT_ERROR_NORTFILE_MSG);
 	if ((fd = open(pathname, RT_O_FLAGS)) == -1)
 		rt_perror();
+	rt_read_scene(fd, scene);
 	if (close(fd) == -1)
 		rt_perror();
+	//rt_check_scene(scene);
 }
