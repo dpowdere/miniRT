@@ -17,6 +17,15 @@ SRCS := \
 	rt_color.c \
 	rt_error.c \
 	rt_parse.c \
+	rt_parse_ambient.c \
+	rt_parse_camera.c \
+	rt_parse_cylinder.c \
+	rt_parse_light.c \
+	rt_parse_plane.c \
+	rt_parse_resolution.c \
+	rt_parse_sphere.c \
+	rt_parse_square.c \
+	rt_parse_triangle.c \
 	rt_scene.c
 
 OBJS := $(SRCS:.c=.o)

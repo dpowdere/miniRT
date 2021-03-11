@@ -13,6 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include <stddef.h>
 # include <stdint.h>
 # include "rt_keys.h"
 
@@ -26,6 +27,7 @@
 # define RT_ERROR_XWINDOW		5
 # define RT_ERROR_LINEREAD		6
 # define RT_ERROR_NORTFILE		7
+# define RT_ERROR_PARSE_UNKNOWN	8
 
 # define RT_ERROR_ARGS_MSG		"Invalid arguments"
 # define RT_ERROR_XLOOP_MSG		"Can't enter the main loop"
@@ -33,6 +35,7 @@
 # define RT_ERROR_XWINDOW_MSG	"Can't display a window"
 # define RT_ERROR_LINEREAD_MSG	"Reading lines of the file failed"
 # define RT_ERROR_NORTFILE_MSG	"Can parse *.rt files only"
+# define RT_ERROR_PARSE_UNKNOWN_MSG	"Unknown element in the scene config file"
 
 # ifdef __APPLE__
 #  define RT_O_FLAGS	O_RDONLY | O_SYMLINK
@@ -56,5 +59,15 @@ t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 void			rt_parse_line(const char *line, t_scene *scene);
 void			rt_perror(void);
+
+void			rt_parse_ambient(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_camera(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_cylinder(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_light(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_plane(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_resolution(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_sphere(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_square(char *const *segs, size_t n, t_scene *s);
+void			rt_parse_triangle(char *const *segs, size_t n, t_scene *s);
 
 #endif

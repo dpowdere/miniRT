@@ -27,6 +27,7 @@ CONTENTS := \
 	ft_memmove.c \
 	ft_memset.c \
 	ft_strchr.c \
+	ft_strcmp.c \
 	ft_strdup.c \
 	ft_strlcat.c \
 	ft_strlcpy.c \
