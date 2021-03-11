@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/03 23:03:25 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:03:15 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
 # include <stdint.h>
 # include "rt_keys.h"
 
+# define UNDEFINED	-1
+
+# define RT_ERROR_SYSTEM		1
+
+# define RT_ERROR_ARGS			2
+# define RT_ERROR_XLOOP			3
+# define RT_ERROR_XSERVER		4
+# define RT_ERROR_XWINDOW		5
+
+# define RT_ERROR_ARGS_MSG		"Invalid arguments"
+# define RT_ERROR_XLOOP_MSG		"Can't enter the main loop"
+# define RT_ERROR_XSERVER_MSG	"Can't establish connection with display server"
+# define RT_ERROR_XWINDOW_MSG	"Can't display a window"
+
+# ifdef __APPLE__
+#  define RT_O_FLAGS	O_RDONLY | O_SYMLINK
+# elif __linux__
+#  define RT_O_FLAGS	O_RDONLY
+# else
+#  define RT_O_FLAGS	O_RDONLY
+# endif
+
 typedef struct	s_scene
 {
 	void	*mlx;
@@ -24,6 +46,10 @@ typedef struct	s_scene
 	int		height;
 }				t_scene;
 
+void			rt_error(int error_code, char *error_msg);
 int32_t			rt_get_color(int alpha, int red, int green, int blue);
+t_scene			rt_init_scene(void);
+void			rt_load_scene(const char *pathname, t_scene *scene);
+void			rt_perror(void);
 
 #endif

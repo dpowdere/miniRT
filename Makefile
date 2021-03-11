@@ -6,7 +6,7 @@
 #    By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 22:31:34 by dpowdere          #+#    #+#              #
-#    Updated: 2021/03/03 23:26:22 by dpowdere         ###   ########.fr        #
+#    Updated: 2021/03/11 18:25:08 by dpowdere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME := miniRT
 
 SRCS := \
 	minirt.c \
-	rt_color.c
+	rt_color.c \
+	rt_error.c \
+	rt_scene.c
 
 OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
