@@ -44,6 +44,7 @@ CONTENTS := \
 	ft_get_next_line.c \
 	ft_itoa.c \
 	ft_jbase.c \
+	ft_ptrarr_len.c \
 	ft_putchar_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \

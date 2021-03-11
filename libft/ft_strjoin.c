@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -26,11 +25,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len1 = (s1 ? ft_strlen(s1) : 0);
 	len2 = (s2 ? ft_strlen(s2) : 0);
 	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	if (!str)
-	{
-		errno = ENOMEM;
+	if (str == NULL)
 		return (NULL);
-	}
 	i = 0;
 	while (i < len1 || i < len2)
 	{

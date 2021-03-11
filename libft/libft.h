@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:14:56 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/11 23:22:54 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/03/12 01:05:29 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 
 char			**ft_split(char const *s, char c);
-char *const		*ft_split_const(char const *s, char c);
+char *const		*ft_split_const(char const *s, char const *separator_chars);
 /*
 ** `ft_split` allocates memory several times -- once per each splitted segment
 ** of the initial string and once for the array of pointers to strings.
@@ -102,6 +102,7 @@ void			ft_putstr_fd(char *s, int fd);
 # define ft_println(s)	ft_putendl_fd(s, 1)
 # define ft_eprintln(s)	ft_putendl_fd(s, 2)
 
+size_t			ft_ptrarr_len(void *const *arr);
 size_t			ft_wcstombs_len(const wchar_t *s);
 int				ft_wctomb_len(wchar_t wc);
 

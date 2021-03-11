@@ -20,22 +20,26 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+#include "libft.h"
+
 #define IN_SEGMENT		1
 #define IN_SEPARATOR	0
 
-static void	ft___count(char const *s, char c,
+static void	ft___count(const char *s, const char *separator_chars,
 					size_t *n_segments, size_t *n_chars)
 {
 	int		where;
+	int		is_sep_char;
 
 	*n_segments = 0;
 	*n_chars = 0;
 	where = IN_SEPARATOR;
 	while (*s)
 	{
-		if (*s == c && where == IN_SEGMENT)
+		is_sep_char = !!ft_strchr(separator_chars, *s);
+		if (is_sep_char && where == IN_SEGMENT)
 			where = IN_SEPARATOR;
-		else if (*s != c)
+		else if (!is_sep_char)
 		{
 			++*n_chars;
 			if (where == IN_SEPARATOR)
@@ -48,24 +52,27 @@ static void	ft___count(char const *s, char c,
 	}
 }
 
-static void	ft___fill(char const *s, char c, char **mem, size_t n_segments)
+static void	ft___fill(const char *s, const char *separator_chars,
+						char **mem, size_t n_segments)
 {
 	char	*write_cursor;
 	int		where;
+	int		is_sep_char;
 
 	*(mem + n_segments) = NULL;
 	write_cursor = (char *)(mem + n_segments + 1);
 	where = IN_SEPARATOR;
 	while (s && *s)
 	{
-		if (*s == c && where == IN_SEGMENT)
+		is_sep_char = !!ft_strchr(separator_chars, *s);
+		if (is_sep_char && where == IN_SEGMENT)
 		{
 			where = IN_SEPARATOR;
 			*write_cursor++ = '\0';
 		}
-		else if (*s != c && where == IN_SEGMENT)
+		else if (!is_sep_char && where == IN_SEGMENT)
 			*write_cursor++ = *s;
-		else if (*s != c && where == IN_SEPARATOR)
+		else if (!is_sep_char && where == IN_SEPARATOR)
 		{
 			where = IN_SEGMENT;
 			*write_cursor = *s;
@@ -75,7 +82,7 @@ static void	ft___fill(char const *s, char c, char **mem, size_t n_segments)
 	}
 }
 
-char *const	*ft_split_const(char const *s, char c)
+char *const	*ft_split_const(const char *s, const char *separator_chars)
 {
 	size_t	n_segments;
 	size_t	n_chars;
@@ -85,7 +92,7 @@ char *const	*ft_split_const(char const *s, char c)
 	n_segments = 0;
 	n_chars = 0;
 	if (s)
-		ft___count(s, c, &n_segments, &n_chars);
+		ft___count(s, separator_chars, &n_segments, &n_chars);
 	size = (n_segments + 1) * sizeof(char *)
 			+ (n_chars + n_segments) * sizeof(char);
 	string_array = (char **)malloc(size);
@@ -93,6 +100,6 @@ char *const	*ft_split_const(char const *s, char c)
 		return (NULL);
 	while (size > 0)
 		((char *)string_array)[--size] = '\0';
-	ft___fill(s, c, string_array, n_segments);
+	ft___fill(s, separator_chars, string_array, n_segments);
 	return ((char *const *)string_array);
 }
