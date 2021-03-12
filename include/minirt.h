@@ -78,15 +78,14 @@ int32_t			rt_get_color(int alpha, int red, int green, int blue);
 void			rt_free_scene(t_scene *s);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
-t_color			rt_parse_color(t_config_line *cline);
+t_color			rt_parse_color(t_config_line *cline, const char *name);
 void			rt_parse_line(const char *line, size_t linenum, t_scene *scene);
 void			rt_parse_triplet(t_config_line *c, int snum, const char *sname);
 void			rt_parse_type(t_config_line *cline);
 
 void			rt_error(int error_code, const char *error_msg);
-void			rt_parsing_error(t_config_line *cline, const char *error_msg);
-void			rt_parsing_error_free(t_config_line *cline,
-					char *error_msg, int free_error_msg);
+void			rt_parsing_error(t_config_line *cline,
+					const char *scope_name, const char *error_msg);
 void			rt_perror(t_scene *s);
 void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
 

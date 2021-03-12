@@ -25,17 +25,16 @@ void	rt_parse_resolution(t_config_line *c)
 	char	*endptr;
 
 	if (c->scene->width != UNDEFINED || c->scene->height != UNDEFINED)
-		rt_parsing_error(c, "Resolution can be specified only once");
+		rt_parsing_error(c, "Resolution", "Can be specified only once");
 	if (c->n_segments != 3)
-		rt_parsing_error(c, "Resolution config option has "
-							"a wrong number of args");
+		rt_parsing_error(c, "Resolution", "Wrong number of arguments");
 	endptr = NULL;
 	width = ft_strtoi(c->segments[1], &endptr, BASE);
 	if (*endptr != '\0' || width < 1)
-		rt_parsing_error(c, "Invalid config value for resolution width");
+		rt_parsing_error(c, "Resolution width", "Invalid value");
 	c->scene->width = width;
 	height = ft_strtoi(c->segments[2], &endptr, BASE);
 	if (*endptr != '\0' || height < 1)
-		rt_parsing_error(c, "Invalid config value for resolution height");
+		rt_parsing_error(c, "Resolution height", "Invalid value");
 	c->scene->height = height;
 }

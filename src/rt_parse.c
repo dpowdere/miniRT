@@ -70,30 +70,30 @@ void		rt_parse_type(t_config_line *cline)
 	else if (IS_ETYPE("tr"))
 		rt_parse_triangle(cline);
 	else
-		rt_parsing_error(cline, "Unknown element type");
+		rt_parsing_error(cline, NULL, "Unknown element type");
 }
 
 void		rt_parse_triplet(t_config_line *c, int segnum, const char *segname)
 {
-	size_t	n;
-	char	*error_msg;
-
 	c->triplet = (char const *const *)ft_split_const(c->segments[segnum], ",");
-	n = ft_ptrarr_len((void **)c->triplet);
-	if (n != 3)
-	{
-		error_msg = ft_strjoin("Wrong number of constituents for ", segname);
-		rt_parsing_error_free(c, error_msg, DO_FREE_ERROR_MSG);
-	}
+	if (3 != ft_ptrarr_len((void **)c->triplet))
+		rt_parsing_error(c, segname, "Wrong number of constituents");
 }
 
-t_color		rt_parse_color(t_config_line *c)
+t_color		rt_parse_color(t_config_line *c, const char *attrname)
 {
-	t_color color;
-	color.red = 0;
-	color.green = 0;
-	color.blue = 0;
-	(void)c;
-	//c->triplet;
+	t_color	color;
+	char	*endptr;
+
+	endptr = NULL;
+	color.red = ft_strtoi(c->triplet[0], &endptr, BASE);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, attrname, "Invalid value for red channel");
+	color.green = ft_strtoi(c->triplet[1], &endptr, BASE);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, attrname, "Invalid value for green channel");
+	color.blue = ft_strtoi(c->triplet[2], &endptr, BASE);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, attrname, "Invalid value for blue channel");
 	return (color);
 }

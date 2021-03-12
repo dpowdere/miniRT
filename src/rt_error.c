@@ -47,8 +47,8 @@ void	rt_perror(t_scene *s)
 	exit(RT_ERROR_SYSTEM);
 }
 
-void	rt_parsing_error_free(t_config_line *cline, char *error_msg,
-								int free_error_msg)
+void	rt_parsing_error(t_config_line *cline, const char *scope_name,
+							const char *error_msg)
 {
 	char *line_num;
 
@@ -58,16 +58,14 @@ void	rt_parsing_error_free(t_config_line *cline, char *error_msg,
 	ft_eprint(RT_ERROR_PARSE_MSG ", line ");
 	ft_eprintln(line_num);
 	free(line_num);
-	if (error_msg != NULL)
+	if (scope_name != NULL)
 	{
-		ft_eprintln(error_msg);
-		if (free_error_msg)
-			free(error_msg);
+		ft_eprint(scope_name);
+		ft_eprint(": ");
 	}
+	if (error_msg != NULL)
+		ft_eprintln(error_msg);
+	else
+		ft_eprint("\n");
 	exit(RT_ERROR_PARSE);
-}
-
-void	rt_parsing_error(t_config_line *cline, const char *error_msg)
-{
-	rt_parsing_error_free(cline, (char *)error_msg, DO_NOT_FREE_ERROR_MSG);
 }
