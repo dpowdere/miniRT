@@ -40,6 +40,10 @@ t_scene	rt_init_scene(void)
 	scene.ambient_color.red = UNDEFINED;
 	scene.ambient_color.green = UNDEFINED;
 	scene.ambient_color.blue = UNDEFINED;
+	scene.cameras = NULL;
+	scene.active_camera = NULL;
+	scene.lights = NULL;
+	scene.objects = NULL;
 	return (scene);
 }
 
@@ -55,6 +59,10 @@ void	rt_free_scene(t_scene *scene)
 		mlx_destroy_display(scene->mlx);
 		scene->mlx = NULL;
 	}
+	scene->active_camera = NULL;
+	ft_lstclear(&scene->cameras, free);
+	ft_lstclear(&scene->lights, free);
+	ft_lstclear(&scene->objects, free);
 }
 
 void	rt_read_scene(int fd, t_scene *scene)

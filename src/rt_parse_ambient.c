@@ -17,22 +17,19 @@
 
 #include "minirt.h"
 
-#define PROP_NAME	"Ambient lighting"
-
 void	rt_parse_ambient(t_config_line *c)
 {
 	int		intensity;
 	char	*endptr;
 
 	if (!isnan(c->scene->ambient))
-		rt_parsing_error(c, PROP_NAME, "Can be specified only once");
+		rt_parsing_error(c, "Ambient lighting", "Can be specified only once");
 	if (c->n_segments != 3)
-		rt_parsing_error(c, PROP_NAME, "Wrong number of arguments");
+		rt_parsing_error(c, "Ambient lighting", "Wrong number of arguments");
 	endptr = NULL;
 	intensity = ft_strtod(c->segments[1], &endptr);
 	if (*endptr != '\0' || intensity < 0.0 || intensity > 1.0)
-		rt_parsing_error(c, PROP_NAME " intensity", "Invalid value");
+		rt_parsing_error(c, "Ambient lighting intensity", "Invalid value");
 	c->scene->ambient = intensity;
-	rt_parse_triplet(c, 2, PROP_NAME " color");
-	c->scene->ambient_color = rt_parse_color(c, PROP_NAME " color");
+	c->scene->ambient_color = rt_parse_color(c, 2, "Ambient lighting color");
 }
