@@ -14,9 +14,8 @@
 
 #include "minirt.h"
 
-void	rt_parse_plane(char *const *segments, size_t n, t_scene *scene)
+void	rt_parse_plane(t_config_line *c, t_scene *scene)
 {
-	(void)segments;
-	(void)n;
+	(void)c;
 	(void)scene;
 }

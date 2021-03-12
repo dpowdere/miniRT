@@ -40,12 +40,14 @@ t_scene	rt_init_scene(void)
 void	rt_read_scene(int fd, t_scene *scene)
 {
 	char	*line;
+	size_t	line_num;
 	int		retcode;
 
 	line = NULL;
+	line_num = 0;
 	while ((retcode = ft_get_next_line(fd, &line)) > 0)
 	{
-		rt_parse_line(line, scene);
+		rt_parse_line(line, ++line_num, scene);
 		free(line);
 		line = NULL;
 	}

@@ -92,9 +92,9 @@ char *const		*ft_split_const(char const *s, char const *separator_chars);
 */
 
 void			ft_putchar_fd(char c, int fd);
-void			ft_putendl_fd(char *s, int fd);
+void			ft_putendl_fd(const char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
-void			ft_putstr_fd(char *s, int fd);
+void			ft_putstr_fd(const char *s, int fd);
 
 /*
 ** Macros inspired by Rust, yet without string formating:

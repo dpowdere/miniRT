@@ -18,54 +18,55 @@
 #include "minirt.h"
 
 #define SPACES		" \f\n\r\t\v"
-#define IS_ETYPE(e)	(!ft_strcmp((e), segments[0]))
+#define IS_ETYPE(e)	(!ft_strcmp((e), cline->segments[0]))
 
-void	rt_parse_type(char *const *segments, size_t n, t_scene *scene)
+void	rt_parse_type(t_config_line *cline, t_scene *scene)
 {
 	if (IS_ETYPE("A"))
-		rt_parse_ambient(segments, n, scene);
+		rt_parse_ambient(cline, scene);
 	else if (IS_ETYPE("c"))
-		rt_parse_camera(segments, n, scene);
+		rt_parse_camera(cline, scene);
 	else if (IS_ETYPE("cy"))
-		rt_parse_cylinder(segments, n, scene);
+		rt_parse_cylinder(cline, scene);
 	else if (IS_ETYPE("l"))
-		rt_parse_light(segments, n, scene);
+		rt_parse_light(cline, scene);
 	else if (IS_ETYPE("pl"))
-		rt_parse_plane(segments, n, scene);
+		rt_parse_plane(cline, scene);
 	else if (IS_ETYPE("R"))
-		rt_parse_resolution(segments, n, scene);
+		rt_parse_resolution(cline, scene);
 	else if (IS_ETYPE("sp"))
-		rt_parse_sphere(segments, n, scene);
+		rt_parse_sphere(cline, scene);
 	else if (IS_ETYPE("sq"))
-		rt_parse_square(segments, n, scene);
+		rt_parse_square(cline, scene);
 	else if (IS_ETYPE("tr"))
-		rt_parse_triangle(segments, n, scene);
+		rt_parse_triangle(cline, scene);
 	else
 	{
-		free((void *)segments);
-		rt_error(RT_ERROR_PARSE_UNKNOWN, RT_ERROR_PARSE_UNKNOWN_MSG);
+		free((void *)cline->segments);
+		rt_parse_error(cline, "Unknown element type");
 	}
 }
 
-void	rt_parse_line(const char *line, t_scene *scene)
+void	rt_parse_line(const char *line, size_t line_num, t_scene *scene)
 {
-	char *const	*segments;
-	size_t		n;
-	int			i;
+	t_config_line	config_line;
+	int				i;
 
 	i = 0;
-	segments = ft_split_const(line, SPACES);
-	n = ft_ptrarr_len((void **)segments);
-	if (n > 0)
+	config_line.line = line;
+	config_line.line_num = line_num;
+	config_line.segments = (char const *const *)ft_split_const(line, SPACES);
+	config_line.n_segments = ft_ptrarr_len((void **)config_line.segments);
+	if (config_line.n_segments > 0)
 	{
-		rt_parse_type(segments, n, scene);
+		rt_parse_type(&config_line, scene);
 		printf(">>>");
-		while (segments[i])
+		while (config_line.segments[i])
 		{
-			printf(" %s", segments[i]);
+			printf(" %s", config_line.segments[i]);
 			++i;
 		}
 		printf("\n");
 	}
-	free((void *)segments);
+	free((void *)config_line.segments);
 }
