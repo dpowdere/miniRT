@@ -35,6 +35,7 @@ CONTENTS := \
 	ft_strncmp.c \
 	ft_strnstr.c \
 	ft_strrchr.c \
+	ft_strtod.c \
 	ft_tolower.c \
 	ft_toupper.c \
 	ft_wcslen.c \
@@ -54,7 +55,9 @@ CONTENTS := \
 	ft_split_const.c \
 	ft_strjoin.c \
 	ft_strmapi.c \
+	ft_strtoi.c \
 	ft_strtrim.c \
+	ft_str_index.c \
 	ft_str_xwith.c \
 	ft_substr.c \
 	ft_wcstombs_len.c \
