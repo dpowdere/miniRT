@@ -6,7 +6,7 @@
 #    By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 17:22:01 by dpowdere          #+#    #+#              #
-#    Updated: 2021/01/02 20:44:31 by dpowdere         ###   ########.fr        #
+#    Updated: 2021/03/12 13:12:57 by dpowdere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ CONTENTS := \
 	ft_wctomb.c \
 	ft_write.c \
 \
+	ft_free_null.c \
 	ft_get_next_line.c \
 	ft_itoa.c \
 	ft_jbase.c \

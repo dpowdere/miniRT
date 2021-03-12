@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,6 +23,7 @@
 ** unistd.h - close
 */
 
+#include <mlx.h>
 #include <libft.h>
 
 #include "minirt.h"
@@ -34,7 +36,25 @@ t_scene	rt_init_scene(void)
 	scene.window = NULL;
 	scene.width = UNDEFINED;
 	scene.height = UNDEFINED;
+	scene.ambient = NAN;
+	scene.ambient_color.red = UNDEFINED;
+	scene.ambient_color.green = UNDEFINED;
+	scene.ambient_color.blue = UNDEFINED;
 	return (scene);
+}
+
+void	rt_free_scene(t_scene *scene)
+{
+	if (scene->mlx != NULL && scene->window != NULL)
+	{
+		mlx_destroy_window(scene->mlx, scene->window);
+		scene->window = NULL;
+	}
+	if (scene->mlx != NULL)
+	{
+		mlx_destroy_display(scene->mlx);
+		scene->mlx = NULL;
+	}
 }
 
 void	rt_read_scene(int fd, t_scene *scene)
@@ -52,7 +72,7 @@ void	rt_read_scene(int fd, t_scene *scene)
 		line = NULL;
 	}
 	if (retcode < 0)
-		rt_error(RT_ERROR_LINEREAD, RT_ERROR_LINEREAD_MSG);
+		rt_xerror(scene, RT_ERROR_LINEREAD, RT_ERROR_LINEREAD_MSG);
 }
 
 void	rt_load_scene(const char *pathname, t_scene *scene)
@@ -62,9 +82,9 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NORTFILE, RT_ERROR_NORTFILE_MSG);
 	if ((fd = open(pathname, RT_O_FLAGS)) == -1)
-		rt_perror();
+		rt_perror(scene);
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)
-		rt_perror();
+		rt_perror(scene);
 	//rt_check_scene(scene);
 }

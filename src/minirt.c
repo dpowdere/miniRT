@@ -25,7 +25,7 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 	ft_print("\n");
 	if (keycode == KEY_Q || keycode == KEY_ESQ)
 	{
-		mlx_destroy_window(scene->mlx, scene->window);
+		rt_free_scene(scene);
 		exit(0);
 	}
 	return (0);
@@ -35,10 +35,10 @@ void	rt_render_scene(t_scene *scene)
 {
 	scene->mlx = mlx_init();
 	if (scene->mlx == NULL)
-		rt_error(RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	scene->window = mlx_new_window(scene->mlx, 900, 600, "miniRT");
 	if (scene->window == NULL)
-		rt_error(RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
+		rt_xerror(scene, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
 	mlx_clear_window(scene->mlx, scene->window);
 	mlx_pixel_put(scene->mlx, scene->window,
 					100, 100, rt_get_color(128, 255, 0, 0));
@@ -46,7 +46,7 @@ void	rt_render_scene(t_scene *scene)
 					10, 20, rt_get_color(255, 128, 128, 0), "Pixel");
 	mlx_key_hook(scene->window, rt_on_keypress, scene);
 	mlx_loop(scene->mlx);
-	rt_error(RT_ERROR_XLOOP, RT_ERROR_XLOOP_MSG);
+	rt_xerror(scene, RT_ERROR_XLOOP, RT_ERROR_XLOOP_MSG);
 }
 
 int		main(int argc, char **argv)

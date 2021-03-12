@@ -14,8 +14,7 @@
 
 #include "minirt.h"
 
-void	rt_parse_square(t_config_line *c, t_scene *scene)
+void	rt_parse_square(t_config_line *c)
 {
 	(void)c;
-	(void)scene;
 }

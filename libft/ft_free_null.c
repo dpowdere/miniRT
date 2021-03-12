@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_sphere.c                                  :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/12 02:06:05 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 02:06:23 by dpowdere         ###   ########.fr       */
+/*   Created: 2021/03/12 13:05:51 by dpowdere          #+#    #+#             */
+/*   Updated: 2021/03/12 13:11:19 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdlib.h>
 
-#include "minirt.h"
-
-void	rt_parse_sphere(t_config_line *c)
+void	ft_free_null(void **p)
 {
-	(void)c;
+	if (p != NULL && *p != NULL)
+	{
+		free((void *)*p);
+		*p = NULL;
+	}
 }

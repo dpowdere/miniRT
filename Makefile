@@ -16,6 +16,7 @@ SRCS := \
 	minirt.c \
 	rt_color.c \
 	rt_error.c \
+	rt_free.c \
 	rt_parse.c \
 	rt_parse_ambient.c \
 	rt_parse_camera.c \
@@ -49,12 +50,12 @@ HPATHS	:=	-I$(INCDIR) -I$(LIBX) -I$(LIBFT)
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror $(DFLAGS) $(HPATHS) -c
-LDLIBS	:=	-lmlx -framework OpenGL -framework AppKit -lz
+LDLIBS	:=	-lm -lmlx -framework OpenGL -framework AppKit -lz
 LDFLAGS	:=	-L$(LIBX) -L$(LIBFT)
 
 # if on Linux
 ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
-  LDLIBS := -lft -lmlx -lXext -lX11
+  LDLIBS := -lm -lft -lmlx -lXext -lX11
 endif
 
 $(shell mkdir -p $(OBJDIR))

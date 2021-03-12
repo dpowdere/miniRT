@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/11 19:03:15 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/03/12 12:49:31 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,59 @@
 #  define RT_O_FLAGS	O_RDONLY
 # endif
 
+typedef struct	s_color
+{
+	int red;
+	int green;
+	int blue;
+}				t_color;
+
 typedef struct	s_scene
 {
 	void	*mlx;
 	void	*window;
 	int		width;
 	int		height;
+	float	ambient;
+	t_color	ambient_color;
 }				t_scene;
 
 typedef struct	s_config_line
 {
 	char const			*line;
 	char const *const	*segments;
+	char const *const	*triplet;
+	t_scene				*scene;
 	size_t				line_num;
 	size_t				n_segments;
 }				t_config_line;
 
+void			rt_config_line_regular_free(t_config_line *cline);
+void			rt_config_line_emergency_free(t_config_line *cline);
 int32_t			rt_get_color(int alpha, int red, int green, int blue);
+void			rt_free_scene(t_scene *s);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
+t_color			rt_parse_color(t_config_line *cline);
 void			rt_parse_line(const char *line, size_t linenum, t_scene *scene);
+void			rt_parse_triplet(t_config_line *c, int snum, const char *sname);
+void			rt_parse_type(t_config_line *cline);
 
 void			rt_error(int error_code, const char *error_msg);
-void			rt_parse_error(t_config_line *cline, const char *error_msg);
-void			rt_perror(void);
+void			rt_parsing_error(t_config_line *cline, const char *error_msg);
+void			rt_parsing_error_free(t_config_line *cline,
+					char *error_msg, int free_error_msg);
+void			rt_perror(t_scene *s);
+void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
 
-void			rt_parse_ambient(t_config_line *line, t_scene *s);
-void			rt_parse_camera(t_config_line *line, t_scene *s);
-void			rt_parse_cylinder(t_config_line *line, t_scene *s);
-void			rt_parse_light(t_config_line *line, t_scene *s);
-void			rt_parse_plane(t_config_line *line, t_scene *s);
-void			rt_parse_resolution(t_config_line *line, t_scene *s);
-void			rt_parse_sphere(t_config_line *line, t_scene *s);
-void			rt_parse_square(t_config_line *line, t_scene *s);
-void			rt_parse_triangle(t_config_line *line, t_scene *s);
+void			rt_parse_ambient(t_config_line *cline);
+void			rt_parse_camera(t_config_line *cline);
+void			rt_parse_cylinder(t_config_line *cline);
+void			rt_parse_light(t_config_line *cline);
+void			rt_parse_plane(t_config_line *cline);
+void			rt_parse_resolution(t_config_line *cline);
+void			rt_parse_sphere(t_config_line *cline);
+void			rt_parse_square(t_config_line *cline);
+void			rt_parse_triangle(t_config_line *cline);
 
 #endif
