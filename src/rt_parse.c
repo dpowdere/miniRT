@@ -95,5 +95,10 @@ t_color		rt_parse_color(t_config_line *c, const char *attrname)
 	color.blue = ft_strtoi(c->triplet[2], &endptr, BASE);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, attrname, "Invalid value for blue channel");
+	if (color.red < 0 || color.red > 255 ||
+			color.green < 0 || color.green > 255 ||
+			color.blue < 0 || color.blue > 255)
+		rt_parsing_error(c, attrname,
+				"Each color channel value must be in the range [0, 255]");
 	return (color);
 }
