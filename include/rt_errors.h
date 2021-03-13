@@ -31,4 +31,10 @@
 # define RT_ERROR_NORTFILE_MSG	"Can parse *.rt files only"
 # define RT_ERROR_PARSE_MSG		"Can't parse the scene config file"
 
+typedef const enum	e_infotype
+{
+	RT_SCENE,
+	RT_CONFIG_LINE
+}					t_infotype;
+
 #endif

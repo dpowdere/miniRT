@@ -11,43 +11,13 @@
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <libft.h>
 
 #include "minirt.h"
 
-#define BASE				10
-#define DO_FREE_ERROR_MSG	1
-#define IS_ETYPE(e)			(!ft_strcmp((e), cline->segments[0]))
-#define SPACES				" \f\n\r\t\v"
-
-void		rt_parse_line(const char *line, size_t line_num, t_scene *scene)
-{
-	t_config_line	config_line;
-	int				i;
-
-	i = 0;
-	config_line.line = line;
-	config_line.line_num = line_num;
-	config_line.segments = (char const *const *)ft_split_const(line, SPACES);
-	config_line.n_segments = ft_ptrarr_len((void **)config_line.segments);
-	config_line.triplet = NULL;
-	config_line.scene = scene;
-	if (config_line.n_segments > 0)
-	{
-		rt_parse_type(&config_line);
-		printf(">>>");
-		while (config_line.segments[i])
-		{
-			printf(" %s", config_line.segments[i]);
-			++i;
-		}
-		printf("\n");
-	}
-	rt_config_line_regular_free(&config_line);
-}
+#define BASE		10
+#define IS_ETYPE(e)	(!ft_strcmp((e), cline->segments[0]))
 
 void		rt_parse_type(t_config_line *cline)
 {
@@ -80,6 +50,18 @@ void		rt_parse_triplet(t_config_line *c, int ix, const char *scope_name)
 		rt_parsing_error(c, scope_name, "Wrong number of constituents");
 }
 
+double		rt_parse_float(t_config_line *c, int ix, const char *scope_name)
+{
+	char	*endptr;
+	double	value;
+
+	endptr = NULL;
+	value = ft_strtod(c->segments[ix], &endptr);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, scope_name, "Invalid value");
+	return (value);
+}
+
 t_color		rt_parse_color(t_config_line *c, int ix, const char *scope_name)
 {
 	t_color	color;
@@ -104,6 +86,26 @@ t_color		rt_parse_color(t_config_line *c, int ix, const char *scope_name)
 	return (color);
 }
 
-t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name)
+t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
+							int should_be_normalized)
 {
+	t_vector	vec;
+	char		*endptr;
+
+	endptr = NULL;
+	rt_parse_triplet(c, ix, scope_name);
+	vec.x = ft_strtod(c->triplet[0], &endptr);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, scope_name, "X: Invalid value");
+	vec.y = ft_strtod(c->triplet[1], &endptr);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, scope_name, "Y: Invalid value");
+	vec.z = ft_strtod(c->triplet[2], &endptr);
+	if (endptr == NULL || *endptr != '\0')
+		rt_parsing_error(c, scope_name, "Z: Invalid value");
+	if (should_be_normalized && (vec.x < -1.0 || vec.x > 1.0 ||
+				vec.y < -1.0 || vec.y > 1.0 || vec.z < -1.0 || vec.z > 1.0))
+		rt_parsing_error(c, scope_name,
+				"Individual values must be in the range [-1.0, +1.0]");
+	return (vec);
 }

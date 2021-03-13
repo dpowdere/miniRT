@@ -68,7 +68,9 @@ void			rt_parse_triplet(t_config_line *c, int ix, const char *sname);
 void			rt_parse_type(t_config_line *c);
 
 t_color			rt_parse_color(t_config_line *c, int ix, const char *sname);
-t_vector		rt_parse_vector(t_config_line *c, int ix, const char *sname);
+double			rt_parse_float(t_config_line *c, int ix, const char *sname);
+t_vector		rt_parse_vector(t_config_line *c, int ix, const char *sname,
+								int should_be_normalized);
 
 void			rt_parse_ambient(t_config_line *cline);
 void			rt_parse_camera(t_config_line *cline);
@@ -83,7 +85,7 @@ void			rt_parse_triangle(t_config_line *cline);
 void			rt_error(int error_code, const char *error_msg);
 void			rt_parsing_error(t_config_line *cline,
 					const char *scope_name, const char *error_msg);
-void			rt_perror(t_scene *s);
+void			rt_perror(void *info, t_infotype infotype);
 void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
 
 #endif

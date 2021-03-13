@@ -14,6 +14,7 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
 /*
@@ -27,6 +28,8 @@
 #include <libft.h>
 
 #include "minirt.h"
+
+#define SPACES	" \f\n\r\t\v"
 
 t_scene	rt_init_scene(void)
 {
@@ -65,6 +68,32 @@ void	rt_free_scene(t_scene *scene)
 	ft_lstclear(&scene->objects, free);
 }
 
+void		rt_parse_line(const char *line, size_t line_num, t_scene *scene)
+{
+	t_config_line	config_line;
+	int				i;
+
+	i = 0;
+	config_line.line = line;
+	config_line.line_num = line_num;
+	config_line.segments = (char const *const *)ft_split_const(line, SPACES);
+	config_line.n_segments = ft_ptrarr_len((void **)config_line.segments);
+	config_line.triplet = NULL;
+	config_line.scene = scene;
+	if (config_line.n_segments > 0)
+	{
+		printf(">>>");
+		while (config_line.segments[i])
+		{
+			printf(" %s", config_line.segments[i]);
+			++i;
+		}
+		printf("\n");
+		rt_parse_type(&config_line);
+	}
+	rt_config_line_regular_free(&config_line);
+}
+
 void	rt_read_scene(int fd, t_scene *scene)
 {
 	char	*line;
@@ -90,9 +119,9 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NORTFILE, RT_ERROR_NORTFILE_MSG);
 	if ((fd = open(pathname, RT_O_FLAGS)) == -1)
-		rt_perror(scene);
+		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)
-		rt_perror(scene);
+		rt_perror((void *)scene, RT_SCENE);
 	//rt_check_scene(scene);
 }

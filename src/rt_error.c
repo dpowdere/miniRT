@@ -39,9 +39,12 @@ void	rt_xerror(t_scene *s, int error_code, const char *error_msg)
 	rt_error(error_code, error_msg);
 }
 
-void	rt_perror(t_scene *s)
+void	rt_perror(void *info, t_infotype infotype)
 {
-	rt_free_scene(s);
+	if (infotype == RT_SCENE)
+		rt_free_scene((t_scene *)info);
+	else if (infotype == RT_CONFIG_LINE)
+		rt_config_line_emergency_free((t_config_line *)info);
 	ft_eprintln("Error");
 	perror(NULL);
 	exit(RT_ERROR_SYSTEM);

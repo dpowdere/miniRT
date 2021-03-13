@@ -27,7 +27,7 @@ typedef struct		s_vector
 	double z;
 }					t_vector;
 
-typedef const enum	s_objtype
+typedef const enum	e_objtype
 {
 	RT_CYLINDER,
 	RT_PLANE,

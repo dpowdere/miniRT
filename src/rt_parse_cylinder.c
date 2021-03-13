@@ -11,31 +11,34 @@
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #include <libft.h>
 
 #include "minirt.h"
 
+#define NORMALIZED		1
+#define NON_NORMALIZED	0
+
 void	rt_parse_cylinder(t_config_line *c)
 {
-	t_cylinder	cy;
-	char		*endptr;
+	t_cylinder	*cy;
+	t_list		*list_element;
 
 	if (c->n_segments != 6)
 		rt_parsing_error(c, "Cylinder", "Wrong number of arguments");
-	cy.location = rt_parse_vector(c, 1, "Cylinder location");
-
-	cy.orientation = rt_parse_vector(c, 2, "Cylinder orientation");
-	// check normalized
-
-	endptr = NULL;
-	cy.diameter = ft_strtod(c->segments[3], &endptr);
-	if (endptr == NULL || *endptr == '\0')
-		rt_parsing_error(c, "Cylinder diameter", "Invalid value");
-
-	cy.height = ft_strtod(c->segments[4], &endptr);
-	if (endptr == NULL || *endptr == '\0')
-		rt_parsing_error(c, "Cylinder height", "Invalid value");
-
-	cy.color = rt_parse_color(c, 5, "Cylinder color");
+	if ((cy = (t_cylinder *)malloc(sizeof(t_cylinder))) == NULL)
+		rt_perror((void *)c, RT_CONFIG_LINE);
+	*(int *)&cy->type = RT_CYLINDER;
+	cy->location = rt_parse_vector(c, 1, "Cylinder location", NON_NORMALIZED);
+	cy->orientation = rt_parse_vector(c, 2, "Cylinder orientation", NORMALIZED);
+	cy->diameter = rt_parse_float(c, 3, "Cylinder diameter");
+	cy->height = rt_parse_float(c, 4, "Cylinder height");
+	cy->color = rt_parse_color(c, 5, "Cylinder color");
+	if ((list_element = ft_lstnew(cy)) == NULL)
+	{
+		free(cy);
+		rt_perror((void *)c, RT_CONFIG_LINE);
+	}
+	ft_lstadd_back(&c->scene->objects, list_element);
 }
