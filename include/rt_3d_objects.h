@@ -46,6 +46,13 @@ typedef struct		s_camera
 	double		view_angle;
 }					t_camera;
 
+typedef struct		s_light
+{
+	t_vector	location;
+	double		intensity;
+	t_color		color;
+}					t_light;
+
 typedef struct		s_cylinder
 {
 	t_objtype	type;
