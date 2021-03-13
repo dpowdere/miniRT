@@ -11,10 +11,30 @@
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdlib.h>
+
+#include <libft.h>
 
 #include "minirt.h"
 
 void	rt_parse_triangle(t_config_line *c)
 {
-	(void)c;
+	t_triangle	*tr;
+	t_list		*list_element;
+
+	if (c->n_segments != 5)
+		rt_parsing_error(c, "Triangle", "Wrong number of arguments");
+	if ((tr = (t_triangle *)malloc(sizeof(t_triangle))) == NULL)
+		rt_perror((void *)c, RT_CONFIG_LINE);
+	*(int *)&tr->type = RT_TRIANGLE;
+	tr->p1 = rt_parse_vector(c, 1, "Triangle, point 1", NON_NORMALIZED);
+	tr->p2 = rt_parse_vector(c, 2, "Triangle, point 2", NON_NORMALIZED);
+	tr->p3 = rt_parse_vector(c, 3, "Triangle, point 3", NON_NORMALIZED);
+	tr->color = rt_parse_color(c, 4, "Triangle color");
+	if ((list_element = ft_lstnew(tr)) == NULL)
+	{
+		free(tr);
+		rt_perror((void *)c, RT_CONFIG_LINE);
+	}
+	ft_lstadd_back(&c->scene->objects, list_element);
 }
