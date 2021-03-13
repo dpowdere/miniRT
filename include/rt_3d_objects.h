@@ -27,6 +27,9 @@ typedef struct		s_vector
 	double z;
 }					t_vector;
 
+#define NORMALIZED		1
+#define NON_NORMALIZED	0
+
 typedef const enum	e_objtype
 {
 	RT_CYLINDER,
@@ -40,7 +43,7 @@ typedef struct		s_camera
 {
 	t_vector	location;
 	t_vector	orientation;
-	int			view_angle;
+	double		view_angle;
 }					t_camera;
 
 typedef struct		s_cylinder

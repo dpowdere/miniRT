@@ -17,9 +17,6 @@
 
 #include "minirt.h"
 
-#define NORMALIZED		1
-#define NON_NORMALIZED	0
-
 void	rt_parse_cylinder(t_config_line *c)
 {
 	t_cylinder	*cy;
