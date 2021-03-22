@@ -29,32 +29,45 @@ SRCS := \
 	rt_parse_triangle.c \
 	rt_scene.c
 
+ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
+  define ON_LINUX =
+
+    We are on linux!
+
+    Just a quick reminder on how to define
+    a multiline variable value in Makefiles.
+
+    See https://www.gnu.org/software/make/manual/html_node/Multi_002dLine.html
+
+  endef
+endif
+
 OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
 
-LIBX	:=	libmlx
 LIBFT	:=	libft
+LIBX	:=	libmlx/macos_opengl
+ifdef ON_LINUX
+  LIBX	:=	libmlx/linux
+endif
 
 DEPX	:=	$(shell find $(LIBX) -name '*.[ch]')
 DEPFT	:=	$(shell find $(LIBFT) -name '*.[ch]')
 
 SRCDIR := src
 INCDIR := include
-OBJDIR := .o
+OBJDIR := .tmp
 OBJLST := $(addprefix $(OBJDIR)/,$(OBJS))
+DEPLST := $(addprefix $(OBJDIR)/,$(DEPS))
 
-VPATH := $(OBJDIR):$(SRCDIR):$(INCDIR)
+VPATH := $(OBJDIR):$(SRCDIR):$(INCDIR):.
 
-DFLAGS	:=	-MMD -MP
-HPATHS	:=	-I$(INCDIR) -I$(LIBX) -I$(LIBFT)
-
-CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror $(DFLAGS) $(HPATHS) -c
-LDLIBS	:=	-lm -lmlx -framework OpenGL -framework AppKit -lz
-LDFLAGS	:=	-L$(LIBX) -L$(LIBFT)
-
-# if on Linux
-ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
+CC			:=	gcc
+CPPFLAGS	=	-MMD -MP -MT $@ -I$(INCDIR) -I$(LIBX) -I$(LIBFT)
+CFLAGS		:=	-Wall -Wextra -Werror -c
+LDFLAGS		:=	-L$(LIBX) -L$(LIBFT)
+LDLIBS		:=	-lm -lft -lmlx -framework OpenGL -framework AppKit -lz
+ifdef ON_LINUX
   LDLIBS := -lm -lft -lmlx -lXext -lX11
 endif
 
@@ -66,7 +79,7 @@ $(NAME): $(OBJS) .ft .mlx
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $(OBJDIR)/$@ $<
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 .mlx: $(DEPX)
 	@$(MAKE) -C $(LIBX)
@@ -81,7 +94,7 @@ all: $(NAME)
 clean:
 	@$(MAKE) -C $(LIBX) clean
 	@$(MAKE) -C $(LIBFT) fclean
-	$(RM) .ft .mlx
+	@$(RM) .ft .mlx
 	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
@@ -98,4 +111,4 @@ norm:
 	#norminette -R CheckDefine $(SRCDIR) $(INCDIR)
 	#norminette $(SRCDIR) $(INCDIR)
 
--include $(DEPS)
+-include $(DEPLST)

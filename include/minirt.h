@@ -20,7 +20,6 @@
 
 # include "rt_3d_objects.h"
 # include "rt_errors.h"
-# include "rt_keys.h"
 
 # define UNDEFINED	-1
 
