@@ -57,9 +57,9 @@ void	rt_render_scene(t_scene *scene)
 }
 
 /*
-** For closing a window,
-** see https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
-** and WM_DELETE_WINDOW ICCCM protocol.
+** NOTE: For closing a window see `ClientMessage` X event
+** https://tronche.com/gui/x/xlib/events/ and `WM_DELETE_WINDOW` ICCCM
+** protocol https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
 */
 
 int		main(int argc, char **argv)

@@ -27,8 +27,8 @@ typedef struct		s_vector
 	double z;
 }					t_vector;
 
-#define NORMALIZED		1
-#define NON_NORMALIZED	0
+# define NORMALIZED		1
+# define NON_NORMALIZED	0
 
 typedef const enum	e_objtype
 {

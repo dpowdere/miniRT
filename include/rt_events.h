@@ -13,6 +13,18 @@
 #ifndef RT_EVENTS_H
 # define RT_EVENTS_H
 
+# ifdef __APPLE__
+#  define KEY_ENTER	36
+#  define KEY_ESQ	53
+#  define KEY_Q		12
+# endif
+
+# ifdef __linux__
+#  define KEY_ENTER	65293
+#  define KEY_ESQ	65307
+#  define KEY_Q		113
+# endif
+
 # define XEVENT_KEY_PRESS				2
 # define XEVENT_KEY_RELEASE				3
 # define XEVENT_BUTTON_PRESS			4
@@ -55,18 +67,5 @@
 # define XMASK_SUBSTRUCTURE_NOTIFY		(1L << 19)
 # define XMASK_SUBSTRUCTURE_REDIRECT	(1L << 20)
 # define XMASK_FOCUS_CHANGE				(1L << 21)
-
-
-# ifdef __APPLE__
-#  define KEY_ENTER	36
-#  define KEY_ESQ	53
-#  define KEY_Q		12
-# endif
-
-# ifdef __linux__
-#  define KEY_ENTER	65293
-#  define KEY_ESQ	65307
-#  define KEY_Q		113
-# endif
 
 #endif
