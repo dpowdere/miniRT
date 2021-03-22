@@ -14,11 +14,11 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 
 /*
 ** fcntl.h  - open
+** math.h   - NAN
 ** stddef.h - NULL
 ** stdlib.h - free
 ** unistd.h - close
@@ -28,8 +28,6 @@
 #include <libft.h>
 
 #include "minirt.h"
-
-#define SPACES	" \f\n\r\t\v"
 
 t_scene	rt_init_scene(void)
 {
@@ -68,32 +66,6 @@ void	rt_free_scene(t_scene *scene)
 	ft_lstclear(&scene->objects, free);
 }
 
-void		rt_parse_line(const char *line, size_t line_num, t_scene *scene)
-{
-	t_config_line	config_line;
-	int				i;
-
-	i = 0;
-	config_line.line = line;
-	config_line.line_num = line_num;
-	config_line.segments = (char const *const *)ft_split_const(line, SPACES);
-	config_line.n_segments = ft_ptrarr_len((void **)config_line.segments);
-	config_line.triplet = NULL;
-	config_line.scene = scene;
-	if (config_line.n_segments > 0)
-	{
-		printf(">>>");
-		while (config_line.segments[i])
-		{
-			printf(" %s", config_line.segments[i]);
-			++i;
-		}
-		printf("\n");
-		rt_parse_type(&config_line);
-	}
-	rt_config_line_regular_free(&config_line);
-}
-
 void	rt_read_scene(int fd, t_scene *scene)
 {
 	char	*line;
@@ -104,7 +76,7 @@ void	rt_read_scene(int fd, t_scene *scene)
 	line_num = 0;
 	while ((retcode = ft_get_next_line(fd, &line)) > 0)
 	{
-		rt_parse_line(line, ++line_num, scene);
+		rt_parse_config_line(line, ++line_num, scene);
 		free(line);
 		line = NULL;
 	}

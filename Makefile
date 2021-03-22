@@ -14,10 +14,14 @@ NAME := miniRT
 
 SRCS := \
 	minirt.c \
+\
 	rt_color.c \
 	rt_error.c \
 	rt_free.c \
 	rt_parse.c \
+	rt_parse_config_line.c \
+	rt_scene.c \
+\
 	rt_parse_ambient.c \
 	rt_parse_camera.c \
 	rt_parse_cylinder.c \
@@ -26,8 +30,7 @@ SRCS := \
 	rt_parse_resolution.c \
 	rt_parse_sphere.c \
 	rt_parse_square.c \
-	rt_parse_triangle.c \
-	rt_scene.c
+	rt_parse_triangle.c
 
 ifneq ($(findstring linux,$(shell $(CC) -dumpmachine)),)
   define ON_LINUX =

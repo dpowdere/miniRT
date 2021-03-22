@@ -62,7 +62,7 @@ void			rt_free_scene(t_scene *s);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 
-void			rt_parse_line(const char *line, size_t linenum, t_scene *scene);
+void			rt_parse_config_line(const char *line, size_t lnum, t_scene *s);
 void			rt_parse_triplet(t_config_line *c, int ix, const char *sname);
 void			rt_parse_type(t_config_line *c);
 
