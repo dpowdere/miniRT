@@ -106,7 +106,7 @@ fclean: clean
 re: fclean all
 
 run: all
-	./miniRT
+	./miniRT assets/subject.rt
 
 norm:
 	~/norm.sh $(SRCDIR) $(INCDIR)
