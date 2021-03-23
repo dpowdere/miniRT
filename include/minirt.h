@@ -57,10 +57,14 @@ typedef struct	s_config_line
 
 void			rt_config_line_regular_free(t_config_line *cline);
 void			rt_config_line_emergency_free(t_config_line *cline);
-int32_t			rt_get_color(int alpha, int red, int green, int blue);
-void			rt_free_scene(t_scene *s);
+int32_t			rt_get_color(int red, int green, int blue);
+void			rt_free_camera(void *camera);
+void			rt_free_image(void *image);
+void			rt_free_scene(t_scene *scene);
+t_image			*rt_init_image(t_scene *scene);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
+void			rt_put_pixel(t_image *img, int x, int y, int color);
 
 void			rt_parse_config_line(const char *line, size_t lnum, t_scene *s);
 void			rt_parse_triplet(t_config_line *c, int ix, const char *sname);

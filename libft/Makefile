@@ -45,6 +45,7 @@ CONTENTS := \
 \
 	ft_free_null.c \
 	ft_get_next_line.c \
+	ft_is_big_endian.c \
 	ft_itoa.c \
 	ft_jbase.c \
 	ft_ptrarr_len.c \

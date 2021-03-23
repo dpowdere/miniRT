@@ -63,7 +63,7 @@ void	rt_free_scene(t_scene *scene)
 		scene->mlx = NULL;
 	}
 	scene->active_camera = NULL;
-	ft_lstclear(&scene->cameras, free);
+	ft_lstclear(&scene->cameras, rt_free_camera);
 	ft_lstclear(&scene->lights, free);
 	ft_lstclear(&scene->objects, free);
 }
@@ -104,9 +104,9 @@ void	rt_check_scene(t_scene *scene)
 	if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
 		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	if (scene->width > screen_width)
-		scene->width = screen_width - 10;
+		scene->width = screen_width;
 	if (scene->height > screen_height)
-		scene->height = screen_height - 10;
+		scene->height = screen_height;
 }
 
 void	rt_load_scene(const char *pathname, t_scene *scene)

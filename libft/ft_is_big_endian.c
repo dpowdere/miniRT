@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   ft_is_big_endian.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 17:44:50 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/02 17:55:18 by dpowdere         ###   ########.fr       */
+/*   Created: 2021/03/24 01:14:56 by dpowdere          #+#    #+#             */
+/*   Updated: 2021/03/24 01:20:31 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-
-static inline int	rt_normalize(int x)
+int	ft_is_big_endian(void)
 {
-	if (x < 0)
-		x = 0;
-	else if (x > 255)
-		x = 255;
-	return (x);
-}
+	const int x = 1;
 
-int32_t				rt_get_color(int red, int green, int blue)
-{
-	uint32_t color;
-
-	color = 0u;
-	color |= rt_normalize(red) << 16;
-	color |= rt_normalize(green) << 8;
-	color |= rt_normalize(blue);
-	return (*(int32_t *)&color);
+	return (!*(unsigned char *)&x);
 }

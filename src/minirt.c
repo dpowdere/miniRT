@@ -28,9 +28,6 @@ int		rt_on_close(t_scene *scene)
 
 int		rt_on_keypress(int keycode, t_scene *scene)
 {
-	ft_print("key: ");
-	ft_putnbr_fd(keycode, 1);
-	ft_print("\n");
 	if (keycode == KEY_Q || keycode == KEY_ESQ)
 		rt_on_close(scene);
 	return (0);
@@ -38,14 +35,16 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 
 void	rt_render_scene(t_scene *s)
 {
+	t_image *img;
+
+	img = rt_init_image(s);
+	rt_put_pixel(img, 10, 10, rt_get_color(255, 0, 0));
+	rt_put_pixel(img, 12, 10, rt_get_color(0, 255, 0));
 	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
 	mlx_clear_window(s->mlx, s->window);
-	mlx_pixel_put(s->mlx, s->window,
-			100, 100, rt_get_color(0, 255, 0, 0));
-	mlx_string_put(s->mlx, s->window, 10, 20, rt_get_color(0, 128, 128, 0),
-			"Pixel");
+	mlx_put_image_to_window(s->mlx, s->window, img->img, 0, 0);
 	mlx_hook(s->window, XEVENT_CLIENT_MESSAGE, XMASK_NO_EVENT, rt_on_close, s);
 	mlx_key_hook(s->window, rt_on_keypress, s);
 	mlx_loop(s->mlx);

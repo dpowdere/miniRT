@@ -39,11 +39,24 @@ typedef const enum	e_objtype
 	RT_TRIANGLE,
 }					t_objtype;
 
+typedef struct		s_scene
+					t_scene;
+typedef struct		s_image
+{
+	void	*img;
+	char	*byte_array;
+	int		bytes_per_pixel;
+	int		bytes_per_line;
+	int		is_big_endian;
+	t_scene	*scene;
+}					t_image;
+
 typedef struct		s_camera
 {
 	t_vector	location;
 	t_vector	orientation;
 	double		view_angle;
+	t_image		*viewport;
 }					t_camera;
 
 typedef struct		s_light

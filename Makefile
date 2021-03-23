@@ -18,6 +18,7 @@ SRCS := \
 	rt_color.c \
 	rt_error.c \
 	rt_free.c \
+	rt_image.c \
 	rt_parse.c \
 	rt_parse_config_line.c \
 	rt_scene.c \
@@ -72,6 +73,9 @@ LDFLAGS		:=	-L$(LIBX) -L$(LIBFT)
 LDLIBS		:=	-lm -lft -lmlx -framework OpenGL -framework AppKit -lz
 ifdef ON_LINUX
   LDLIBS := -lm -lft -lmlx -lXext -lX11
+endif
+ifdef DEBUG
+  CFLAGS += -g3
 endif
 
 $(shell mkdir -p $(OBJDIR))

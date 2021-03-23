@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:14:56 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 13:13:45 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/03/24 01:20:19 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ ssize_t			ft_write(int fd, const void *buf, size_t count);
 ** ====================
 */
 int				ft_get_next_line(int fd, char **line);
+int				ft_is_big_endian(void);
 int				ft_str_index(const char *s, int c);
 int				ft_str_endswith(const char *s, const char *suffix);
 int				ft_str_startswith(const char *s, const char *prefix);

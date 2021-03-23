@@ -34,6 +34,7 @@ void	rt_parse_camera(t_config_line *c)
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
 		rt_scheme_error(c, RT_CONFIG_LINE,
 						NM, "View angle must be in the range (0, 180]");
+	camera->viewport = NULL;
 	if ((list_element = ft_lstnew(camera)) == NULL)
 	{
 		free(camera);
@@ -42,4 +43,18 @@ void	rt_parse_camera(t_config_line *c)
 	ft_lstadd_back(&c->scene->cameras, list_element);
 	if (c->scene->active_camera == NULL)
 		c->scene->active_camera = camera;
+}
+
+void	rt_free_camera(void *data)
+{
+	t_camera *const camera = (t_camera *)data;
+
+	if (camera == NULL)
+		return ;
+	if (camera->viewport != NULL)
+	{
+		rt_free_image(camera->viewport);
+		camera->viewport = NULL;
+	}
+	free((void *)camera);
 }

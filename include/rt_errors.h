@@ -23,6 +23,7 @@
 # define RT_ERROR_NO_RTFILE		7
 # define RT_ERROR_PARSE			8
 # define RT_ERROR_SCHEME		9
+# define RT_ERROR_XIMAGE		10
 
 # define RT_ERROR_ARGS_MSG		"Invalid number of arguments"
 # define RT_ERROR_XLOOP_MSG		"Can't enter the main loop"
@@ -32,6 +33,7 @@
 # define RT_ERROR_NO_RTFILE_MSG	"Can parse *.rt files only"
 # define RT_ERROR_PARSE_MSG		"Can't parse the scene config file"
 # define RT_ERROR_SCHEME_MSG	"Scene config does not comply with the scheme"
+# define RT_ERROR_XIMAGE_MSG	"Can't create an image buffer"
 
 typedef const enum	e_infotype
 {
