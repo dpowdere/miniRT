@@ -38,9 +38,6 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 
 void	rt_render_scene(t_scene *s)
 {
-	s->mlx = mlx_init();
-	if (s->mlx == NULL)
-		rt_xerror(s, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
@@ -65,9 +62,9 @@ int		main(int argc, char **argv)
 {
 	t_scene scene;
 
-	scene = rt_init_scene();
 	if (argc != 2)
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
+	scene = rt_init_scene();
 	rt_load_scene(argv[1], &scene);
 	rt_render_scene(&scene);
 	return (0);
