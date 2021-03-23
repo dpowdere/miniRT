@@ -31,7 +31,8 @@ void	rt_parse_light(t_config_line *c)
 	light->location = rt_parse_vector(c, 1, NM " location", NON_NORMALIZED);
 	light->intensity = rt_parse_float(c, 2, NM " intensity");
 	if (light->intensity < 0.0 || light->intensity > 1.0)
-		rt_parsing_error(c, NM, "Intensity must be in the range [0, 1.0]");
+		rt_scheme_error(c, RT_CONFIG_LINE,
+						NM, "Intensity must be in the range [0, 1.0]");
 	light->color = rt_parse_color(c, 3, NM " color");
 	if ((list_element = ft_lstnew(light)) == NULL)
 	{

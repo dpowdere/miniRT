@@ -32,7 +32,8 @@ void	rt_parse_camera(t_config_line *c)
 	camera->orientation = rt_parse_vector(c, 2, NM " orientation", NORMALIZED);
 	camera->view_angle = rt_parse_float(c, 3, NM " view angle");
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
-		rt_parsing_error(c, NM, "View angle must be in the range (0, 180]");
+		rt_scheme_error(c, RT_CONFIG_LINE,
+						NM, "View angle must be in the range (0, 180]");
 	if ((list_element = ft_lstnew(camera)) == NULL)
 	{
 		free(camera);

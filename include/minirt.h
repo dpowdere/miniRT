@@ -85,6 +85,8 @@ void			rt_error(int error_code, const char *error_msg);
 void			rt_parsing_error(t_config_line *cline,
 					const char *scope_name, const char *error_msg);
 void			rt_perror(void *info, t_infotype infotype);
+void			rt_scheme_error(void *info, t_infotype infotype,
+						const char *scope_name, const char *error_msg);
 void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
 
 #endif

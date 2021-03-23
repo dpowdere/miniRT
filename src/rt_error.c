@@ -72,3 +72,33 @@ void	rt_parsing_error(t_config_line *cline, const char *scope_name,
 		ft_eprint("\n");
 	exit(RT_ERROR_PARSE);
 }
+
+void	rt_scheme_error(void *info, t_infotype infotype,
+						const char *scope_name, const char *error_msg)
+{
+	char			*line_num;
+
+	ft_eprintln("Error");
+	ft_eprint(RT_ERROR_SCHEME_MSG);
+	if (infotype == RT_SCENE)
+		rt_free_scene((t_scene *)info);
+	else if (infotype == RT_CONFIG_LINE)
+	{
+		line_num = ft_itoa(((t_config_line *)info)->line_num);
+		rt_config_line_emergency_free((t_config_line *)info);
+		ft_eprint(", line ");
+		ft_eprint(line_num);
+		free(line_num);
+	}
+	ft_eprint("\n");
+	if (scope_name != NULL)
+	{
+		ft_eprint(scope_name);
+		ft_eprint(": ");
+	}
+	if (error_msg != NULL)
+		ft_eprintln(error_msg);
+	else
+		ft_eprint("\n");
+	exit(RT_ERROR_SCHEME);
+}

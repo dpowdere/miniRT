@@ -110,8 +110,8 @@ run: all
 
 norm:
 	~/norm.sh $(SRCDIR) $(INCDIR)
-	#norminette -R CheckForbiddenSourceHeader $(SRCDIR) $(INCDIR)
-	#norminette -R CheckDefine $(SRCDIR) $(INCDIR)
-	#norminette $(SRCDIR) $(INCDIR)
+#	norminette -R CheckForbiddenSourceHeader $(SRCDIR) $(INCDIR)
+#	norminette -R CheckDefine $(SRCDIR) $(INCDIR)
+#	norminette $(SRCDIR) $(INCDIR)
 
 -include $(DEPLST)

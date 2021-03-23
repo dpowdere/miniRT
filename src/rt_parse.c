@@ -21,7 +21,9 @@
 
 void		rt_parse_type(t_config_line *cline)
 {
-	if (IS_ETYPE("A"))
+	if ('#' == *cline->segments[0])
+		return ;
+	else if (IS_ETYPE("A"))
 		rt_parse_ambient(cline);
 	else if (IS_ETYPE("c"))
 		rt_parse_camera(cline);
@@ -81,7 +83,7 @@ t_color		rt_parse_color(t_config_line *c, int ix, const char *scope_name)
 	if (color.red < 0 || color.red > 255 ||
 			color.green < 0 || color.green > 255 ||
 			color.blue < 0 || color.blue > 255)
-		rt_parsing_error(c, scope_name,
+		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
 				"Color channels must have values in the range [0, 255]");
 	return (color);
 }
@@ -105,7 +107,7 @@ t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
 		rt_parsing_error(c, scope_name, "Z attribute: Invalid value");
 	if (should_be_normalized && (vec.x < -1.0 || vec.x > 1.0 ||
 				vec.y < -1.0 || vec.y > 1.0 || vec.z < -1.0 || vec.z > 1.0))
-		rt_parsing_error(c, scope_name,
+		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
 				"Individual values must be in the range [-1, 1]");
 	return (vec);
 }

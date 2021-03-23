@@ -25,7 +25,8 @@ void	rt_parse_resolution(t_config_line *c)
 	char	*endptr;
 
 	if (c->scene->width != UNDEFINED || c->scene->height != UNDEFINED)
-		rt_parsing_error(c, "Resolution", "Can be specified only once");
+		rt_scheme_error(c, RT_CONFIG_LINE,
+						"Resolution", "Can be specified only once");
 	if (c->n_segments != 3)
 		rt_parsing_error(c, "Resolution", "Wrong number of arguments");
 	endptr = NULL;

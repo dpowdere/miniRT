@@ -84,16 +84,30 @@ void	rt_read_scene(int fd, t_scene *scene)
 		rt_xerror(scene, RT_ERROR_LINEREAD, RT_ERROR_LINEREAD_MSG);
 }
 
+void	rt_check_scene(t_scene *scene)
+{
+	if (scene->width == UNDEFINED || scene->height == UNDEFINED)
+		rt_scheme_error(scene, RT_SCENE, NULL, "No resolution is specified");
+	if (isnan(scene->ambient))
+		rt_scheme_error(scene, RT_SCENE, NULL,
+						"No abmbient lighting is specified");
+	if (scene->cameras == NULL || scene->active_camera == NULL)
+		rt_scheme_error(scene, RT_SCENE, NULL, "No camera is specified");
+	if (scene->objects == NULL)
+		rt_scheme_error(scene, RT_SCENE, NULL,
+						"There is no geometric object in the scene");
+}
+
 void	rt_load_scene(const char *pathname, t_scene *scene)
 {
 	int	fd;
 
 	if (!ft_str_endswith(pathname, ".rt"))
-		rt_error(RT_ERROR_NORTFILE, RT_ERROR_NORTFILE_MSG);
+		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
 	if ((fd = open(pathname, RT_O_FLAGS)) == -1)
 		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)
 		rt_perror((void *)scene, RT_SCENE);
-	//rt_check_scene(scene);
+	rt_check_scene(scene);
 }
