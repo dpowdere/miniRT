@@ -67,7 +67,7 @@ int		main(int argc, char **argv)
 	rt_load_scene(argv[1], &scene);
 	//rt_render_scene(&scene);
 	if (argc == 3)
-		rt_save_as_bmp(&scene);
+		rt_save_to_bmp_files(&scene);
 	else
 		rt_show_in_window(&scene);
 	return (0);

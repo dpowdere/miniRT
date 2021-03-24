@@ -67,7 +67,7 @@ t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 void			rt_put_pixel(t_image *img, int x, int y, int color);
 void			rt_render_scene(t_scene *scene);
-void			rt_save_as_bmp(t_scene *scene);
+void			rt_save_to_bmp_files(t_scene *scene);
 void			rt_switch_camera(t_scene *scene);
 
 t_color			rt_parse_color(t_config_line *c, int ix, const char *sname);

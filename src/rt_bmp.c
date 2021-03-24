@@ -10,9 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
+
 #include "minirt.h"
 
-void	rt_save_as_bmp(t_scene *scene)
+#define FILEPREFIX	"view_"
+
+void	rt_save_bmp(t_image *image, int *serial_number)
 {
-	(void)scene;
+	(void)image;
+	(void)serial_number;
+}
+
+void	rt_save_to_bmp_files(t_scene *scene)
+{
+	t_list		*elem;
+	t_camera	*camera;
+	int			serial_number;
+
+	serial_number = 1;
+	elem = scene->cameras;
+	while (elem != NULL)
+	{
+		camera = elem->content;
+		rt_save_bmp(camera->viewport, &serial_number);
+		++serial_number;
+	}
 }

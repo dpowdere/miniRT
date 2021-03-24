@@ -72,7 +72,7 @@ void	rt_draw_smth(t_image *img, int i)
 
 void	rt_init_camera_viewports(t_scene *scene)
 {
-	t_list 		*elem;
+	t_list		*elem;
 	t_camera	*camera;
 	int			i;
 
