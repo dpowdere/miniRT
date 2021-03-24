@@ -33,43 +33,14 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 	return (0);
 }
 
-void	rt_draw_smth(t_image *img)
+void	rt_show_in_window(t_scene *s)
 {
-	int	u;
-	int	v;
-	int	red;
-	int	green;
-	int	blue;
-
-	u = img->scene->width;
-	while (--u >= 0)
-	{
-		v = img->scene->height;
-		while (--v >= 0)
-		{
-			red = 0;
-			green = 0;
-			blue = 0;
-			if (u > img->scene->width / 2)
-				red = 255;
-			if (v > img->scene->height / 2)
-				green = 255;
-			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
-		}
-	}
-}
-
-void	rt_render_scene(t_scene *s)
-{
-	t_image *img;
-
-	img = rt_init_image(s);
-	rt_draw_smth(img);
 	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
 	mlx_clear_window(s->mlx, s->window);
-	mlx_put_image_to_window(s->mlx, s->window, img->img, 0, 0);
+	mlx_put_image_to_window(s->mlx, s->window,
+							s->active_camera->viewport->img, 0, 0);
 	mlx_hook(s->window, XEVENT_CLIENT_MESSAGE, XMASK_NO_EVENT, rt_on_close, s);
 	mlx_key_hook(s->window, rt_on_keypress, s);
 	mlx_loop(s->mlx);
@@ -90,6 +61,6 @@ int		main(int argc, char **argv)
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
 	scene = rt_init_scene();
 	rt_load_scene(argv[1], &scene);
-	rt_render_scene(&scene);
+	rt_show_in_window(&scene);
 	return (0);
 }

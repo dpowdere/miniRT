@@ -41,8 +41,49 @@ void	rt_parse_camera(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	}
 	ft_lstadd_back(&c->scene->cameras, list_element);
-	if (c->scene->active_camera == NULL)
-		c->scene->active_camera = camera;
+}
+
+void	rt_draw_smth(t_image *img)
+{
+	int	u;
+	int	v;
+	int	red;
+	int	green;
+	int	blue;
+
+	u = img->scene->width;
+	while (--u >= 0)
+	{
+		v = img->scene->height;
+		while (--v >= 0)
+		{
+			red = (long)img % 256;
+			green = ((long)img + 85) % 256;
+			blue = ((long)img + 190) % 256;
+			if (u > img->scene->width / 2)
+				red = ((long)img + 128) % 256;
+			if (v > img->scene->height / 2)
+				green = ((long)img + 190) % 256;
+			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
+		}
+	}
+}
+
+void	rt_init_camera_viewports(t_scene *scene)
+{
+	t_list 		*elem;
+	t_camera	*camera;
+
+	elem = scene->cameras;
+	while (elem != NULL)
+	{
+		camera = elem->content;
+		camera->viewport = rt_init_image(scene);
+		rt_draw_smth(camera->viewport);
+		elem = elem->next;
+	}
+	if (scene->active_camera == NULL)
+		scene->active_camera = scene->cameras->content;
 }
 
 void	rt_free_camera(void *data)

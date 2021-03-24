@@ -96,7 +96,7 @@ void	rt_check_scene(t_scene *scene)
 	if (isnan(scene->ambient))
 		rt_scheme_error(scene, RT_SCENE, NULL,
 						"No abmbient lighting is specified");
-	if (scene->cameras == NULL || scene->active_camera == NULL)
+	if (scene->cameras == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL, "No camera is specified");
 	if (scene->objects == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL,
@@ -107,6 +107,7 @@ void	rt_check_scene(t_scene *scene)
 		scene->width = screen_width;
 	if (scene->height > screen_height)
 		scene->height = screen_height;
+	rt_init_camera_viewports(scene);
 }
 
 void	rt_load_scene(const char *pathname, t_scene *scene)

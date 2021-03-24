@@ -61,6 +61,7 @@ int32_t			rt_get_color(int red, int green, int blue);
 void			rt_free_camera(void *camera);
 void			rt_free_image(void *image);
 void			rt_free_scene(t_scene *scene);
+void			rt_init_camera_viewports(t_scene *scene);
 t_image			*rt_init_image(t_scene *scene);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
