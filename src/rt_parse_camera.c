@@ -13,6 +13,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+#include <mlx.h>
 #include <libft.h>
 
 #include "minirt.h"
@@ -43,7 +44,7 @@ void	rt_parse_camera(t_config_line *c)
 	ft_lstadd_back(&c->scene->cameras, list_element);
 }
 
-void	rt_draw_smth(t_image *img)
+void	rt_draw_smth(t_image *img, int i)
 {
 	int	u;
 	int	v;
@@ -58,12 +59,12 @@ void	rt_draw_smth(t_image *img)
 		while (--v >= 0)
 		{
 			red = (long)img % 256;
-			green = ((long)img + 85) % 256;
-			blue = ((long)img + 190) % 256;
+			green = ((long)img + 85 * i) % 256;
+			blue = ((long)img + 190 * i) % 256;
 			if (u > img->scene->width / 2)
-				red = ((long)img + 128) % 256;
+				red = ((long)img + 128 * i) % 256;
 			if (v > img->scene->height / 2)
-				green = ((long)img + 190) % 256;
+				green = ((long)img + 190 * i) % 256;
 			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
 		}
 	}
@@ -73,17 +74,34 @@ void	rt_init_camera_viewports(t_scene *scene)
 {
 	t_list 		*elem;
 	t_camera	*camera;
+	int			i;
 
+	i = 1;
 	elem = scene->cameras;
 	while (elem != NULL)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
-		rt_draw_smth(camera->viewport);
+		rt_draw_smth(camera->viewport, i++);
 		elem = elem->next;
 	}
-	if (scene->active_camera == NULL)
-		scene->active_camera = scene->cameras->content;
+	scene->active_camera = scene->cameras;
+}
+
+void	rt_switch_camera(t_scene *s)
+{
+	t_list		*elem;
+	t_camera	*camera;
+
+	if (s->cameras->next == NULL)
+		return ;
+	elem = s->active_camera->next;
+	if (elem == NULL)
+		elem = s->cameras;
+	s->active_camera = elem;
+	camera = s->active_camera->content;
+	mlx_clear_window(s->mlx, s->window);
+	mlx_put_image_to_window(s->mlx, s->window, camera->viewport->img, 0, 0);
 }
 
 void	rt_free_camera(void *data)

@@ -30,17 +30,21 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 {
 	if (keycode == KEY_Q || keycode == KEY_ESQ)
 		rt_on_close(scene);
+	else
+		rt_switch_camera(scene);
 	return (0);
 }
 
 void	rt_show_in_window(t_scene *s)
 {
+	t_camera	*camera;
+
 	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
 	mlx_clear_window(s->mlx, s->window);
-	mlx_put_image_to_window(s->mlx, s->window,
-							s->active_camera->viewport->img, 0, 0);
+	camera = s->active_camera->content;
+	mlx_put_image_to_window(s->mlx, s->window, camera->viewport->img, 0, 0);
 	mlx_hook(s->window, XEVENT_CLIENT_MESSAGE, XMASK_NO_EVENT, rt_on_close, s);
 	mlx_key_hook(s->window, rt_on_keypress, s);
 	mlx_loop(s->mlx);

@@ -40,7 +40,7 @@ typedef struct	s_scene
 	float		ambient;
 	t_color		ambient_color;
 	t_list		*cameras;
-	t_camera	*active_camera;
+	t_list		*active_camera;
 	t_list		*lights;
 	t_list		*objects;
 }				t_scene;
@@ -66,6 +66,7 @@ t_image			*rt_init_image(t_scene *scene);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 void			rt_put_pixel(t_image *img, int x, int y, int color);
+void			rt_switch_camera(t_scene *scene);
 
 void			rt_parse_config_line(const char *line, size_t lnum, t_scene *s);
 void			rt_parse_triplet(t_config_line *c, int ix, const char *sname);

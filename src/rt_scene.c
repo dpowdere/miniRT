@@ -57,15 +57,15 @@ void	rt_free_scene(t_scene *scene)
 		mlx_destroy_window(scene->mlx, scene->window);
 		scene->window = NULL;
 	}
+	scene->active_camera = NULL;
+	ft_lstclear(&scene->cameras, rt_free_camera);
+	ft_lstclear(&scene->lights, free);
+	ft_lstclear(&scene->objects, free);
 	if (scene->mlx != NULL)
 	{
 		mlx_destroy_display(scene->mlx);
 		scene->mlx = NULL;
 	}
-	scene->active_camera = NULL;
-	ft_lstclear(&scene->cameras, rt_free_camera);
-	ft_lstclear(&scene->lights, free);
-	ft_lstclear(&scene->objects, free);
 }
 
 void	rt_read_scene(int fd, t_scene *scene)
