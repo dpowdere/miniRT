@@ -39,15 +39,14 @@ typedef const enum	e_objtype
 	RT_TRIANGLE,
 }					t_objtype;
 
-typedef struct		s_scene
-					t_scene;
+typedef struct s_scene	t_scene;
 typedef struct		s_image
 {
 	void	*img;
 	char	*byte_array;
 	int		bytes_per_pixel;
 	int		bytes_per_line;
-	int		is_big_endian;
+	int		switch_endianness;
 	t_scene	*scene;
 }					t_image;
 

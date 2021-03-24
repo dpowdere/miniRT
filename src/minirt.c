@@ -33,13 +33,38 @@ int		rt_on_keypress(int keycode, t_scene *scene)
 	return (0);
 }
 
+void	rt_draw_smth(t_image *img)
+{
+	int	u;
+	int	v;
+	int	red;
+	int	green;
+	int	blue;
+
+	u = img->scene->width;
+	while (--u >= 0)
+	{
+		v = img->scene->height;
+		while (--v >= 0)
+		{
+			red = 0;
+			green = 0;
+			blue = 0;
+			if (u > img->scene->width / 2)
+				red = 255;
+			if (v > img->scene->height / 2)
+				green = 255;
+			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
+		}
+	}
+}
+
 void	rt_render_scene(t_scene *s)
 {
 	t_image *img;
 
 	img = rt_init_image(s);
-	rt_put_pixel(img, 10, 10, rt_get_color(255, 0, 0));
-	rt_put_pixel(img, 12, 10, rt_get_color(0, 255, 0));
+	rt_draw_smth(img);
 	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);

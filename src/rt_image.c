@@ -22,13 +22,15 @@ t_image	*rt_init_image(t_scene *s)
 {
 	t_image	*image;
 	int		bits_per_pixel;
+	int		is_big_endian;
 
 	if ((image = malloc(sizeof(t_image))) == NULL)
 		rt_xerror(s, RT_ERROR_XIMAGE, RT_ERROR_XIMAGE_MSG);
 	if ((image->img = mlx_new_image(s->mlx, s->width, s->height)) == NULL)
 		rt_xerror(s, RT_ERROR_XIMAGE, RT_ERROR_XIMAGE_MSG);
 	image->byte_array = mlx_get_data_addr(image->img, &bits_per_pixel,
-			&image->bytes_per_line, &image->is_big_endian);
+			&image->bytes_per_line, &is_big_endian);
+	image->switch_endianness = is_big_endian != ft_is_big_endian();
 	image->bytes_per_pixel = bits_per_pixel / 8 + (bits_per_pixel % 8 > 0);
 	image->scene = s;
 	return (image);
@@ -60,7 +62,7 @@ void	rt_put_pixel(t_image *img, int x, int y, int color)
 	i = -1;
 	a = 0;
 	b = 1;
-	if (img->is_big_endian != ft_is_big_endian())
+	if (img->switch_endianness)
 	{
 		a = img->bytes_per_pixel - 1;
 		b = -1;
