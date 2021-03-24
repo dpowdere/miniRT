@@ -61,10 +61,14 @@ int		main(int argc, char **argv)
 {
 	t_scene scene;
 
-	if (argc != 2)
+	if (argc < 2 || argc > 3 || (argc == 3 && ft_strcmp("--save", argv[2])))
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
 	scene = rt_init_scene();
 	rt_load_scene(argv[1], &scene);
-	rt_show_in_window(&scene);
+	//rt_render_scene(&scene);
+	if (argc == 3)
+		rt_save_as_bmp(&scene);
+	else
+		rt_show_in_window(&scene);
 	return (0);
 }

@@ -66,14 +66,15 @@ t_image			*rt_init_image(t_scene *scene);
 t_scene			rt_init_scene(void);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 void			rt_put_pixel(t_image *img, int x, int y, int color);
+void			rt_render_scene(t_scene *scene);
+void			rt_save_as_bmp(t_scene *scene);
 void			rt_switch_camera(t_scene *scene);
 
+t_color			rt_parse_color(t_config_line *c, int ix, const char *sname);
 void			rt_parse_config_line(const char *line, size_t lnum, t_scene *s);
+double			rt_parse_float(t_config_line *c, int ix, const char *sname);
 void			rt_parse_triplet(t_config_line *c, int ix, const char *sname);
 void			rt_parse_type(t_config_line *c);
-
-t_color			rt_parse_color(t_config_line *c, int ix, const char *sname);
-double			rt_parse_float(t_config_line *c, int ix, const char *sname);
 t_vector		rt_parse_vector(t_config_line *c, int ix, const char *sname,
 								int should_be_normalized);
 
