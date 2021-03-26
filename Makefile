@@ -65,7 +65,7 @@ OBJDIR := .tmp
 OBJLST := $(addprefix $(OBJDIR)/,$(OBJS))
 DEPLST := $(addprefix $(OBJDIR)/,$(DEPS))
 
-VPATH := $(OBJDIR):$(SRCDIR):$(INCDIR):.
+VPATH := $(OBJDIR):$(SRCDIR):$(INCDIR)
 
 CC			:=	gcc
 CPPFLAGS	=	-MMD -MP -MT $@ -I$(INCDIR) -I$(LIBX) -I$(LIBFT)
@@ -76,12 +76,19 @@ ifdef ON_LINUX
   LDLIBS := -lm -lft -lmlx -lXext -lX11
 endif
 ifdef DEBUG
+  CPPFLAGS += -DDEBUG=1
   CFLAGS += -g3
+  LDFLAGS += -g3
+endif
+
+OPEN := open
+ifdef ON_LINUX
+  OPEN := xdg-open
 endif
 
 $(shell mkdir -p $(OBJDIR))
 
-.PHONY: all clean fclean norm re run
+.PHONY: all clean debug fclean norm re run save
 
 $(NAME): $(OBJS) .ft .mlx
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
@@ -106,12 +113,19 @@ clean:
 	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
-	$(RM) $(NAME) *.dSYM
+	$(RM) $(NAME) *.dSYM *.bmp
 
 re: fclean all
 
 run: all
-	./miniRT assets/subject.rt
+	./$(NAME) assets/subject.rt
+
+save: all
+	./$(NAME) assets/subject.rt --save
+	$(OPEN) view_1.bmp
+
+debug:
+	test $(NAME) -nt core && gdb ./$(NAME) || gdb ./$(NAME) core
 
 norm:
 	~/norm.sh $(SRCDIR) $(INCDIR)

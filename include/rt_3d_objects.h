@@ -13,6 +13,9 @@
 #ifndef RT_3D_OBJECTS_H
 # define RT_3D_OBJECTS_H
 
+# define BITS_PER_PIXEL		24
+# define BYTES_PER_PIXEL	3
+
 typedef struct		s_color
 {
 	int red;

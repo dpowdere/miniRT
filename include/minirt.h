@@ -21,18 +21,13 @@
 # include "rt_3d_objects.h"
 # include "rt_errors.h"
 
-# define UNDEFINED	-1
-
-# ifdef __APPLE__
-#  define RT_O_FLAGS	O_RDONLY | O_SYMLINK
-# elif __linux__
-#  define RT_O_FLAGS	O_RDONLY
-# else
-#  define RT_O_FLAGS	O_RDONLY
+# ifndef DEBUG
+#  define DEBUG	0
 # endif
 
 typedef struct	s_scene
 {
+	int			save;
 	void		*mlx;
 	void		*window;
 	int			width;
@@ -63,7 +58,7 @@ void			rt_free_image(void *image);
 void			rt_free_scene(t_scene *scene);
 void			rt_init_camera_viewports(t_scene *scene);
 t_image			*rt_init_image(t_scene *scene);
-t_scene			rt_init_scene(void);
+t_scene			rt_init_scene(int save);
 void			rt_load_scene(const char *pathname, t_scene *scene);
 void			rt_put_pixel(t_image *img, int x, int y, int color);
 void			rt_render_scene(t_scene *scene);
@@ -95,5 +90,18 @@ void			rt_perror(void *info, t_infotype infotype);
 void			rt_scheme_error(void *info, t_infotype infotype,
 						const char *scope_name, const char *error_msg);
 void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
+
+# ifdef __APPLE__
+#  define RT_O_RDONLY			O_RDONLY | O_SYMLINK
+#  define DESTROY_XDISPLAY(x)	()
+# elif __linux__
+#  define RT_O_RDONLY			O_RDONLY
+#  define DESTROY_XDISPLAY(x)	mlx_destroy_display(x)
+# else
+#  define RT_O_RDONLY			O_RDONLY
+#  define DESTROY_XDISPLAY(x)	()
+# endif
+
+# define UNDEFINED	-1
 
 #endif

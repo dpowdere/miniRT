@@ -29,10 +29,11 @@
 
 #include "minirt.h"
 
-t_scene	rt_init_scene(void)
+t_scene	rt_init_scene(int save)
 {
 	t_scene scene;
 
+	scene.save = save;
 	scene.mlx = mlx_init();
 	if (scene.mlx == NULL)
 		rt_error(RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
@@ -63,7 +64,7 @@ void	rt_free_scene(t_scene *scene)
 	ft_lstclear(&scene->objects, free);
 	if (scene->mlx != NULL)
 	{
-		mlx_destroy_display(scene->mlx);
+		DESTROY_XDISPLAY(scene->mlx);
 		scene->mlx = NULL;
 	}
 }
@@ -116,7 +117,7 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
-	if ((fd = open(pathname, RT_O_FLAGS)) == -1)
+	if ((fd = open(pathname, RT_O_RDONLY)) == -1)
 		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)

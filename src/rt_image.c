@@ -18,16 +18,46 @@
 
 #include "minirt.h"
 
+#define BYTES_PER_PIXEL	3
+#define DIB_BYTE_FACTOR	4
+
+t_image	*rt_init_dib(t_scene *s)
+{
+	t_image	*image;
+	int		bytes_per_line;
+
+	if ((image = malloc(sizeof(t_image))) == NULL)
+		rt_perror(s, RT_SCENE);
+	image->img = NULL;
+	bytes_per_line = BYTES_PER_PIXEL * s->width;
+	bytes_per_line += DIB_BYTE_FACTOR * (bytes_per_line % DIB_BYTE_FACTOR > 0);
+	if ((image->byte_array = malloc(bytes_per_line * s->height)) == NULL)
+	{
+		free(image);
+		rt_perror(s, RT_SCENE);
+	}
+	image->bytes_per_line = bytes_per_line;
+	image->switch_endianness = ft_is_big_endian();
+	image->bytes_per_pixel = BYTES_PER_PIXEL;
+	image->scene = s;
+	return (image);
+}
+
 t_image	*rt_init_image(t_scene *s)
 {
 	t_image	*image;
 	int		bits_per_pixel;
 	int		is_big_endian;
 
+	if (s->save)
+		return (rt_init_dib(s));
 	if ((image = malloc(sizeof(t_image))) == NULL)
-		rt_xerror(s, RT_ERROR_XIMAGE, RT_ERROR_XIMAGE_MSG);
+		rt_perror(s, RT_SCENE);
 	if ((image->img = mlx_new_image(s->mlx, s->width, s->height)) == NULL)
+	{
+		free(image);
 		rt_xerror(s, RT_ERROR_XIMAGE, RT_ERROR_XIMAGE_MSG);
+	}
 	image->byte_array = mlx_get_data_addr(image->img, &bits_per_pixel,
 			&image->bytes_per_line, &is_big_endian);
 	image->switch_endianness = is_big_endian != ft_is_big_endian();
@@ -38,17 +68,29 @@ t_image	*rt_init_image(t_scene *s)
 
 void	rt_free_image(void *img)
 {
+	t_image	*image;
 	void	*mlx_ptr;
 	void	*img_ptr;
-	t_image	*image;
 
+	if (img == NULL)
+		return ;
 	image = (t_image *)img;
-	mlx_ptr = image->scene->mlx;
-	img_ptr = image->img;
-	image->byte_array = NULL;
+	if (!image->scene->save)
+	{
+		mlx_ptr = image->scene->mlx;
+		img_ptr = image->img;
+		image->byte_array = NULL;
+		mlx_destroy_image(mlx_ptr, img_ptr);
+	}
+	else
+	{
+		if (image->byte_array != NULL)
+			free(image->byte_array);
+		image->byte_array = NULL;
+	}
 	image->img = NULL;
 	image->scene = NULL;
-	mlx_destroy_image(mlx_ptr, img_ptr);
+	free(img);
 }
 
 void	rt_put_pixel(t_image *img, int x, int y, int color)
@@ -67,7 +109,9 @@ void	rt_put_pixel(t_image *img, int x, int y, int color)
 		a = img->bytes_per_pixel - 1;
 		b = -1;
 	}
-	prepared_color = mlx_get_color_value(img->scene->mlx, color);
+	prepared_color = color;
+	if (!img->scene->save)
+		prepared_color = mlx_get_color_value(img->scene->mlx, color);
 	px = img->byte_array + y * img->bytes_per_line + x * img->bytes_per_pixel;
 	while (++i < img->bytes_per_pixel)
 		px[a + i * b] = *((char *)&prepared_color + i);

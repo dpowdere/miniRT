@@ -33,13 +33,16 @@ void	rt_parse_config_line(const char *line, size_t line_num, t_scene *scene)
 	config_line.scene = scene;
 	if (config_line.n_segments > 0)
 	{
-		printf(">>>");
-		while (config_line.segments[i])
+		if (DEBUG)
 		{
-			printf(" %s", config_line.segments[i]);
-			++i;
+			printf(">>>");
+			while (config_line.segments[i])
+			{
+				printf(" %s", config_line.segments[i]);
+				++i;
+			}
+			printf("\n");
 		}
-		printf("\n");
 		rt_parse_type(&config_line);
 	}
 	rt_config_line_regular_free(&config_line);
