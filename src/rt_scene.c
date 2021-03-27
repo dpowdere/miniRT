@@ -33,10 +33,13 @@ t_scene	rt_init_scene(int save)
 {
 	t_scene scene;
 
-	scene.save = save;
-	scene.mlx = mlx_init();
-	if (scene.mlx == NULL)
-		rt_error(RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	scene.mlx = NULL;
+	if (!save)
+	{
+		scene.mlx = mlx_init();
+		if (scene.mlx == NULL)
+			rt_error(RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	}
 	scene.window = NULL;
 	scene.width = UNDEFINED;
 	scene.height = UNDEFINED;
@@ -89,9 +92,6 @@ void	rt_read_scene(int fd, t_scene *scene)
 
 void	rt_check_scene(t_scene *scene)
 {
-	int	screen_width;
-	int	screen_height;
-
 	if (scene->width == UNDEFINED || scene->height == UNDEFINED)
 		rt_scheme_error(scene, RT_SCENE, NULL, "No resolution is specified");
 	if (isnan(scene->ambient))
@@ -102,12 +102,7 @@ void	rt_check_scene(t_scene *scene)
 	if (scene->objects == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL,
 						"There is no geometric object in the scene");
-	if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
-		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
-	if (scene->width > screen_width)
-		scene->width = screen_width;
-	if (scene->height > screen_height)
-		scene->height = screen_height;
+	rt_tweak_resolution(scene);
 	rt_init_camera_viewports(scene);
 }
 
@@ -122,5 +117,4 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)
 		rt_perror((void *)scene, RT_SCENE);
-	rt_check_scene(scene);
 }

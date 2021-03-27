@@ -61,9 +61,9 @@ void	rt_draw_smth(t_image *img, int i)
 			red = (long)img % 256;
 			green = ((long)img + 85 * i) % 256;
 			blue = ((long)img + 190 * i) % 256;
-			if (u > img->scene->width / 2)
+			if (u > img->scene->width / 4)
 				red = ((long)img + 128 * i) % 256;
-			if (v > img->scene->height / 2)
+			if (v > img->scene->height / 4)
 				green = ((long)img + 190 * i) % 256;
 			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
 		}

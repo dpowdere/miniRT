@@ -49,7 +49,7 @@ t_image	*rt_init_image(t_scene *s)
 	int		bits_per_pixel;
 	int		is_big_endian;
 
-	if (s->save)
+	if (s->mlx == NULL)
 		return (rt_init_dib(s));
 	if ((image = malloc(sizeof(t_image))) == NULL)
 		rt_perror(s, RT_SCENE);
@@ -75,7 +75,7 @@ void	rt_free_image(void *img)
 	if (img == NULL)
 		return ;
 	image = (t_image *)img;
-	if (!image->scene->save)
+	if (image->scene->mlx != NULL)
 	{
 		mlx_ptr = image->scene->mlx;
 		img_ptr = image->img;
@@ -110,7 +110,7 @@ void	rt_put_pixel(t_image *img, int x, int y, int color)
 		b = -1;
 	}
 	prepared_color = color;
-	if (!img->scene->save)
+	if (img->scene->mlx != NULL)
 		prepared_color = mlx_get_color_value(img->scene->mlx, color);
 	px = img->byte_array + y * img->bytes_per_line + x * img->bytes_per_pixel;
 	while (++i < img->bytes_per_pixel)

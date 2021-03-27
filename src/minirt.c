@@ -65,8 +65,9 @@ int		main(int argc, char **argv)
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
 	scene = rt_init_scene(argc == 3);
 	rt_load_scene(argv[1], &scene);
+	rt_check_scene(&scene);
 	//rt_render_scene(&scene);
-	if (scene.save)
+	if (scene.mlx == NULL)
 		rt_save_to_bmp_files(&scene);
 	else
 		rt_show_in_window(&scene);

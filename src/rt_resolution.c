@@ -12,6 +12,7 @@
 
 #include <stddef.h>
 
+#include <mlx.h>
 #include <libft.h>
 
 #include "minirt.h"
@@ -38,4 +39,22 @@ void	rt_parse_resolution(t_config_line *c)
 	if (*endptr != '\0' || height < 1)
 		rt_parsing_error(c, "Resolution height", "Invalid value");
 	c->scene->height = height;
+}
+
+void	rt_tweak_resolution(t_scene *scene)
+{
+	int screen_width;
+	int screen_height;
+
+	if (scene->mlx == NULL)
+	{
+		screen_width = 8192;
+		screen_height = 8192;
+	}
+	else if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
+		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	if (scene->width > screen_width)
+		scene->width = screen_width;
+	if (scene->height > screen_height)
+		scene->height = screen_height;
 }
