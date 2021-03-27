@@ -113,7 +113,7 @@ clean:
 	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
-	$(RM) $(NAME) *.dSYM *.bmp
+	$(RM) $(NAME) *.dSYM core* *.bmp
 
 re: fclean all
 

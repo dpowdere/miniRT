@@ -82,7 +82,7 @@ char	*rt_init_header(t_scene *scene)
 	*(uint32_t *)(mem + SH_BMP_FILESIZE) = file_size;
 	*(uint32_t *)(mem + SH_BMP_RESERVED) = 0;
 	*(uint32_t *)(mem + SH_BMP_DATAOFFSET) = BMP_HEADER_SIZE + DIB_HEADER_SIZE;
-	rt_dib_bitmapinfoheader(mem, scene);
+	RT_DIB_HEADER(mem, scene);
 	return (mem);
 }
 

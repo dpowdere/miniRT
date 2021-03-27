@@ -21,11 +21,13 @@
 ** formats instead.
 */
 
+# define RT_DIB_HEADER			rt_dib_bitmapcoreheader
+# define DIB_HEADER_SIZE		BITMAPCOREHEADER_SIZE
+
 # define DIB_BYTE_FACTOR		4
 # define PIXELS_PER_METER		10000
 
 # define BMP_HEADER_SIZE		14
-# define DIB_HEADER_SIZE		BITMAPINFOHEADER_SIZE
 
 # define BITMAPCOREHEADER_SIZE	12
 # define BITMAPINFOHEADER_SIZE	40

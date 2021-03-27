@@ -17,20 +17,20 @@
 #include <libft.h>
 
 #include "minirt.h"
-
-#define BYTES_PER_PIXEL	3
-#define DIB_BYTE_FACTOR	4
+#include "rt_bmp.h"
 
 t_image	*rt_init_dib(t_scene *s)
 {
 	t_image	*image;
 	int		bytes_per_line;
+	int		antipad;
 
 	if ((image = malloc(sizeof(t_image))) == NULL)
 		rt_perror(s, RT_SCENE);
 	image->img = NULL;
 	bytes_per_line = BYTES_PER_PIXEL * s->width;
-	bytes_per_line += DIB_BYTE_FACTOR * (bytes_per_line % DIB_BYTE_FACTOR > 0);
+	antipad = bytes_per_line % DIB_BYTE_FACTOR;
+	bytes_per_line += DIB_BYTE_FACTOR * (antipad > 0) - antipad;
 	if ((image->byte_array = malloc(bytes_per_line * s->height)) == NULL)
 	{
 		free(image);
