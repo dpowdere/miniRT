@@ -94,13 +94,13 @@ void			rt_xerror(t_scene *s, int error_code, const char *error_msg);
 
 # ifdef __APPLE__
 #  define RT_O_RDONLY			O_RDONLY | O_SYMLINK
-#  define DESTROY_XDISPLAY(x)	()
+#  define DESTROY_XDISPLAY(x)	NULL
 # elif __linux__
 #  define RT_O_RDONLY			O_RDONLY
 #  define DESTROY_XDISPLAY(x)	mlx_destroy_display(x)
 # else
 #  define RT_O_RDONLY			O_RDONLY
-#  define DESTROY_XDISPLAY(x)	()
+#  define DESTROY_XDISPLAY(x)	NULL
 # endif
 
 # define UNDEFINED	-1
