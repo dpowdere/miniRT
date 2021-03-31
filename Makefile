@@ -88,7 +88,7 @@ endif
 
 $(shell mkdir -p $(OBJDIR))
 
-.PHONY: all clean debug fclean norm re run save
+.PHONY: all clean debug deps-install-linux fclean norm re run save
 
 $(NAME): $(OBJS) .ft .mlx
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
@@ -118,10 +118,10 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) assets/subject.rt
+	./$(NAME) assets/sphere.rt
 
 save: all
-	./$(NAME) assets/subject.rt --save
+	./$(NAME) assets/sphere.rt --save
 	$(OPEN) view_1.bmp
 
 debug:
@@ -132,5 +132,8 @@ norm:
 #	norminette -R CheckForbiddenSourceHeader $(SRCDIR) $(INCDIR)
 #	norminette -R CheckDefine $(SRCDIR) $(INCDIR)
 #	norminette $(SRCDIR) $(INCDIR)
+
+deps-install-linux:
+	sudo apt-get install gcc make xorg libxext-dev libbsd-dev
 
 -include $(DEPLST)
