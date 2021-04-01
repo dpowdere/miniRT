@@ -38,11 +38,11 @@ t_x	rt_get_nearest_intersection(t_point origin, t_x x1, t_x x2)
 	return (x2);
 }
 
-t_x	rt_get_intersection(t_point origin, t_vector ray, void *object)
+t_x	rt_get_intersection(t_point origin, t_point direction, void *object)
 {
 	const t_otype objtype = (t_objtype)((t_object *)object)->type;
 
 	if (objtype == RT_SPHERE)
-		return (rt_sphere_intersection(origin, ray, object));
+		return (rt_sphere_intersection(origin, direction, object));
 	return (rt_get_no_intersection(object));
 }

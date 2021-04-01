@@ -13,10 +13,10 @@
 #ifndef RT_3D_OBJECTS_H
 # define RT_3D_OBJECTS_H
 
+# include "rt_common.h"
+
 # define BITS_PER_PIXEL		24
 # define BYTES_PER_PIXEL	3
-
-typedef float		t_float;
 
 typedef struct		s_color
 {
@@ -125,11 +125,11 @@ typedef struct		s_triangle
 	t_color		color;
 }					t_triangle;
 
-typedef struct	s_intersection
+typedef struct		s_intersection
 {
 	void		*object;
 	t_point		point;
-}				t_x;
+}					t_x;
 
 typedef t_x			(*t_xfunc)();
 typedef t_color		(*t_cfunc)();

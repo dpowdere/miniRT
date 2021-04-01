@@ -18,7 +18,9 @@
 
 # include <libft.h>
 
+# include "rt_common.h"
 # include "rt_3d_objects.h"
+# include "rt_quadratic.h"
 # include "rt_errors.h"
 
 # ifndef DEBUG
@@ -50,7 +52,6 @@ typedef struct	s_config_line
 	size_t				line_num;
 	size_t				n_segments;
 }				t_config_line;
-
 
 void			rt_check_scene(t_scene *scene);
 int32_t			rt_color_channels_to_int(int red, int green, int blue);
@@ -89,17 +90,22 @@ void			rt_parse_sphere(t_config_line *cline);
 void			rt_parse_square(t_config_line *cline);
 void			rt_parse_triangle(t_config_line *cline);
 
+t_vector		vt_add(t_vector a, t_vector b);
 t_scalar		vt_distance(t_point p1, t_point p2);
 t_vector		vt_init(t_float x, t_float y, t_float z);
 int				vt_isequal(t_vector a, t_vector b);
 int				vt_isinf(t_vector v);
+t_vector		vt_inv(t_vector v);
 t_scalar		vt_magnitude(t_vector v);
+t_vector		vt_mul_cross(t_vector v, t_vector w);
+t_scalar		vt_mul_dot(t_vector v, t_vector w);
+t_vector		vt_mul_sc(t_vector v, t_scalar k);
 t_vector		vt_normalize(t_vector v);
 
-t_x				rt_get_intersection(t_point origin, t_vector ray, void *obj);
+t_x				rt_get_intersection(t_point origin, t_point dir, void *obj);
 t_x				rt_get_nearest_intersection(t_point origin, t_x x1, t_x x2);
 t_x				rt_get_no_intersection(void *obj);
-t_x				rt_sphere_intersection(t_point o, t_vector ray, t_sphere *sp);
+t_x				rt_sphere_intersection(t_point o, t_point d, t_sphere *sp);
 
 t_color			rt_get_color(t_x intersection);
 t_color			rt_sphere_color(t_x intersection);

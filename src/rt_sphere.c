@@ -38,11 +38,11 @@ void	rt_parse_sphere(t_config_line *c)
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
 
-t_x		rt_sphere_intersection(t_point origin, t_vector ray, t_sphere *sp)
+t_x		rt_sphere_intersection(t_point origin, t_point direction, t_sphere *sp)
 {
-	(void)origin;
-	(void)ray;
-	(void)sp;
+	const t_vector	dir = vt_add(direction, vt_inv(origin));
+
+	(void)dir;
 	return (rt_get_no_intersection(sp));
 }
 
