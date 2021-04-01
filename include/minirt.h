@@ -31,12 +31,14 @@ typedef struct	s_scene
 	void		*window;
 	int			width;
 	int			height;
-	float		ambient;
+	t_float		ambient;
 	t_color		ambient_color;
 	t_list		*cameras;
 	t_list		*active_camera;
 	t_list		*lights;
 	t_list		*objects;
+	t_xfunc		xfunctions[NUM_DENSE_OBJECTS];
+	t_cfunc		cfunctions[NUM_DENSE_OBJECTS];
 }				t_scene;
 
 typedef struct	s_config_line
@@ -49,13 +51,16 @@ typedef struct	s_config_line
 	size_t				n_segments;
 }				t_config_line;
 
+
 void			rt_check_scene(t_scene *scene);
+int32_t			rt_color_channels_to_int(int red, int green, int blue);
+int32_t			rt_color_to_int(t_color c);
 void			rt_config_line_regular_free(t_config_line *cline);
 void			rt_config_line_emergency_free(t_config_line *cline);
-int32_t			rt_get_color(int red, int green, int blue);
 void			rt_free_camera(void *camera);
 void			rt_free_image(void *image);
 void			rt_free_scene(t_scene *scene);
+t_color			rt_init_color(int red, int green, int blue);
 void			rt_init_camera_viewports(t_scene *scene);
 t_image			*rt_init_image(t_scene *scene);
 t_scene			rt_init_scene(int save);
@@ -83,6 +88,21 @@ void			rt_parse_resolution(t_config_line *cline);
 void			rt_parse_sphere(t_config_line *cline);
 void			rt_parse_square(t_config_line *cline);
 void			rt_parse_triangle(t_config_line *cline);
+
+t_scalar		vt_distance(t_point p1, t_point p2);
+t_vector		vt_init(t_float x, t_float y, t_float z);
+int				vt_isequal(t_vector a, t_vector b);
+int				vt_isinf(t_vector v);
+t_scalar		vt_magnitude(t_vector v);
+t_vector		vt_normalize(t_vector v);
+
+t_x				rt_get_intersection(t_point origin, t_vector ray, void *obj);
+t_x				rt_get_nearest_intersection(t_point origin, t_x x1, t_x x2);
+t_x				rt_get_no_intersection(void *obj);
+t_x				rt_sphere_intersection(t_point o, t_vector ray, t_sphere *sp);
+
+t_color			rt_get_color(t_x intersection);
+t_color			rt_sphere_color(t_x intersection);
 
 void			rt_error(int error_code, const char *error_msg);
 void			rt_parsing_error(t_config_line *cline,

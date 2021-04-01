@@ -20,9 +20,12 @@ SRCS := \
 	rt_error.c \
 	rt_free.c \
 	rt_image.c \
+	rt_intersection.c \
 	rt_parse.c \
 	rt_parse_config_line.c \
+	rt_render.c \
 	rt_scene.c \
+	rt_vectors.c \
 \
 	rt_ambient.c \
 	rt_camera.c \

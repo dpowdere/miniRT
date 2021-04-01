@@ -65,7 +65,7 @@ void	rt_draw_smth(t_image *img, int i)
 				red = ((long)img + 128 * i) % 256;
 			if (v > img->scene->height / 4)
 				green = ((long)img + 190 * i) % 256;
-			rt_put_pixel(img, u, v, rt_get_color(red, green, blue));
+			rt_put_pixel(img, u, v, rt_color_channels_to_int(red, green, blue));
 		}
 	}
 }
@@ -74,15 +74,15 @@ void	rt_init_camera_viewports(t_scene *scene)
 {
 	t_list		*elem;
 	t_camera	*camera;
-	int			i;
+	//int			i;
 
-	i = 1;
+	//i = 1;
 	elem = scene->cameras;
 	while (elem != NULL)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
-		rt_draw_smth(camera->viewport, i++);
+		//rt_draw_smth(camera->viewport, i++);
 		elem = elem->next;
 	}
 	scene->active_camera = scene->cameras;

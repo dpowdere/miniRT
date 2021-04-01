@@ -60,6 +60,7 @@ t_image	*rt_init_image(t_scene *s)
 	}
 	image->byte_array = mlx_get_data_addr(image->img, &bits_per_pixel,
 			&image->bytes_per_line, &is_big_endian);
+	ft_memset(image->byte_array, 0, image->bytes_per_line * s->height);
 	image->switch_endianness = is_big_endian != ft_is_big_endian();
 	image->bytes_per_pixel = bits_per_pixel / 8 + (bits_per_pixel % 8 > 0);
 	image->scene = s;

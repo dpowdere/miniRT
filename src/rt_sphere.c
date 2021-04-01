@@ -37,3 +37,17 @@ void	rt_parse_sphere(t_config_line *c)
 	}
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
+
+t_x		rt_sphere_intersection(t_point origin, t_vector ray, t_sphere *sp)
+{
+	(void)origin;
+	(void)ray;
+	(void)sp;
+	return (rt_get_no_intersection(sp));
+}
+
+t_color	rt_sphere_color(t_x x)
+{
+	(void)x;
+	return (rt_init_color(0, 0, 0));
+}
