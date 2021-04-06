@@ -40,7 +40,7 @@ typedef t_float		t_scalar;
 
 typedef enum		e_otype
 {
-	RT_CYLINDER,
+	RT_CYLINDER = 1,
 	RT_PLANE,
 	RT_SPHERE,
 	RT_SQUARE,
@@ -67,6 +67,8 @@ typedef struct		s_camera
 	t_vector	orientation;
 	t_float		view_angle;
 	t_image		*viewport;
+	t_float		width;
+	t_float		height;
 }					t_camera;
 
 typedef struct		s_light

@@ -12,6 +12,7 @@
 
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #include "minirt.h"
 
@@ -22,7 +23,10 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 	t_x			nearest_intersection;
 	t_list		*elem;
 
-	local_ray = vt_init(scene->width / 2.0 + u, scene->height / 2.0 - v, 1.0);
+	local_ray = vt_init(
+			u / (t_float)scene->width * camera->width - camera->width / 2.0,
+			camera->height / 2.0 - v / (t_float)scene->height * camera->height,
+			1.0);
 	nearest_intersection = rt_get_no_intersection(NULL);
 	elem = scene->objects;
 	while (elem)
@@ -33,6 +37,10 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 				camera->location, nearest_intersection, intersection);
 		elem = elem->next;
 	}
+	if (DEBUG && !vt_isinf(nearest_intersection.point))
+		printf("%d %d: %p (%g, %g, %g)\n", u, v, nearest_intersection.object,
+			nearest_intersection.point.x, nearest_intersection.point.y,
+			nearest_intersection.point.z);
 	return (rt_get_color(nearest_intersection));
 }
 

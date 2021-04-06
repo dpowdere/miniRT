@@ -51,8 +51,11 @@ t_color				rt_init_color(int red, int green, int blue)
 
 t_color				rt_get_color(t_x intersection)
 {
-	const t_otype objtype = (t_objtype)((t_object *)intersection.object)->type;
+	t_otype objtype;
 
+	if (intersection.object == NULL)
+		return (rt_init_color(0, 0, 0));
+	objtype = (t_objtype)((t_object *)intersection.object)->type;
 	if (objtype == RT_SPHERE)
 		return (rt_sphere_color(intersection));
 	return (rt_init_color(0, 0, 0));

@@ -98,3 +98,12 @@ t_vector	vt_mul_cross(t_vector v, t_vector w)
 	r.z = v.x * w.y - v.y * w.x;
 	return (r);
 }
+
+/*
+** Convert degrees to radians
+*/
+
+t_float		vt_rad(t_float deg)
+{
+	return (deg / 180 * PI);
+}

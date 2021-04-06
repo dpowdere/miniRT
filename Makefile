@@ -23,6 +23,7 @@ SRCS := \
 	rt_intersection.c \
 	rt_parse.c \
 	rt_parse_config_line.c \
+	rt_quadratic.c \
 	rt_render.c \
 	rt_scene.c \
 	rt_vectors.c \

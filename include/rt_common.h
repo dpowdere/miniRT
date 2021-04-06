@@ -15,4 +15,7 @@
 
 typedef float	t_float;
 
+# define TAN	tanf
+# define PI		acosf(-1.0)
+
 #endif

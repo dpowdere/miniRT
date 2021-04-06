@@ -17,9 +17,12 @@
 
 typedef struct	s_quadratic_equation_roots
 {
-	int		n;
-	t_float	a;
-	t_float	b;
+	t_float	discriminant;
+	t_float	root1;
+	t_float	root2;
 }				t_roots;
+
+t_float			rt_get_quadratic_root(t_roots r);
+t_roots			rt_quadratic_equation(t_float a, t_float b, t_float c);
 
 #endif

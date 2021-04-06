@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -36,6 +37,8 @@ void	rt_parse_camera(t_config_line *c)
 		rt_scheme_error(c, RT_CONFIG_LINE,
 						NM, "View angle must be in the range (0, 180]");
 	camera->viewport = NULL;
+	camera->width = NAN;
+	camera->height = NAN;
 	if ((list_element = ft_lstnew(camera)) == NULL)
 	{
 		free(camera);
@@ -54,6 +57,8 @@ void	rt_init_camera_viewports(t_scene *scene)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
+		camera->width = TAN(vt_rad(camera->view_angle / 2)) * 2;
+		camera->height = camera->width / scene->width * scene->height;
 		elem = elem->next;
 	}
 	scene->active_camera = scene->cameras;

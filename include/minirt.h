@@ -39,8 +39,6 @@ typedef struct	s_scene
 	t_list		*active_camera;
 	t_list		*lights;
 	t_list		*objects;
-	t_xfunc		xfunctions[NUM_DENSE_OBJECTS];
-	t_cfunc		cfunctions[NUM_DENSE_OBJECTS];
 }				t_scene;
 
 typedef struct	s_config_line
@@ -101,6 +99,7 @@ t_vector		vt_mul_cross(t_vector v, t_vector w);
 t_scalar		vt_mul_dot(t_vector v, t_vector w);
 t_vector		vt_mul_sc(t_vector v, t_scalar k);
 t_vector		vt_normalize(t_vector v);
+t_float			vt_rad(t_float deg);
 
 t_x				rt_get_intersection(t_point origin, t_point dir, void *obj);
 t_x				rt_get_nearest_intersection(t_point origin, t_x x1, t_x x2);
