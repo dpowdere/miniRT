@@ -62,7 +62,7 @@ t_color	rt_sphere_color(t_x x)
 {
 	const t_sphere	*sp = x.object;
 
-	if (sp)
+	if (sp != NULL && !vt_isinf(x.point))
 		return (sp->color);
 	return (rt_init_color(0, 0, 0));
 }
