@@ -27,7 +27,7 @@ void	rt_parse_cylinder(t_config_line *c)
 	if ((cy = (t_cylinder *)malloc(sizeof(t_cylinder))) == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&cy->type = RT_CYLINDER;
-	cy->location = rt_parse_vector(c, 1, "Cylinder location", NON_NORMALIZED);
+	cy->origin = rt_parse_vector(c, 1, "Cylinder origin", NON_NORMALIZED);
 	cy->orientation = rt_parse_vector(c, 2, "Cylinder orientation", NORMALIZED);
 	cy->diameter = rt_parse_float(c, 3, "Cylinder diameter");
 	cy->height = rt_parse_float(c, 4, "Cylinder height");

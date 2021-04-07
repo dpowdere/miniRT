@@ -126,7 +126,7 @@ run: all
 
 save: all
 	./$(NAME) assets/sphere.rt --save
-	$(OPEN) view_1.bmp
+	ls *.bmp | xargs -L1 $(OPEN)
 
 debug:
 	test $(NAME) -nt core && gdb ./$(NAME) || gdb ./$(NAME) core

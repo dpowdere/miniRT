@@ -28,7 +28,7 @@ void	rt_parse_light(t_config_line *c)
 		rt_parsing_error(c, NM, "Wrong number of arguments");
 	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
-	light->location = rt_parse_vector(c, 1, NM " location", NON_NORMALIZED);
+	light->origin = rt_parse_vector(c, 1, NM " origin", NON_NORMALIZED);
 	light->intensity = rt_parse_float(c, 2, NM " intensity");
 	if (light->intensity < 0.0 || light->intensity > 1.0)
 		rt_scheme_error(c, RT_CONFIG_LINE,

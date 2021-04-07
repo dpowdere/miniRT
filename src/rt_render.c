@@ -18,30 +18,25 @@
 
 t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 {
-	t_vector	local_ray;
-	t_x			intersection;
-	t_x			nearest_intersection;
-	t_list		*elem;
+	t_ray	local_ray;
+	t_x		xx;
+	t_x		nearest_xx;
+	t_list	*elem;
 
-	local_ray = vt_init(
+	local_ray.origin = camera->origin;
+	local_ray.orientation = vt_normalize(vt_init(
 			u / (t_float)scene->width * camera->width - camera->width / 2.0,
 			camera->height / 2.0 - v / (t_float)scene->height * camera->height,
-			1.0);
-	nearest_intersection = rt_get_no_intersection(NULL);
+			1.0));
+	nearest_xx = rt_get_no_intersection(local_ray, NULL);
 	elem = scene->objects;
 	while (elem)
 	{
-		intersection = rt_get_intersection(
-				camera->location, local_ray, elem->content);
-		nearest_intersection = rt_get_nearest_intersection(
-				camera->location, nearest_intersection, intersection);
+		xx = rt_get_intersection(local_ray, elem->content);
+		nearest_xx = rt_get_nearest_intersection(nearest_xx, xx);
 		elem = elem->next;
 	}
-	if (DEBUG && !vt_isinf(nearest_intersection.point))
-		printf("%d %d: %p (%g, %g, %g)\n", u, v, nearest_intersection.object,
-			nearest_intersection.point.x, nearest_intersection.point.y,
-			nearest_intersection.point.z);
-	return (rt_get_color(nearest_intersection));
+	return (rt_get_color(nearest_xx, scene));
 }
 
 void	rt_render_viewport(t_camera *camera, t_scene *scene)

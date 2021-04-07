@@ -38,6 +38,12 @@ typedef t_float		t_scalar;
 # define NORMALIZED		1
 # define NON_NORMALIZED	0
 
+typedef struct		s_ray
+{
+	t_point		origin;
+	t_vector	orientation;
+}					t_ray;
+
 typedef enum		e_otype
 {
 	RT_CYLINDER = 1,
@@ -63,7 +69,7 @@ typedef struct		s_image
 
 typedef struct		s_camera
 {
-	t_vector	location;
+	t_vector	origin;
 	t_vector	orientation;
 	t_float		view_angle;
 	t_image		*viewport;
@@ -73,7 +79,7 @@ typedef struct		s_camera
 
 typedef struct		s_light
 {
-	t_vector	location;
+	t_vector	origin;
 	t_float		intensity;
 	t_color		color;
 }					t_light;
@@ -86,7 +92,7 @@ typedef struct		s_object
 typedef struct		s_cylinder
 {
 	t_objtype	type;
-	t_vector	location;
+	t_vector	origin;
 	t_vector	orientation;
 	t_float		diameter;
 	t_float		height;
@@ -96,7 +102,7 @@ typedef struct		s_cylinder
 typedef struct		s_plane
 {
 	t_objtype	type;
-	t_vector	location;
+	t_vector	origin;
 	t_vector	orientation;
 	t_color		color;
 }					t_plane;
@@ -104,7 +110,7 @@ typedef struct		s_plane
 typedef struct		s_sphere
 {
 	t_objtype	type;
-	t_vector	location;
+	t_vector	origin;
 	t_float		diameter;
 	t_color		color;
 }					t_sphere;
@@ -112,7 +118,7 @@ typedef struct		s_sphere
 typedef struct		s_square
 {
 	t_objtype	type;
-	t_vector	location;
+	t_vector	origin;
 	t_vector	orientation;
 	t_float		side_size;
 	t_color		color;
@@ -129,11 +135,9 @@ typedef struct		s_triangle
 
 typedef struct		s_intersection
 {
-	void		*object;
-	t_point		point;
+	void	*object;
+	t_ray	ray;
+	t_point	point;
 }					t_x;
-
-typedef t_x			(*t_xfunc)();
-typedef t_color		(*t_cfunc)();
 
 #endif

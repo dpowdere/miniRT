@@ -13,9 +13,14 @@
 #ifndef RT_COMMON_H
 # define RT_COMMON_H
 
+# include <math.h>
+
 typedef float	t_float;
 
+# define ABS	fabsf
+# define ACOS	acosf
 # define TAN	tanf
-# define PI		acosf(-1.0)
+
+# define PI		ACOS(-1.0)
 
 #endif

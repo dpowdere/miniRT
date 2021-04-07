@@ -30,7 +30,7 @@ void	rt_parse_camera(t_config_line *c)
 		rt_parsing_error(c, NM, "Wrong number of arguments");
 	if ((camera = (t_camera *)malloc(sizeof(t_camera))) == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
-	camera->location = rt_parse_vector(c, 1, NM " location", NON_NORMALIZED);
+	camera->origin = rt_parse_vector(c, 1, NM " origin", NON_NORMALIZED);
 	camera->orientation = rt_parse_vector(c, 2, NM " orientation", NORMALIZED);
 	camera->view_angle = rt_parse_float(c, 3, NM " view angle");
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)

@@ -99,6 +99,14 @@ t_vector	vt_mul_cross(t_vector v, t_vector w)
 	return (r);
 }
 
+t_scalar	vt_angle(t_vector v, t_vector w)
+{
+	t_scalar	x;
+
+	x = vt_mul_dot(v, w) / (vt_magnitude(v) * vt_magnitude(w));
+	return (ACOS(x));
+}
+
 /*
 ** Convert degrees to radians
 */

@@ -27,7 +27,7 @@ void	rt_parse_square(t_config_line *c)
 	if ((sq = (t_square *)malloc(sizeof(t_square))) == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&sq->type = RT_SQUARE;
-	sq->location = rt_parse_vector(c, 1, "Square location", NON_NORMALIZED);
+	sq->origin = rt_parse_vector(c, 1, "Square origin", NON_NORMALIZED);
 	sq->orientation = rt_parse_vector(c, 2, "Square orientation", NORMALIZED);
 	sq->side_size = rt_parse_float(c, 3, "Square side size");
 	sq->color = rt_parse_color(c, 4, "Square color");

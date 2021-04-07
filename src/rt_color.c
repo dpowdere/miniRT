@@ -14,7 +14,7 @@
 
 #include "minirt.h"
 
-static inline int	rt_normalize(int x)
+static inline int	rt_color_normalize(int x)
 {
 	if (x < 0)
 		x = 0;
@@ -28,9 +28,9 @@ int32_t				rt_color_channels_to_int(int red, int green, int blue)
 	uint32_t color;
 
 	color = 0u;
-	color |= rt_normalize(red) << 16;
-	color |= rt_normalize(green) << 8;
-	color |= rt_normalize(blue);
+	color |= rt_color_normalize(red) << 16;
+	color |= rt_color_normalize(green) << 8;
+	color |= rt_color_normalize(blue);
 	return (*(int32_t *)&color);
 }
 
@@ -43,20 +43,41 @@ t_color				rt_init_color(int red, int green, int blue)
 {
 	t_color c;
 
-	c.red = red;
-	c.green = green;
-	c.blue = blue;
+	c.red = rt_color_normalize(red);
+	c.green = rt_color_normalize(green);
+	c.blue = rt_color_normalize(blue);
 	return (c);
 }
 
-t_color				rt_get_color(t_x intersection)
+t_color	rt_get_ambient_color(t_vector normal, t_x x, t_scene *scene)
 {
-	t_otype objtype;
+	const t_sphere	*sp = x.object;
+	t_float			angle;
+	t_float			factor;
+	t_color			color;
+
+	if (sp != NULL && !vt_isinf(x.point))
+	{
+		angle = vt_angle(normal, x.ray.orientation);
+		factor = scene->ambient * angle / PI;
+		color = rt_init_color(
+			(sp->color.red + scene->ambient_color.red) * factor,
+			(sp->color.green + scene->ambient_color.green) * factor,
+			(sp->color.blue + scene->ambient_color.blue) * factor);
+		return (color);
+	}
+	return (rt_init_color(0, 0, 0));
+}
+
+t_color				rt_get_color(t_x intersection, t_scene *scene)
+{
+	t_otype		objtype;
+	t_vector	normal;
 
 	if (intersection.object == NULL)
 		return (rt_init_color(0, 0, 0));
 	objtype = (t_objtype)((t_object *)intersection.object)->type;
 	if (objtype == RT_SPHERE)
-		return (rt_sphere_color(intersection));
-	return (rt_init_color(0, 0, 0));
+		normal = rt_sphere_normal(intersection);
+	return (rt_get_ambient_color(normal, intersection, scene));
 }

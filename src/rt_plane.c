@@ -27,7 +27,7 @@ void	rt_parse_plane(t_config_line *c)
 	if ((pl = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&pl->type = RT_PLANE;
-	pl->location = rt_parse_vector(c, 1, "Plane location", NON_NORMALIZED);
+	pl->origin = rt_parse_vector(c, 1, "Plane origin", NON_NORMALIZED);
 	pl->orientation = rt_parse_vector(c, 2, "Plane orientation", NORMALIZED);
 	pl->color = rt_parse_color(c, 3, "Plane color");
 	if ((list_element = ft_lstnew(pl)) == NULL)
