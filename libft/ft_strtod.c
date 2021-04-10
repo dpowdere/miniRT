@@ -14,7 +14,9 @@
 
 static inline void	ft__calc_sign(const char **ptr, int *sign)
 {
-	*sign = (**ptr == '-' ? -1 : +1);
+	*sign = 1;
+	if (**ptr == '-')
+		*sign = -1;
 	++*ptr;
 }
 
@@ -40,7 +42,7 @@ static inline void	ft__calc_exp(const char **ptr, int *exp, int *exp_sign)
 
 static inline void	ft__calc_final_n(double *n, int frac, int exp)
 {
-	int floating_point_shift;
+	int	floating_point_shift;
 
 	floating_point_shift = exp - frac;
 	while (floating_point_shift != 0)
@@ -64,7 +66,7 @@ static inline void	ft__calc_final_n(double *n, int frac, int exp)
 ** or underflow and without much care of roundoff errors.
 */
 
-double				ft_strtod(const char *nptr, char **endptr)
+double	ft_strtod(const char *nptr, char **endptr)
 {
 	double	n;
 	int		frac;

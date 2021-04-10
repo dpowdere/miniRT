@@ -21,15 +21,18 @@ void	ft_putnbr_fd(int n, int fd)
 	int		x;
 	char	c;
 
-	if (fd < 0)
-		return ;
 	if (n < 0)
 		write(fd, "-", 1);
-	sign = (n < 0 ? -1 : 1);
+	sign = 1;
+	if (n < 0)
+		sign = -1;
 	power10 = 1;
-	x = n;
-	while ((x /= 10) != 0)
+	x = n / 10;
+	while (x != 0)
+	{
+		x /= 10;
 		power10 *= 10;
+	}
 	while (power10 != 0)
 	{
 		x = n / power10;

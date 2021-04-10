@@ -94,7 +94,7 @@ char *const	*ft_split_const(const char *s, const char *separator_chars)
 	if (s)
 		ft___count(s, separator_chars, &n_segments, &n_chars);
 	size = (n_segments + 1) * sizeof(char *)
-			+ (n_chars + n_segments) * sizeof(char);
+		+ (n_chars + n_segments) * sizeof(char);
 	string_array = (char **)malloc(size);
 	if (!string_array)
 		return (NULL);

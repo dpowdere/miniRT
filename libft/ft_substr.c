@@ -24,7 +24,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	len2 = ft_strlen(s);
-	len2 = (len2 > start ? len2 - start : 0);
+	if (len2 > start)
+		len2 = len2 - start;
+	else
+		len2 = 0;
 	if (len2 > len)
 		len2 = len;
 	substring = (char *)malloc((len2 + 1) * sizeof(char));

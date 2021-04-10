@@ -16,30 +16,75 @@
 
 #define LOWER_DIGITS "0123456789abcdefghijklmnopqrstuvwxyz"
 #define UPPER_DIGITS "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-#define DIGITS	(use_upper_case ? UPPER_DIGITS : LOWER_DIGITS)
+
+static inline char	*ft_ji_allocate_string(
+						intmax_t n, intmax_t *power, int *sign, int base)
+{
+	intmax_t	i;
+	size_t		size;
+	int			n_digits;
+	char		*s;
+
+	n_digits = 1;
+	*power = 1;
+	i = n / base;
+	while (i != 0)
+	{
+		i /= base;
+		*power *= base;
+		++n_digits;
+	}
+	size = n_digits + 1;
+	*sign = 1;
+	if (n < 0)
+	{
+		*sign = -1;
+		size += 1;
+	}
+	s = malloc(size * sizeof(char));
+	return (s);
+}
+
+static inline char	*ft_ju_allocate_string(
+						uintmax_t n, uintmax_t *power, int base)
+{
+	uintmax_t	i;
+	int			n_digits;
+	char		*s;
+
+	n_digits = 1;
+	*power = 1;
+	i = n / base;
+	while (i != 0)
+	{
+		i /= base;
+		*power *= base;
+		++n_digits;
+	}
+	s = malloc(n_digits + 1);
+	return (s);
+}
 
 char	*ft_ji_base(intmax_t n, int base, int use_upper_case)
 {
 	intmax_t	power;
 	intmax_t	i;
-	int			digits;
+	int			sign;
+	char		*digits;
 	char		*s;
 
-	digits = 1;
-	power = 1;
-	i = n;
-	while ((i /= base) != 0)
-	{
-		power *= base;
-		++digits;
-	}
-	if ((s = malloc(digits + (n < 0 ? 2 : 1))) == NULL)
+	s = ft_ji_allocate_string(n, &power, &sign, base);
+	if (s == NULL)
 		return (NULL);
+	i = 0;
 	if (n < 0)
 		s[i++] = '-';
+	digits = LOWER_DIGITS;
+	if (use_upper_case)
+		digits = UPPER_DIGITS;
 	while (power != 0)
 	{
-		s[i++] = *((char *)DIGITS + (n / power * (n < 0 ? -1 : 1)));
+		s[i++] = *((char *)digits + (n / power * sign));
 		n %= power;
 		power /= base;
 	}
@@ -51,22 +96,19 @@ char	*ft_ju_base(uintmax_t n, int base, int use_upper_case)
 {
 	uintmax_t	power;
 	uintmax_t	i;
-	int			digits;
+	char		*digits;
 	char		*s;
 
-	digits = 1;
-	power = 1;
-	i = n;
-	while ((i /= base) != 0)
-	{
-		power *= base;
-		++digits;
-	}
-	if ((s = malloc(digits + 1)) == NULL)
+	s = ft_ju_allocate_string(n, &power, base);
+	if (s == NULL)
 		return (NULL);
+	i = 0;
+	digits = LOWER_DIGITS;
+	if (use_upper_case)
+		digits = UPPER_DIGITS;
 	while (power != 0)
 	{
-		s[i++] = *((char *)DIGITS + (n / power));
+		s[i++] = *((char *)digits + (n / power));
 		n %= power;
 		power /= base;
 	}

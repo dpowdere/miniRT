@@ -15,31 +15,42 @@
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+static inline void	ft_find_limits(char const **start, char const **end,
+						char const *set)
 {
-	size_t	set_len;
-	char	*start;
-	char	*end;
-	char	*trimmed;
+	size_t		set_len;
 
-	if (!s1)
+	set_len = 0;
+	if (set)
+		set_len = ft_strlen(set);
+	while (**start && set_len && ft_strchr(set, **start))
+		++*start;
+	*end = *start;
+	while (**end && *(*end + 1))
+		++*end;
+	while (*end > *start && set_len && ft_strchr(set, **end))
+		--*end;
+}
+
+char	*ft_strtrim(char const *str, char const *set)
+{
+	size_t		size;
+	char const	*end;
+	char		*trimmed;
+
+	if (!str)
 		return (NULL);
-	set_len = (set ? ft_strlen(set) : 0);
-	start = (char *)s1;
-	while (*start && set_len && ft_strchr(set, *start))
-		++start;
-	end = start;
-	while (*end && *(end + 1))
-		++end;
-	while (end > start && set_len && ft_strchr(set, *end))
-		--end;
-	trimmed = (char *)malloc(sizeof(char) * (!*start ? 1 : end - start + 2));
+	ft_find_limits(&str, &end, set);
+	size = end - str + 2;
+	if (!*str)
+		size = 1;
+	trimmed = (char *)malloc(size * sizeof(char));
 	if (!trimmed)
 		return (NULL);
 	++end;
-	if (*start)
-		*(end - start + trimmed) = '\0';
-	while (--end >= start)
-		*(end - start + trimmed) = *end;
+	if (*str)
+		*(end - str + trimmed) = '\0';
+	while (--end >= str)
+		*(end - str + trimmed) = *end;
 	return (trimmed);
 }

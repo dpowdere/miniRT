@@ -16,7 +16,7 @@
 
 #include "ft_get_next_line.h"
 
-int				ft_get_next_line(int fd, char **line)
+int	ft_get_next_line(int fd, char **line)
 {
 	static struct s_stash	stash;
 
@@ -30,20 +30,24 @@ int				ft_get_next_line(int fd, char **line)
 	if (stash.tail == NULL && ft_add_tail(&stash) == FAIL)
 		return (GNL_ERROR);
 	while (ft_find_nl(&stash) == NOT_FOUND)
+	{
 		if (ft_add_tail(&stash) == FAIL)
 		{
 			ft_reset(&stash, RESET_ALL_TO_DEFAULT);
 			return (GNL_ERROR);
 		}
+	}
 	*line = NULL;
 	if (ft_get_line_from_stash(&stash, line) == FAIL)
 		return (GNL_ERROR);
-	return (*line == NULL ? GNL_EOF : GNL_LINE);
+	if (*line == NULL)
+		return (GNL_EOF);
+	return (GNL_LINE);
 }
 
-static void		ft_reset(struct s_stash *stash, int kind)
+static void	ft_reset(struct s_stash *stash, int kind)
 {
-	struct s_part *tmp;
+	struct s_part	*tmp;
 
 	if (kind == RESET_ALL_TO_DEFAULT)
 		stash->fd = DEFAULT_FD;
@@ -61,14 +65,16 @@ static void		ft_reset(struct s_stash *stash, int kind)
 	stash->tail = NULL;
 }
 
-static int		ft_add_tail(struct s_stash *stash)
+static int	ft_add_tail(struct s_stash *stash)
 {
 	struct s_part	*tail;
 
-	if ((tail = (struct s_part *)malloc(sizeof(struct s_part))) == NULL)
+	tail = (struct s_part *)malloc(sizeof(struct s_part));
+	if (tail == NULL)
 		return (FAIL);
 	tail->next = NULL;
-	if ((tail->s = (char *)malloc(sizeof(char) * BUFFER_SIZE)) == NULL)
+	tail->s = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	if (tail->s == NULL)
 	{
 		free(tail);
 		return (FAIL);
@@ -84,7 +90,7 @@ static int		ft_add_tail(struct s_stash *stash)
 	return (SUCCESS);
 }
 
-static int		ft_find_nl(struct s_stash *stash)
+static int	ft_find_nl(struct s_stash *stash)
 {
 	if (stash->head->next == NULL)
 		stash->end = stash->start;
@@ -101,7 +107,7 @@ static int		ft_find_nl(struct s_stash *stash)
 	return (NOT_FOUND);
 }
 
-static int		ft_get_line_from_stash(struct s_stash *stash, char **line)
+static int	ft_get_line_from_stash(struct s_stash *stash, char **line)
 {
 	size_t	size;
 

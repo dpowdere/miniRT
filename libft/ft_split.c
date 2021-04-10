@@ -30,7 +30,7 @@ static int	ft___count_segments(char const *s, char c)
 
 static void	ft___free_array(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -38,7 +38,7 @@ static void	ft___free_array(char **arr)
 	free(arr);
 }
 
-static char	**ft___populate_array(char **arr, char const *s, char c)
+static char	**ft___populate_array(char **arr, char const *s, char separator)
 {
 	int		i;
 	char	*e;
@@ -47,35 +47,35 @@ static char	**ft___populate_array(char **arr, char const *s, char c)
 	i = -1;
 	while (*s)
 	{
-		if (*s++ == c)
+		if (*s++ == separator)
 			continue ;
-		if (!(e = ft_strchr(--s, c)))
+		e = ft_strchr(--s, separator);
+		if (!e)
 			p = ft_strdup(s);
 		else
 			p = ft_substr(s, 0, e - s);
-		if (!(arr[++i] = p))
+		if (!p)
 		{
 			ft___free_array(arr);
 			return (NULL);
 		}
-		if (!e)
-			break ;
+		arr[++i] = p;
 		s = e;
 	}
 	arr[++i] = NULL;
 	return (arr);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char separator)
 {
 	char	**arr;
 	int		n_segments;
 
 	if (!s)
 		return (NULL);
-	n_segments = ft___count_segments(s, c);
+	n_segments = ft___count_segments(s, separator);
 	arr = (char **)malloc((n_segments + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	return (ft___populate_array(arr, s, c));
+	return (ft___populate_array(arr, s, separator));
 }

@@ -15,7 +15,7 @@
 /*
 ** Naive and lazy conversion of string to int, partly similar
 ** to `strtoi` BSD function and `strtol`, `strtoll`, `strtoq`
-** stdlib functions; returns no error.
+** stdlib functions. It returns no error.
 */
 
 #define DIGITS		"0123456789abcdefghijklmnopqrstuvwxyz"
@@ -23,16 +23,15 @@
 
 int	ft_strtoi(const char *nptr, char **endptr, int base)
 {
-	int index;
-	int sign;
-	int n;
+	int	index;
+	int	sign;
+	int	n;
 
 	sign = 1;
 	n = 0;
 	if (base < 1 || base > DIGITS_N)
 		return (n);
-	while (*nptr == ' ' || *nptr == '\f' || *nptr == '\n' || *nptr == '\r'
-			|| *nptr == '\t' || *nptr == '\v')
+	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
 		++nptr;
 	if (*nptr == '+' || *nptr == '-')
 	{
@@ -40,9 +39,12 @@ int	ft_strtoi(const char *nptr, char **endptr, int base)
 			sign = -1;
 		++nptr;
 	}
-	--nptr;
-	while ((index = ft_str_index(DIGITS, *++nptr)) >= 0 && index < base)
+	index = ft_str_index(DIGITS, *nptr);
+	while (index >= 0 && index < base)
+	{
 		n = n * base + index * sign;
+		index = ft_str_index(DIGITS, *++nptr);
+	}
 	if (endptr != NULL)
 		*endptr = (char *)nptr;
 	return (n);

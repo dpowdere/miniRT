@@ -15,7 +15,7 @@
 
 size_t	ft_wcslen(const wchar_t *s)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	while (s[len] != L'\0')

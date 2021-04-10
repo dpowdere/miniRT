@@ -12,7 +12,7 @@
 
 int	ft_is_big_endian(void)
 {
-	const int x = 1;
+	const int	x = 1;
 
 	return (!*(unsigned char *)&x);
 }

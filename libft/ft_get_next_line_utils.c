@@ -33,7 +33,17 @@ static size_t	ft_get_line_size(struct s_stash *stash)
 	return (size + stash->end + 1);
 }
 
-static void		ft_dump_line(struct s_stash *stash, char *line)
+static inline ssize_t	ft_j(struct s_part *cursor, struct s_stash *stash)
+{
+	ssize_t			j;
+
+	j = 0;
+	if (cursor == stash->head)
+		j = stash->start;
+	return (j);
+}
+
+static void	ft_dump_line(struct s_stash *stash, char *line)
 {
 	struct s_part	*cursor;
 	struct s_part	*tmp;
@@ -44,7 +54,7 @@ static void		ft_dump_line(struct s_stash *stash, char *line)
 	i = 0;
 	while (cursor && cursor->next)
 	{
-		j = (cursor == stash->head ? stash->start : 0);
+		j = ft_j(cursor, stash);
 		while (j < cursor->size)
 			line[i++] = cursor->s[j++];
 		tmp = cursor;
@@ -53,7 +63,7 @@ static void		ft_dump_line(struct s_stash *stash, char *line)
 			free(tmp->s);
 		free(tmp);
 	}
-	j = (cursor == stash->head ? stash->start : 0);
+	j = ft_j(cursor, stash);
 	while (j < stash->end)
 		line[i++] = stash->tail->s[j++];
 	line[i] = '\0';

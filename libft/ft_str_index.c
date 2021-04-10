@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_str_index(const char *s, int c)
+int	ft_str_index(const char *s, int c)
 {
-	const char *e;
+	const char	*e;
 
 	e = s;
 	while (*e && *e != (unsigned char)c)

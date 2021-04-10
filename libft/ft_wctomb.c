@@ -22,9 +22,9 @@ static inline void	ft___utf32_utf8_multibyte(char *s, wchar_t wc, int len)
 	uint8_t	data_segm;
 	uint8_t	data_mask;
 
-	prefix = (uint8_t)~0u << (8 - len);
+	prefix = (uint8_t)(~0u << (8 - len));
 	data_segm = (uint8_t)(*(uint32_t *)&wc >> ((len - 1) * 6));
-	data_mask = (uint8_t)~0u >> (len + 1);
+	data_mask = (uint8_t)(~0u >> (len + 1));
 	s[0] = (unsigned char)(prefix | (data_segm & data_mask));
 	i = 1;
 	while (i < len)
@@ -59,9 +59,9 @@ static inline void	ft___utf32_utf8_multibyte(char *s, wchar_t wc, int len)
 **    that requires no more than 4 bytes per unicode point.
 */
 
-int					ft_wctomb(char *s, wchar_t wc)
+int	ft_wctomb(char *s, wchar_t wc)
 {
-	int len;
+	int	len;
 
 	len = ft_wctomb_len(wc);
 	if (len == 1)
