@@ -35,10 +35,10 @@
 # define RT_ERROR_SCHEME_MSG	"Scene config does not comply with the scheme"
 # define RT_ERROR_XIMAGE_MSG	"Can't create an image buffer"
 
-typedef const enum	e_infotype
+typedef const enum e_infotype
 {
 	RT_SCENE,
 	RT_CONFIG_LINE
-}					t_infotype;
+}		t_infotype;
 
 #endif

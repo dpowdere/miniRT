@@ -31,7 +31,7 @@
 
 t_scene	rt_init_scene(int save)
 {
-	t_scene scene;
+	t_scene	scene;
 
 	scene.mlx = NULL;
 	if (!save)
@@ -80,11 +80,13 @@ void	rt_read_scene(int fd, t_scene *scene)
 
 	line = NULL;
 	line_num = 0;
-	while ((retcode = ft_get_next_line(fd, &line)) > 0)
+	retcode = ft_get_next_line(fd, &line);
+	while (retcode > 0)
 	{
 		rt_parse_config_line(line, ++line_num, scene);
 		free(line);
 		line = NULL;
+		retcode = ft_get_next_line(fd, &line);
 	}
 	if (retcode < 0)
 		rt_xerror(scene, RT_ERROR_LINEREAD, RT_ERROR_LINEREAD_MSG);
@@ -96,12 +98,12 @@ void	rt_check_scene(t_scene *scene)
 		rt_scheme_error(scene, RT_SCENE, NULL, "No resolution is specified");
 	if (isnan(scene->ambient))
 		rt_scheme_error(scene, RT_SCENE, NULL,
-						"No abmbient lighting is specified");
+			"No abmbient lighting is specified");
 	if (scene->cameras == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL, "No camera is specified");
 	if (scene->objects == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL,
-						"There is no geometric object in the scene");
+			"There is no geometric object in the scene");
 	rt_tweak_resolution(scene);
 	rt_init_camera_viewports(scene);
 }
@@ -112,7 +114,8 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
-	if ((fd = open(pathname, RT_O_RDONLY)) == -1)
+	fd = open(pathname, RT_O_RDONLY);
+	if (fd == -1)
 		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);
 	if (close(fd) == -1)

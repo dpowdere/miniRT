@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_cylinder.c                                :+:      :+:    :+:   */
+/*   rt_cylinder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,7 +24,8 @@ void	rt_parse_cylinder(t_config_line *c)
 
 	if (c->n_segments != 6)
 		rt_parsing_error(c, "Cylinder", "Wrong number of arguments");
-	if ((cy = (t_cylinder *)malloc(sizeof(t_cylinder))) == NULL)
+	cy = (t_cylinder *)malloc(sizeof(t_cylinder));
+	if (cy == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&cy->type = RT_CYLINDER;
 	cy->origin = rt_parse_vector(c, 1, "Cylinder origin", NON_NORMALIZED);
@@ -32,7 +33,8 @@ void	rt_parse_cylinder(t_config_line *c)
 	cy->diameter = rt_parse_float(c, 3, "Cylinder diameter");
 	cy->height = rt_parse_float(c, 4, "Cylinder height");
 	cy->color = rt_parse_color(c, 5, "Cylinder color");
-	if ((list_element = ft_lstnew(cy)) == NULL)
+	list_element = ft_lstnew(cy);
+	if (list_element == NULL)
 	{
 		free(cy);
 		rt_perror((void *)c, RT_CONFIG_LINE);

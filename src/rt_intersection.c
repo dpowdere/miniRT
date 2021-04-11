@@ -15,9 +15,9 @@
 
 #include "minirt.h"
 
-t_x		rt_get_no_intersection(t_ray ray, void *obj)
+t_x	rt_get_no_intersection(t_ray ray, void *obj)
 {
-	t_x x;
+	t_x	x;
 
 	x.object = obj;
 	x.ray = ray;
@@ -25,7 +25,7 @@ t_x		rt_get_no_intersection(t_ray ray, void *obj)
 	return (x);
 }
 
-t_x		rt_get_nearest_intersection(t_x x1, t_x x2)
+t_x	rt_get_nearest_intersection(t_x x1, t_x x2)
 {
 	const t_point	origin = x1.ray.origin;
 	const t_point	p1 = x1.point;
@@ -42,9 +42,9 @@ t_x		rt_get_nearest_intersection(t_x x1, t_x x2)
 	return (x2);
 }
 
-t_x		rt_get_intersection(t_ray ray, void *object)
+t_x	rt_get_intersection(t_ray ray, void *object)
 {
-	const t_otype objtype = (t_objtype)((t_object *)object)->type;
+	const t_otype	objtype = (t_objtype)((t_object *)object)->type;
 
 	if (objtype == RT_SPHERE)
 		return (rt_sphere_intersection(ray, object));

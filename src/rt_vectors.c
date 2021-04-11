@@ -16,7 +16,7 @@
 
 t_vector	vt_init(t_float x, t_float y, t_float z)
 {
-	t_vector v;
+	t_vector	v;
 
 	v.x = x;
 	v.y = y;
@@ -31,7 +31,7 @@ t_scalar	vt_magnitude(t_vector v)
 
 t_vector	vt_normalize(t_vector v)
 {
-	const t_scalar magnitude = vt_magnitude(v);
+	const t_scalar	magnitude = vt_magnitude(v);
 
 	v.x /= magnitude;
 	v.y /= magnitude;
@@ -39,12 +39,12 @@ t_vector	vt_normalize(t_vector v)
 	return (v);
 }
 
-int			vt_isinf(t_vector v)
+int	vt_isinf(t_vector v)
 {
 	return (isinf(v.x) || isinf(v.y) || isinf(v.z));
 }
 
-int			vt_isequal(t_vector a, t_vector b)
+int	vt_isequal(t_vector a, t_vector b)
 {
 	return (a.x == b.x && a.y == b.y && a.z == b.z);
 }
@@ -60,7 +60,7 @@ t_scalar	vt_distance(t_point p1, t_point p2)
 
 t_vector	vt_add(t_vector a, t_vector b)
 {
-	t_vector c;
+	t_vector	c;
 
 	c.x = a.x + b.x;
 	c.y = a.y + b.y;
@@ -91,7 +91,7 @@ t_scalar	vt_mul_dot(t_vector v, t_vector w)
 
 t_vector	vt_mul_cross(t_vector v, t_vector w)
 {
-	t_vector r;
+	t_vector	r;
 
 	r.x = v.y * w.z - v.z * w.y;
 	r.y = v.z * w.x - v.x * w.z;
@@ -101,9 +101,10 @@ t_vector	vt_mul_cross(t_vector v, t_vector w)
 
 t_scalar	vt_angle(t_vector v, t_vector w)
 {
-	t_scalar	x;
+	const t_scalar	vm = vt_magnitude(v);
+	const t_scalar	wm = vt_magnitude(w);
+	const t_scalar	x = vt_mul_dot(v, w) / (vm * wm);
 
-	x = vt_mul_dot(v, w) / (vt_magnitude(v) * vt_magnitude(w));
 	return (ACOS(x));
 }
 
@@ -111,7 +112,7 @@ t_scalar	vt_angle(t_vector v, t_vector w)
 ** Convert degrees to radians
 */
 
-t_float		vt_rad(t_float deg)
+t_float	vt_rad(t_float deg)
 {
 	return (deg / 180 * PI);
 }

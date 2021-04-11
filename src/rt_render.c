@@ -16,6 +16,21 @@
 
 #include "minirt.h"
 
+t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
+{
+	t_ray	ray;
+	t_float	x;
+	t_float	y;
+	t_float	z;
+
+	x = u / (t_float)scene->width * camera->width - camera->width / 2.0;
+	y = camera->height / 2.0 - v / (t_float)scene->height * camera->height;
+	z = 1.0;
+	ray.origin = camera->origin;
+	ray.orientation = vt_normalize(vt_init(x, y, z));
+	return (ray);
+}
+
 t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 {
 	t_ray	local_ray;
@@ -23,11 +38,7 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 	t_x		nearest_xx;
 	t_list	*elem;
 
-	local_ray.origin = camera->origin;
-	local_ray.orientation = vt_normalize(vt_init(
-			u / (t_float)scene->width * camera->width - camera->width / 2.0,
-			camera->height / 2.0 - v / (t_float)scene->height * camera->height,
-			1.0));
+	local_ray = rt_init_ray(u, v, camera, scene);
 	nearest_xx = rt_get_no_intersection(local_ray, NULL);
 	elem = scene->objects;
 	while (elem)

@@ -59,9 +59,9 @@ void	rt_dib_bitmapinfoheader(char *mem, t_scene *scene)
 	*(uint16_t *)(mem + SH_DIB_NF_PLANES) = 1;
 	*(uint16_t *)(mem + SH_DIB_NF_BPP) = BITS_PER_PIXEL;
 	*(uint32_t *)(mem + SH_DIB_NF_COMPRESSION) = DIB_COMPRESSION_RGB;
-	*(uint32_t *)(mem + SH_DIB_NF_IMAGE_SIZE) =
-				((t_camera *)scene->cameras->content)
-					->viewport->bytes_per_line * scene->height;
+	*(uint32_t *)(mem + SH_DIB_NF_IMAGE_SIZE)
+		= ((t_camera *)scene->cameras->content)
+		->viewport->bytes_per_line * scene->height;
 	*(uint32_t *)(mem + SH_DIB_NF_XPPM) = PIXELS_PER_METER;
 	*(uint32_t *)(mem + SH_DIB_NF_YPPM) = PIXELS_PER_METER;
 	*(uint32_t *)(mem + SH_DIB_NF_USED_COLORS) = DIB_ALL_COLORS_ARE_USED;
@@ -73,12 +73,13 @@ char	*rt_init_header(t_scene *scene)
 	char	*mem;
 	size_t	file_size;
 
-	if ((mem = malloc(BMP_HEADER_SIZE + DIB_HEADER_SIZE)) == NULL)
+	mem = malloc(BMP_HEADER_SIZE + DIB_HEADER_SIZE);
+	if (mem == NULL)
 		rt_perror(scene, RT_SCENE);
 	ft_memcpy(mem + SH_BMP_TYPE, "BM", 2);
-	file_size = BMP_HEADER_SIZE + DIB_HEADER_SIZE +
-				((t_camera *)scene->cameras->content)
-					->viewport->bytes_per_line * scene->height;
+	file_size = BMP_HEADER_SIZE + DIB_HEADER_SIZE
+		+ ((t_camera *)scene->cameras->content)
+		->viewport->bytes_per_line * scene->height;
 	*(uint32_t *)(mem + SH_BMP_FILESIZE) = file_size;
 	*(uint32_t *)(mem + SH_BMP_RESERVED) = 0;
 	*(uint32_t *)(mem + SH_BMP_DATAOFFSET) = BMP_HEADER_SIZE + DIB_HEADER_SIZE;
@@ -86,7 +87,7 @@ char	*rt_init_header(t_scene *scene)
 	return (mem);
 }
 
-int		rt_open_bmp_file(int *serial_number, t_scene *scene)
+int	rt_open_bmp_file(int *serial_number, t_scene *scene)
 {
 	extern int	errno;
 	char		*number;

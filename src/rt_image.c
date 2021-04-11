@@ -22,20 +22,24 @@
 t_image	*rt_init_dib(t_scene *s)
 {
 	t_image	*image;
+	char	*mem;
 	int		bytes_per_line;
 	int		antipad;
 
-	if ((image = malloc(sizeof(t_image))) == NULL)
+	image = malloc(sizeof(t_image));
+	if (image == NULL)
 		rt_perror(s, RT_SCENE);
-	image->img = NULL;
 	bytes_per_line = BYTES_PER_PIXEL * s->width;
 	antipad = bytes_per_line % DIB_BYTE_FACTOR;
 	bytes_per_line += DIB_BYTE_FACTOR * (antipad > 0) - antipad;
-	if ((image->byte_array = malloc(bytes_per_line * s->height)) == NULL)
+	mem = ft_calloc(s->height, bytes_per_line);
+	if (mem == NULL)
 	{
 		free(image);
 		rt_perror(s, RT_SCENE);
 	}
+	image->img = NULL;
+	image->byte_array = mem;
 	image->bytes_per_line = bytes_per_line;
 	image->switch_endianness = ft_is_big_endian();
 	image->bytes_per_pixel = BYTES_PER_PIXEL;
@@ -51,9 +55,11 @@ t_image	*rt_init_image(t_scene *s)
 
 	if (s->mlx == NULL)
 		return (rt_init_dib(s));
-	if ((image = malloc(sizeof(t_image))) == NULL)
+	image = malloc(sizeof(t_image));
+	if (image == NULL)
 		rt_perror(s, RT_SCENE);
-	if ((image->img = mlx_new_image(s->mlx, s->width, s->height)) == NULL)
+	image->img = mlx_new_image(s->mlx, s->width, s->height);
+	if (image->img == NULL)
 	{
 		free(image);
 		rt_xerror(s, RT_ERROR_XIMAGE, RT_ERROR_XIMAGE_MSG);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_square.c                                  :+:      :+:    :+:   */
+/*   rt_square.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,14 +24,16 @@ void	rt_parse_square(t_config_line *c)
 
 	if (c->n_segments != 5)
 		rt_parsing_error(c, "Square", "Wrong number of arguments");
-	if ((sq = (t_square *)malloc(sizeof(t_square))) == NULL)
+	sq = (t_square *)malloc(sizeof(t_square));
+	if (sq == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&sq->type = RT_SQUARE;
 	sq->origin = rt_parse_vector(c, 1, "Square origin", NON_NORMALIZED);
 	sq->orientation = rt_parse_vector(c, 2, "Square orientation", NORMALIZED);
 	sq->side_size = rt_parse_float(c, 3, "Square side size");
 	sq->color = rt_parse_color(c, 4, "Square color");
-	if ((list_element = ft_lstnew(sq)) == NULL)
+	list_element = ft_lstnew(sq);
+	if (list_element == NULL)
 	{
 		free(sq);
 		rt_perror((void *)c, RT_CONFIG_LINE);

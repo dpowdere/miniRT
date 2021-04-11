@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_light.c                                   :+:      :+:    :+:   */
+/*   rt_light.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,15 +26,17 @@ void	rt_parse_light(t_config_line *c)
 
 	if (c->n_segments != 4)
 		rt_parsing_error(c, NM, "Wrong number of arguments");
-	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
+	light = (t_light *)malloc(sizeof(t_light));
+	if (light == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	light->origin = rt_parse_vector(c, 1, NM " origin", NON_NORMALIZED);
 	light->intensity = rt_parse_float(c, 2, NM " intensity");
 	if (light->intensity < 0.0 || light->intensity > 1.0)
 		rt_scheme_error(c, RT_CONFIG_LINE,
-						NM, "Intensity must be in the range [0, 1.0]");
+			NM, "Intensity must be in the range [0, 1.0]");
 	light->color = rt_parse_color(c, 3, NM " color");
-	if ((list_element = ft_lstnew(light)) == NULL)
+	list_element = ft_lstnew(light);
+	if (list_element == NULL)
 	{
 		free(light);
 		rt_perror((void *)c, RT_CONFIG_LINE);

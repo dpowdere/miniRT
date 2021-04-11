@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_resolution.c                              :+:      :+:    :+:   */
+/*   rt_resolution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -27,7 +27,7 @@ void	rt_parse_resolution(t_config_line *c)
 
 	if (c->scene->width != UNDEFINED || c->scene->height != UNDEFINED)
 		rt_scheme_error(c, RT_CONFIG_LINE,
-						"Resolution", "Can be specified only once");
+			"Resolution", "Can be specified only once");
 	if (c->n_segments != 3)
 		rt_parsing_error(c, "Resolution", "Wrong number of arguments");
 	endptr = NULL;
@@ -43,8 +43,8 @@ void	rt_parse_resolution(t_config_line *c)
 
 void	rt_tweak_resolution(t_scene *scene)
 {
-	int screen_width;
-	int screen_height;
+	int	screen_width;
+	int	screen_height;
 
 	if (scene->mlx == NULL)
 	{

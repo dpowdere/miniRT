@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_camera.c                                  :+:      :+:    :+:   */
+/*   rt_camera.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,18 +28,20 @@ void	rt_parse_camera(t_config_line *c)
 
 	if (c->n_segments != 4)
 		rt_parsing_error(c, NM, "Wrong number of arguments");
-	if ((camera = (t_camera *)malloc(sizeof(t_camera))) == NULL)
+	camera = (t_camera *)malloc(sizeof(t_camera));
+	if (camera == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	camera->origin = rt_parse_vector(c, 1, NM " origin", NON_NORMALIZED);
 	camera->orientation = rt_parse_vector(c, 2, NM " orientation", NORMALIZED);
 	camera->view_angle = rt_parse_float(c, 3, NM " view angle");
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
 		rt_scheme_error(c, RT_CONFIG_LINE,
-						NM, "View angle must be in the range (0, 180]");
+			NM, "View angle must be in the range (0, 180]");
 	camera->viewport = NULL;
 	camera->width = NAN;
 	camera->height = NAN;
-	if ((list_element = ft_lstnew(camera)) == NULL)
+	list_element = ft_lstnew(camera);
+	if (list_element == NULL)
 	{
 		free(camera);
 		rt_perror((void *)c, RT_CONFIG_LINE);
@@ -82,7 +84,7 @@ void	rt_switch_camera(t_scene *s)
 
 void	rt_free_camera(void *data)
 {
-	t_camera *const camera = (t_camera *)data;
+	t_camera *const	camera = (t_camera *)data;
 
 	if (camera == NULL)
 		return ;

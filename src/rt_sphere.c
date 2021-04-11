@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_sphere.c                                  :+:      :+:    :+:   */
+/*   rt_sphere.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,20 +17,22 @@
 
 #include "minirt.h"
 
-void		rt_parse_sphere(t_config_line *c)
+void	rt_parse_sphere(t_config_line *c)
 {
 	t_sphere	*sp;
 	t_list		*list_element;
 
 	if (c->n_segments != 4)
 		rt_parsing_error(c, "Sphere", "Wrong number of arguments");
-	if ((sp = (t_sphere *)malloc(sizeof(t_sphere))) == NULL)
+	sp = (t_sphere *)malloc(sizeof(t_sphere));
+	if (sp == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&sp->type = RT_SPHERE;
 	sp->origin = rt_parse_vector(c, 1, "Sphere origin", NON_NORMALIZED);
 	sp->diameter = rt_parse_float(c, 2, "Sphere diameter");
 	sp->color = rt_parse_color(c, 3, "Sphere color");
-	if ((list_element = ft_lstnew(sp)) == NULL)
+	list_element = ft_lstnew(sp);
+	if (list_element == NULL)
 	{
 		free(sp);
 		rt_perror((void *)c, RT_CONFIG_LINE);
@@ -38,7 +40,7 @@ void		rt_parse_sphere(t_config_line *c)
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
 
-t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp)
+t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 {
 	const t_vector	dir = vt_add(ray.orientation, vt_inv(ray.origin));
 	const t_vector	dis = vt_add(ray.origin, vt_inv(sp->origin));
@@ -47,9 +49,9 @@ t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp)
 	t_x				x;
 
 	r = rt_quadratic_equation(
-				vt_mul_dot(dir, dir),
-				vt_mul_dot(dis, dir) * 2,
-				vt_mul_dot(dis, dis) - sp->diameter / 2);
+			vt_mul_dot(dir, dir),
+			vt_mul_dot(dis, dir) * 2,
+			vt_mul_dot(dis, dis) - sp->diameter / 2);
 	if (r.discriminant < 0.0)
 		return (rt_get_no_intersection(ray, sp));
 	t = rt_get_quadratic_root(r);

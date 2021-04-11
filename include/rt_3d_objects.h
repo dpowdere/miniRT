@@ -18,46 +18,46 @@
 # define BITS_PER_PIXEL		24
 # define BYTES_PER_PIXEL	3
 
-typedef struct		s_color
+typedef struct s_color
 {
-	int red;
-	int green;
-	int blue;
-}					t_color;
+	int	red;
+	int	green;
+	int	blue;
+}						t_color;
 
-typedef struct		s_point
+typedef struct s_point
 {
-	t_float x;
-	t_float y;
-	t_float z;
-}					t_point;
+	t_float	x;
+	t_float	y;
+	t_float	z;
+}						t_point;
 
-typedef t_point		t_vector;
-typedef t_float		t_scalar;
+typedef t_point			t_vector;
+typedef t_float			t_scalar;
 
 # define NORMALIZED		1
 # define NON_NORMALIZED	0
 
-typedef struct		s_ray
+typedef struct s_ray
 {
 	t_point		origin;
 	t_vector	orientation;
-}					t_ray;
+}						t_ray;
 
-typedef enum		e_otype
+typedef enum e_otype
 {
 	RT_CYLINDER = 1,
 	RT_PLANE,
 	RT_SPHERE,
 	RT_SQUARE,
 	RT_TRIANGLE,
-}					t_otype;
+}						t_otype;
 typedef const t_otype	t_objtype;
 
 # define NUM_DENSE_OBJECTS	5
 
 typedef struct s_scene	t_scene;
-typedef struct		s_image
+typedef struct s_image
 {
 	void	*img;
 	char	*byte_array;
@@ -65,9 +65,9 @@ typedef struct		s_image
 	int		bytes_per_line;
 	int		switch_endianness;
 	t_scene	*scene;
-}					t_image;
+}						t_image;
 
-typedef struct		s_camera
+typedef struct s_camera
 {
 	t_vector	origin;
 	t_vector	orientation;
@@ -75,21 +75,21 @@ typedef struct		s_camera
 	t_image		*viewport;
 	t_float		width;
 	t_float		height;
-}					t_camera;
+}						t_camera;
 
-typedef struct		s_light
+typedef struct s_light
 {
 	t_vector	origin;
 	t_float		intensity;
 	t_color		color;
-}					t_light;
+}						t_light;
 
-typedef struct		s_object
+typedef struct s_object
 {
 	t_objtype	type;
-}					t_object;
+}						t_object;
 
-typedef struct		s_cylinder
+typedef struct s_cylinder
 {
 	t_objtype	type;
 	t_vector	origin;
@@ -97,47 +97,47 @@ typedef struct		s_cylinder
 	t_float		diameter;
 	t_float		height;
 	t_color		color;
-}					t_cylinder;
+}						t_cylinder;
 
-typedef struct		s_plane
+typedef struct s_plane
 {
 	t_objtype	type;
 	t_vector	origin;
 	t_vector	orientation;
 	t_color		color;
-}					t_plane;
+}						t_plane;
 
-typedef struct		s_sphere
+typedef struct s_sphere
 {
 	t_objtype	type;
 	t_vector	origin;
 	t_float		diameter;
 	t_color		color;
-}					t_sphere;
+}						t_sphere;
 
-typedef struct		s_square
+typedef struct s_square
 {
 	t_objtype	type;
 	t_vector	origin;
 	t_vector	orientation;
 	t_float		side_size;
 	t_color		color;
-}					t_square;
+}						t_square;
 
-typedef struct		s_triangle
+typedef struct s_triangle
 {
 	t_objtype	type;
 	t_vector	p1;
 	t_vector	p2;
 	t_vector	p3;
 	t_color		color;
-}					t_triangle;
+}						t_triangle;
 
-typedef struct		s_intersection
+typedef struct s_intersection
 {
 	void	*object;
 	t_ray	ray;
 	t_point	point;
-}					t_x;
+}						t_x;
 
 #endif

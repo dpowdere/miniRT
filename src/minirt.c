@@ -20,13 +20,13 @@
 #include "minirt.h"
 #include "rt_events.h"
 
-int		rt_on_close(t_scene *scene)
+int	rt_on_close(t_scene *scene)
 {
 	rt_free_scene(scene);
 	exit(0);
 }
 
-int		rt_on_keypress(int keycode, t_scene *scene)
+int	rt_on_keypress(int keycode, t_scene *scene)
 {
 	if (keycode == KEY_Q || keycode == KEY_ESQ)
 		rt_on_close(scene);
@@ -57,9 +57,9 @@ void	rt_show_in_window(t_scene *s)
 ** protocol https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
 */
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_scene scene;
+	t_scene	scene;
 
 	if (argc < 2 || argc > 3 || (argc == 3 && ft_strcmp("--save", argv[2])))
 		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);

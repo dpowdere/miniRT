@@ -19,6 +19,7 @@ typedef float	t_float;
 
 # define ABS	fabsf
 # define ACOS	acosf
+# define FMOD	fmodf
 # define TAN	tanf
 
 # define PI		ACOS(-1.0)

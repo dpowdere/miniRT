@@ -17,8 +17,8 @@
 t_roots	rt_quadratic_equation(t_float a, t_float b, t_float c)
 {
 	t_roots	roots;
-	t_float a2;
-	t_float dsqrt;
+	t_float	a2;
+	t_float	dsqrt;
 
 	roots.discriminant = b * b - 4 * a * c;
 	roots.root1 = NAN;
