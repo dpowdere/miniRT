@@ -62,6 +62,8 @@ endif
 
 DEPX	:=	$(shell find $(LIBX) -name '*.[ch]')
 DEPFT	:=	$(shell find $(LIBFT) -name '*.[ch]')
+STUBX	:=	.Makestub.mlx
+STUBFT	:=	.Makestub.ft
 
 SRCDIR := src
 INCDIR := include
@@ -94,17 +96,17 @@ $(shell mkdir -p $(OBJDIR))
 
 .PHONY: all clean debug deps-install-linux fclean norm re run save
 
-$(NAME): $(OBJS) .ft .mlx
+$(NAME): $(OBJS) $(STUBFT) $(STUBX)
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $(OBJDIR)/$@ $<
 
-.mlx: $(DEPX)
+$(STUBX): $(DEPX)
 	@$(MAKE) -C $(LIBX)
 	@touch $@
 
-.ft: $(DEPFT)
+$(STUBFT): $(DEPFT)
 	@$(MAKE) -C $(LIBFT)
 	@touch $@
 
@@ -122,20 +124,17 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) assets/sphere.rt
+	./$(NAME) assets/test.rt
 
 save: all
-	./$(NAME) assets/sphere.rt --save
+	./$(NAME) assets/test.rt --save
 	ls *.bmp | xargs -L1 $(OPEN)
 
 debug:
 	test $(NAME) -nt core && gdb ./$(NAME) || gdb ./$(NAME) core
 
 norm:
-	~/norm.sh $(SRCDIR) $(INCDIR)
-#	norminette -R CheckForbiddenSourceHeader $(SRCDIR) $(INCDIR)
-#	norminette -R CheckDefine $(SRCDIR) $(INCDIR)
-#	norminette $(SRCDIR) $(INCDIR)
+	norminette $(SRCDIR) $(INCDIR) $(LIBFT) | grep -v 'OK!'
 
 deps-install-linux:
 	sudo apt-get install gcc make xorg libxext-dev libbsd-dev
