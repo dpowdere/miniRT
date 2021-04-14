@@ -29,7 +29,7 @@ void	rt_parse_sphere(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	*(int *)&sp->type = RT_SPHERE;
 	sp->origin = rt_parse_vector(c, 1, "Sphere origin", NON_NORMALIZED);
-	sp->diameter = rt_parse_float(c, 2, "Sphere diameter");
+	sp->radius = rt_parse_float(c, 2, "Sphere diameter") / 2.0;
 	sp->color = rt_parse_color(c, 3, "Sphere color");
 	list_element = ft_lstnew(sp);
 	if (list_element == NULL)
@@ -51,7 +51,7 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 	r = rt_quadratic_equation(
 			vt_mul_dot(dir, dir),
 			vt_mul_dot(dis, dir) * 2,
-			vt_mul_dot(dis, dis) - (sp->diameter / 2) * (sp->diameter / 2));
+			vt_mul_dot(dis, dis) - sp->radius * sp->radius);
 	if (r.discriminant < 0.0)
 		return (rt_get_no_intersection(ray, sp));
 	t = rt_get_quadratic_root(r);

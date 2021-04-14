@@ -111,7 +111,7 @@ typedef struct s_sphere
 {
 	t_objtype	type;
 	t_vector	origin;
-	t_float		diameter;
+	t_float		radius;
 	t_color		color;
 }						t_sphere;
 

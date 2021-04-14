@@ -115,7 +115,7 @@ all: $(NAME)
 clean:
 	@$(MAKE) -C $(LIBX) clean
 	@$(MAKE) -C $(LIBFT) fclean
-	@$(RM) .ft .mlx
+	@$(RM) $(STUBFT) $(STUBX)
 	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
