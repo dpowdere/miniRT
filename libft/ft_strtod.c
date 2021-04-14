@@ -90,5 +90,5 @@ double	ft_strtod(const char *nptr, char **endptr)
 	ft__calc_final_n(&n, frac, exp);
 	if (endptr != NULL)
 		*endptr = (char *)nptr;
-	return (n);
+	return (n * sign);
 }
