@@ -14,6 +14,8 @@
 
 #include "minirt.h"
 
+# define T_LIMIT	0.0
+
 t_roots	rt_quadratic_equation(t_float a, t_float b, t_float c)
 {
 	t_roots	roots;
@@ -36,13 +38,13 @@ t_roots	rt_quadratic_equation(t_float a, t_float b, t_float c)
 
 t_float	rt_get_quadratic_root(t_roots r)
 {
-	if (r.discriminant == 0.0 && r.root1 > 1.0)
+	if (r.discriminant == 0.0 && r.root1 > T_LIMIT)
 		return (r.root1);
 	if (r.discriminant > 0)
 	{
-		if (r.root1 > 1 && (r.root1 < r.root2 || r.root2 <= 1))
+		if (r.root1 > T_LIMIT && r.root2 <= T_LIMIT)
 			return (r.root1);
-		if (r.root2 > 1 && (r.root2 < r.root1 || r.root1 <= 1))
+		if (r.root2 > T_LIMIT)
 			return (r.root2);
 	}
 	return (NAN);

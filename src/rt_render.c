@@ -27,7 +27,7 @@ t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
 	y = camera->height / 2.0 - v / (t_float)scene->height * camera->height;
 	z = 1.0;
 	ray.origin = camera->origin;
-	ray.orientation = vt_normalize(vt_init(x, y, z));
+	ray.orientation = vt_init(x, y, z);
 	return (ray);
 }
 
