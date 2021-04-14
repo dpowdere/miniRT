@@ -51,7 +51,7 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 	r = rt_quadratic_equation(
 			vt_mul_dot(dir, dir),
 			vt_mul_dot(dis, dir) * 2,
-			vt_mul_dot(dis, dis) - sp->diameter / 2);
+			vt_mul_dot(dis, dis) - (sp->diameter / 2) * (sp->diameter / 2));
 	if (r.discriminant < 0.0)
 		return (rt_get_no_intersection(ray, sp));
 	t = rt_get_quadratic_root(r);
