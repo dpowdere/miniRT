@@ -6,12 +6,11 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 22:36:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/11 18:58:46 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/15 17:00:36 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <mlx.h>

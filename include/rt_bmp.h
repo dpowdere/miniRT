@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 05:59:07 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/25 06:02:44 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/15 16:22:06 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 ** formats instead.
 */
 
-# define RT_DIB_HEADER			rt_dib_bitmapcoreheader
-# define DIB_HEADER_SIZE		BITMAPCOREHEADER_SIZE
+# define RT_DIB_HEADER			rt_dib_bitmapinfoheader
+# define DIB_HEADER_SIZE		BITMAPINFOHEADER_SIZE
 
 # define DIB_BYTE_FACTOR		4
 # define PIXELS_PER_METER		10000

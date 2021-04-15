@@ -6,7 +6,7 @@
 #    By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 22:31:34 by dpowdere          #+#    #+#              #
-#    Updated: 2021/03/11 18:25:08 by dpowdere         ###   ########.fr        #
+#    Updated: 2021/04/15 16:19:46 by dpowdere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,9 @@ OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
 
 LIBFT	:=	libft
-LIBX	:=	libmlx/macos_opengl
+LIBXMTL	:=	libmlx/macos_metal
+LIBXOGL	:=	libmlx/macos_opengl
+LIBX	:=	$(LIBXMTL)
 ifdef ON_LINUX
   LIBX	:=	libmlx/linux
 endif
@@ -77,9 +79,12 @@ CC			:=	gcc
 CPPFLAGS	=	-MMD -MP -MT $@ -I$(INCDIR) -I$(LIBX) -I$(LIBFT)
 CFLAGS		:=	-Wall -Wextra -Werror -c
 LDFLAGS		:=	-L$(LIBX) -L$(LIBFT)
-LDLIBS		:=	-lm -lft -lmlx -framework OpenGL -framework AppKit -lz
+LDLIBS		:=	-lm -lft -lmlx
+ifeq ($(LIBX),$(LIBOGL))
+  LDLIBS	+=	-framework OpenGL -framework AppKit -lz
+endif
 ifdef ON_LINUX
-  LDLIBS := -lm -lft -lmlx -lXext -lX11
+  LDLIBS	:=	-lXext -lX11
 endif
 ifdef DEBUG
   CPPFLAGS += -DDEBUG=1
@@ -98,6 +103,9 @@ $(shell mkdir -p $(OBJDIR))
 
 $(NAME): $(OBJS) $(STUBFT) $(STUBX)
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
+ifeq ($(LIBX),$(LIBXMTL))
+	install_name_tool -change libmlx.dylib $(LIBXMTL)/libmlx.dylib $(NAME)
+endif
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $(OBJDIR)/$@ $<
@@ -124,10 +132,10 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) assets/test.rt
+	-./$(NAME) assets/test.rt
 
 save: all
-	./$(NAME) assets/test.rt --save
+	-./$(NAME) assets/test.rt --save
 	ls *.bmp | xargs -L1 $(OPEN)
 
 debug:

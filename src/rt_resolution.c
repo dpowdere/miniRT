@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 02:04:59 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 02:05:32 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/15 17:00:33 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,11 @@ void	rt_tweak_resolution(t_scene *scene)
 	int	screen_width;
 	int	screen_height;
 
-	if (scene->mlx == NULL)
-	{
-		screen_width = 8192;
-		screen_height = 8192;
-	}
-	else if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
-		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	screen_width = 8192;
+	screen_height = 8192;
+	if (scene->mlx)
+		if (mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
+			rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	if (scene->width > screen_width)
 		scene->width = screen_width;
 	if (scene->height > screen_height)
