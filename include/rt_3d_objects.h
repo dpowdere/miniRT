@@ -70,7 +70,9 @@ typedef struct s_image
 typedef struct s_camera
 {
 	t_vector	origin;
-	t_vector	orientation;
+	t_vector	x_orientation;
+	t_vector	y_orientation;
+	t_vector	z_orientation;
 	t_float		view_angle;
 	t_image		*viewport;
 	t_float		width;

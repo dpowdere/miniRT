@@ -84,7 +84,7 @@ ifeq ($(LIBX),$(LIBOGL))
   LDLIBS	+=	-framework OpenGL -framework AppKit -lz
 endif
 ifdef ON_LINUX
-  LDLIBS	:=	-lXext -lX11
+  LDLIBS	+=	-lXext -lX11
 endif
 ifdef DEBUG
   CPPFLAGS += -DDEBUG=1

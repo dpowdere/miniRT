@@ -108,5 +108,7 @@ t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
 			|| vec.y < -1.0 || vec.y > 1.0 || vec.z < -1.0 || vec.z > 1.0))
 		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
 			"Individual values must be in the range [-1, 1]");
+	if (should_be_normalized)
+		vec = vt_normalize(vec);
 	return (vec);
 }
