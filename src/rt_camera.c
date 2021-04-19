@@ -19,7 +19,11 @@
 
 #include "minirt.h"
 
-#define NM "Camera"
+#define OBJECT		"Camera"
+#define ORIG_PROP	"Camera origin"
+#define ORNT_PROP	"Camera orientation"
+#define VANG_PROP	"Camera view angle"
+#define VANG_EMSG	"View angle must be in the range (0, 180]"
 
 /*
 ** As we only get camera's Z orientation vector from the scene config file,
@@ -40,21 +44,21 @@
 **   if w_1 = 0, then u_3 = 0, u_1 = +-1.
 */
 
-t_vector	rt_calc_camera_x_orientation(t_vector zo)
+t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 {
-	t_vector	xo;
-	t_float		u_1;
-	t_float		u_3;
+	t_vector	x_ornt;
+	t_float		u1;
+	t_float		u3;
 
-	u_3 = 0.;
-	u_1 = 1.;
-	if (zo.x != 0.)
+	u3 = 0.;
+	u1 = 1.;
+	if (z_ornt.x != 0.)
 	{
-		u_3 = sqrt(1. / (1. + zo.z * zo.z / (zo.x * zo.x)));
-		u_1 = sqrt(1 - u_3 * u_3);
+		u3 = sqrt(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
+		u1 = sqrt(1 - u3 * u3);
 	}
-	xo = vt_init(u_1, 0., u_3);
-	return (xo);
+	x_ornt = vt_init(u1, 0., u3);
+	return (x_ornt);
 }
 
 void	rt_parse_camera(t_config_line *c)
@@ -63,18 +67,17 @@ void	rt_parse_camera(t_config_line *c)
 	t_list		*list_element;
 
 	if (c->n_segments != 4)
-		rt_parsing_error(c, NM, "Wrong number of arguments");
+		rt_parsing_error(c, OBJECT, "Wrong number of arguments");
 	camera = (t_camera *)malloc(sizeof(t_camera));
 	if (camera == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
-	camera->origin = rt_parse_vector(c, 1, NM " origin", NON_NORMALIZED);
-	camera->z_orientation = rt_parse_vector(c, 2, NM " orientation", NORMALIZED);
-	camera->x_orientation = rt_calc_camera_x_orientation(camera->z_orientation);
-	camera->y_orientation = vt_mul_dot(camera->z_orientation, camera->x_orientation);
-	camera->view_angle = rt_parse_float(c, 3, NM " view angle");
+	camera->origin = rt_parse_vector(c, 1, ORIG_PROP, NON_NORMALIZED);
+	camera->z_ornt = rt_parse_vector(c, 2, ORNT_PROP, NORMALIZED);
+	camera->x_ornt = rt_calc_camera_x_orientation(camera->z_ornt);
+	camera->y_ornt = vt_mul_dot(camera->z_ornt, camera->x_ornt);
+	camera->view_angle = rt_parse_float(c, 3, VANG_PROP);
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
-		rt_scheme_error(c, RT_CONFIG_LINE,
-			NM, "View angle must be in the range (0, 180]");
+		rt_scheme_error(c, RT_CONFIG_LINE, OBJECT, VANG_EMSG);
 	camera->viewport = NULL;
 	camera->width = NAN;
 	camera->height = NAN;
