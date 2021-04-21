@@ -42,7 +42,7 @@ void	rt_parse_sphere(t_config_line *c)
 
 t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 {
-	const t_vector	dir = vt_add(ray.orientation, vt_inv(ray.origin));
+	const t_vector	dir = ray.orientation;//vt_add(ray.orientation, vt_inv(ray.origin));
 	const t_vector	dis = vt_add(ray.origin, vt_inv(sp->origin));
 	t_float			t;
 	t_roots			r;
