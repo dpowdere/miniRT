@@ -19,9 +19,10 @@
 
 void	ft_putendl_fd(const char *s, int fd)
 {
-	if (fd < 0 || !s)
+	if (fd < 0)
 		return ;
-	write(fd, s, ft_strlen(s));
+	if (s)
+		write(fd, s, ft_strlen(s));
 	write(fd, "\n", 1);
 }
 

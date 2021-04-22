@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <stdio.h>
 
 #include "minirt.h"
 
@@ -51,12 +52,15 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 	return (rt_get_color(nearest_xx, scene));
 }
 
-void	rt_render_viewport(t_camera *camera, t_scene *scene)
+void	rt_render_viewport(int serial_number, t_camera *camera, t_scene *scene)
 {
-	int		u;
-	int		v;
-	t_color	color;
+	const int	total = scene->width * scene->height;
+	int			progress;
+	int			u;
+	int			v;
+	t_color		color;
 
+	progress = 0;
 	v = 0;
 	while (v < scene->height)
 	{
@@ -65,22 +69,30 @@ void	rt_render_viewport(t_camera *camera, t_scene *scene)
 		{
 			color = rt_trace_ray(u, v, camera, scene);
 			rt_put_pixel(camera->viewport, u, v, rt_color_to_int(color));
+			progress = ((u + 1) + (v + 1) * scene->width) * 100 / total;
+			printf("\rViewport rendering for camera %i [ %i%% ]" AEC_ERASE_EOL,
+				serial_number, progress);
 			++u;
 		}
 		++v;
 	}
+	ft_print("\n");
 }
 
 void	rt_render_scene(t_scene *scene)
 {
 	t_list		*elem;
 	t_camera	*camera;
+	int			camera_serial_number;
 
 	elem = scene->cameras;
+	camera_serial_number = 1;
+	printf(AEC_HIDE_CURSOR);
 	while (elem)
 	{
 		camera = (t_camera *)elem->content;
-		rt_render_viewport(camera, scene);
+		rt_render_viewport(camera_serial_number++, camera, scene);
 		elem = elem->next;
 	}
+	printf(AEC_SHOW_CURSOR);
 }

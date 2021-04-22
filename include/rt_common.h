@@ -24,4 +24,8 @@ typedef float	t_float;
 
 # define PI		ACOS(-1.0)
 
+# define AEC_ERASE_EOL		"\033[0K"
+# define AEC_HIDE_CURSOR	"\033[?25l"
+# define AEC_SHOW_CURSOR	"\033[?25h"
+
 #endif
