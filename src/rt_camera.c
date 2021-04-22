@@ -74,10 +74,7 @@ t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 	else if (z_ornt.z == 0)
 	{
 		u1 = 0.;
-		if (z_ornt.x > 0)
-			u3 = -1.;
-		else if (z_ornt.x < 0)
-			u3 = +1.;
+		u3 = copysign(1., -z_ornt.x);
 	}
 	else if (z_ornt.x != 0.)
 	{
