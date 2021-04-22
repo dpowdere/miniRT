@@ -63,7 +63,6 @@
 
 t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 {
-	t_vector	x_ornt;
 	t_float		u1;
 	t_float		u3;
 
@@ -72,34 +71,24 @@ t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 		u1 = +1.;
 	else if (z_ornt.x == 0 && z_ornt.z < 0)
 		u1 = -1.;
-	if (z_ornt.x != 0.)
+	else if (z_ornt.z == 0)
+	{
+		u1 = 0.;
+		if (z_ornt.x > 0)
+			u3 = -1.;
+		else if (z_ornt.x < 0)
+			u3 = +1.;
+	}
+	else if (z_ornt.x != 0.)
 	{
 		u3 = sqrt(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
 		u1 = sqrt(1. - u3 * u3);
-		if (z_ornt.x > 0 && z_ornt.z > 0)
+		if (z_ornt.x > 0 && (z_ornt.z > 0 && z_ornt.z < 0))
 			u3 = -u3;
-		else if (z_ornt.x < 0 && z_ornt.z > 0)
-			;
-		else if (z_ornt.x < 0 && z_ornt.z < 0)
+		if ((z_ornt.x < 0 || z_ornt.x > 0) && z_ornt.z < 0)
 			u1 = -u1;
-		else if (z_ornt.x > 0 && z_ornt.z < 0)
-		{
-			u1 = -u1;
-			u3 = -u3;
-		}
-		else if (z_ornt.x > 0 && z_ornt.z == 0)
-		{
-			u1 = 0.;
-			u3 = -1.;
-		}
-		else if (z_ornt.x < 0 && z_ornt.z == 0)
-		{
-			u1 = 0.;
-			u3 = +1.;
-		}
 	}
-	x_ornt = vt_init(u1, 0., u3);
-	return (x_ornt);
+	return (vt_init(u1, 0., u3));
 }
 
 void	rt_parse_camera(t_config_line *c)
