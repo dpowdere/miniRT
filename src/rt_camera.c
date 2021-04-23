@@ -74,12 +74,12 @@ t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 	else if (z_ornt.z == 0)
 	{
 		u1 = 0.;
-		u3 = copysign(1., -z_ornt.x);
+		u3 = COPYSIGN(1., -z_ornt.x);
 	}
 	else if (z_ornt.x != 0.)
 	{
-		u3 = sqrt(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
-		u1 = sqrt(1. - u3 * u3);
+		u3 = SQRT(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
+		u1 = SQRT(1. - u3 * u3);
 		if (z_ornt.x > 0 && (z_ornt.z > 0 && z_ornt.z < 0))
 			u3 = -u3;
 		if ((z_ornt.x < 0 || z_ornt.x > 0) && z_ornt.z < 0)
@@ -127,7 +127,7 @@ void	rt_init_camera_viewports(t_scene *scene)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
-		camera->width = TAN(vt_rad(camera->view_angle / 2)) * 2;
+		camera->width = TAN(vt_rad(camera->view_angle / 2.)) * 2.;
 		camera->height = camera->width / scene->width * scene->height;
 		elem = elem->next;
 	}

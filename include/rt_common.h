@@ -15,14 +15,18 @@
 
 # include <math.h>
 
-typedef float	t_float;
+typedef double	t_float;
 
-# define ABS	fabsf
-# define ACOS	acosf
-# define FMOD	fmodf
-# define TAN	tanf
+# define ABS		fabs
+# define ACOS		acos
+# define COPYSIGN	copysign
+# define FMOD		fmod
+# define SQRT		sqrt
+# define TAN		tan
 
-# define PI		ACOS(-1.0)
+# define PI			ACOS(-1.0)
+
+# define FT_STRTOF	ft_strtod
 
 # define AEC_ERASE_EOL		"\033[0K"
 # define AEC_HIDE_CURSOR	"\033[?25l"

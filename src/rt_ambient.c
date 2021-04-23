@@ -10,11 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <stddef.h>
-
-#include <libft.h>
-
 #include "minirt.h"
 
 void	rt_parse_ambient(t_config_line *c)

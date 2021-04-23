@@ -19,7 +19,7 @@
 /*
 ** fcntl.h  - open
 ** math.h   - NAN
-** stddef.h - NULL
+** stddef.h - NULL, size_t
 ** stdlib.h - free
 ** unistd.h - close
 */

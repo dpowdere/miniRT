@@ -57,7 +57,7 @@ t_float	rt_parse_float(t_config_line *c, int ix, const char *scope_name)
 	t_float	value;
 
 	endptr = NULL;
-	value = ft_strtod(c->segments[ix], &endptr);
+	value = FT_STRTOF(c->segments[ix], &endptr);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "Invalid value");
 	return (value);
@@ -95,13 +95,13 @@ t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
 
 	endptr = NULL;
 	rt_parse_triplet(c, ix, scope_name);
-	vec.x = ft_strtod(c->triplet[0], &endptr);
+	vec.x = FT_STRTOF(c->triplet[0], &endptr);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "X attribute: Invalid value");
-	vec.y = ft_strtod(c->triplet[1], &endptr);
+	vec.y = FT_STRTOF(c->triplet[1], &endptr);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "Y attribute: Invalid value");
-	vec.z = ft_strtod(c->triplet[2], &endptr);
+	vec.z = FT_STRTOF(c->triplet[2], &endptr);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "Z attribute: Invalid value");
 	if (should_be_normalized && (vec.x < -1.0 || vec.x > 1.0

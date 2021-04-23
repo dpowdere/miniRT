@@ -26,7 +26,7 @@ t_vector	vt_init(t_float x, t_float y, t_float z)
 
 t_scalar	vt_magnitude(t_vector v)
 {
-	return ((t_scalar)sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	return ((t_scalar)SQRT(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
 t_vector	vt_normalize(t_vector v)
@@ -55,7 +55,7 @@ t_scalar	vt_distance(t_point p1, t_point p2)
 	const t_scalar	dy = p2.y - p1.y;
 	const t_scalar	dz = p2.z - p1.z;
 
-	return ((t_scalar)sqrt(dx * dx + dy * dy + dz * dz));
+	return ((t_scalar)SQRT(dx * dx + dy * dy + dz * dz));
 }
 
 t_vector	vt_add(t_vector a, t_vector b)

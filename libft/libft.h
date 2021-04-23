@@ -41,6 +41,7 @@ int			ft_toupper(int c);
 int			ft_wctomb(char *s, wchar_t wc);
 
 double		ft_strtod(const char *nptr, char **endptr);
+float		ft_strtof(const char *nptr, char **endptr);
 
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
