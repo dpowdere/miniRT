@@ -140,6 +140,7 @@ typedef struct s_intersection
 	void	*object;
 	t_ray	ray;
 	t_point	point;
+	int		is_flip_side;
 }						t_x;
 
 #endif

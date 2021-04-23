@@ -59,7 +59,10 @@ t_color	rt_get_ambient_color(t_vector normal, t_x x, t_scene *scene)
 	if (sp != NULL && !vt_isinf(x.point))
 	{
 		angle = vt_angle(normal, x.ray.orientation);
-		factor = scene->ambient * angle / PI;
+		factor = (angle - PI_2) / PI_2;
+		if (x.is_flip_side)
+			factor = 1. - factor;
+		factor *= scene->ambient;
 		color = rt_init_color(
 				(sp->color.red + scene->ambient_color.red) * factor,
 				(sp->color.green + scene->ambient_color.green) * factor,

@@ -52,11 +52,12 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 			vt_mul_dot(dir, dir),
 			vt_mul_dot(dis, dir) * 2,
 			vt_mul_dot(dis, dis) - sp->radius * sp->radius);
-	if (r.discriminant < 0.0)
+	if (r.discriminant < 0.)
 		return (rt_get_no_intersection(ray, sp));
-	t = rt_get_quadratic_root(r);
 	x.object = sp;
 	x.ray = ray;
+	x.is_flip_side = FALSE;
+	t = rt_get_quadratic_root(r, &x.is_flip_side);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));
 	return (x);
 }
@@ -69,5 +70,7 @@ t_vector	rt_sphere_normal(t_x x)
 	if (sp == NULL)
 		return (vt_init(0, 0, 0));
 	normal = vt_normalize(vt_add(x.point, vt_inv(sp->origin)));
+	if (x.is_flip_side)
+		normal = vt_inv(normal);
 	return (normal);
 }

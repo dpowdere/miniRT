@@ -75,7 +75,6 @@ void	rt_render_viewport(int serial_number, t_camera *camera, t_scene *scene)
 		}
 		++v;
 	}
-	ft_print("\n");
 }
 
 void	rt_render_scene(t_scene *scene)
@@ -93,5 +92,5 @@ void	rt_render_scene(t_scene *scene)
 		rt_render_viewport(camera_serial_number++, camera, scene);
 		elem = elem->next;
 	}
-	printf(AEC_SHOW_CURSOR);
+	printf(AEC_ERASE_LINE "\n" AEC_SHOW_CURSOR);
 }
