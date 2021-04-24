@@ -67,25 +67,25 @@ t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 	t_float		u3;
 
 	u3 = 0.;
-	if (z_ornt.x == 0 && z_ornt.z >= 0)
+	if (fabs(z_ornt.x) < EPS && z_ornt.z >= 0)
 		u1 = +1.;
-	else if (z_ornt.x == 0 && z_ornt.z < 0)
+	else if (fabs(z_ornt.x) < EPS && z_ornt.z <= -EPS)
 		u1 = -1.;
-	else if (z_ornt.z == 0)
+	else if (fabs(z_ornt.z) < EPS)
 	{
 		u1 = 0.;
-		u3 = COPYSIGN(1., -z_ornt.x);
+		u3 = copysign(1., -z_ornt.x);
 	}
-	else if (z_ornt.x != 0.)
+	else if (fabs(z_ornt.x) >= EPS)
 	{
-		u3 = SQRT(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
-		u1 = SQRT(1. - u3 * u3);
-		if (z_ornt.x > 0 && (z_ornt.z > 0 && z_ornt.z < 0))
+		u3 = sqrt(1. / (1. + z_ornt.z * z_ornt.z / (z_ornt.x * z_ornt.x)));
+		u1 = sqrt(1. - u3 * u3);
+		if (z_ornt.x >= EPS && fabs(z_ornt.z) >= EPS)
 			u3 = -u3;
-		if ((z_ornt.x < 0 || z_ornt.x > 0) && z_ornt.z < 0)
+		if (fabs(z_ornt.x) >= EPS && z_ornt.z <= -EPS)
 			u1 = -u1;
 	}
-	return (vt_init(u1, 0., u3));
+	return (vt_normalize(vt_init(u1, 0., u3)));
 }
 
 void	rt_parse_camera(t_config_line *c)
@@ -101,7 +101,7 @@ void	rt_parse_camera(t_config_line *c)
 	camera->origin = rt_parse_vector(c, 1, ORIG_PROP, NON_NORMALIZED);
 	camera->z_ornt = rt_parse_vector(c, 2, ORNT_PROP, NORMALIZED);
 	camera->x_ornt = rt_calc_camera_x_orientation(camera->z_ornt);
-	camera->y_ornt = vt_mul_cross(camera->z_ornt, camera->x_ornt);
+	camera->y_ornt = vt_normalize(vt_mul_cross(camera->z_ornt, camera->x_ornt));
 	camera->view_angle = rt_parse_float(c, 3, VANG_PROP);
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
 		rt_scheme_error(c, RT_CONFIG_LINE, OBJECT, VANG_EMSG);
