@@ -22,7 +22,7 @@ typedef struct s_quadratic_equation_roots
 	double	root2;
 }		t_roots;
 
-double	rt_get_quadratic_root(t_roots r, int *is_inside);
+double	rt_get_quadratic_root(t_roots r, int *is_inside, double limit);
 t_roots	rt_quadratic_equation(double a, double b, double c);
 
 #endif

@@ -43,13 +43,30 @@ t_x	rt_get_nearest_intersection(t_x x1, t_x x2)
 	return (x2);
 }
 
-t_x	rt_get_intersection(t_ray ray, void *object)
+t_x	rt_get_intersection(t_ray ray, void *object, double limit)
 {
 	const t_otype	objtype = (t_objtype)((t_object *)object)->type;
 
 	if (objtype == RT_SPHERE)
-		return (rt_sphere_intersection(ray, object));
+		return (rt_sphere_intersection(ray, object, limit));
 	return (rt_get_no_intersection(ray, object));
+}
+
+t_color	rt_get_illumination(t_vector normal, t_x x, t_scene *scene)
+{
+	t_list	*elem;
+	t_light	*light;
+	t_color color;
+
+	color = rt_get_ambient_illumination(normal, x, scene);
+	elem = scene->lights;
+	while (elem)
+	{
+		light = (t_light *)elem->content;
+		color = rt_get_point_illumination(color, x.point, normal, light);
+		elem = elem->next;
+	}
+	return (color);
 }
 
 t_color	rt_get_color(t_x intersection, t_scene *scene)
@@ -63,5 +80,5 @@ t_color	rt_get_color(t_x intersection, t_scene *scene)
 	normal = vt_init(0, 0, 0);
 	if (objtype == RT_SPHERE)
 		normal = rt_sphere_normal(intersection);
-	return (rt_get_ambient_color(normal, intersection, scene));
+	return (rt_get_illumination(normal, intersection, scene));
 }

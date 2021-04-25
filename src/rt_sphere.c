@@ -40,7 +40,7 @@ void	rt_parse_sphere(t_config_line *c)
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
 
-t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
+t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 {
 	const t_vector	dir = ray.orientation;
 	const t_vector	dis = vt_add(ray.origin, vt_inv(sp->origin));
@@ -58,7 +58,7 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 	x.object = sp;
 	x.ray = ray;
 	x.is_flip_side = FALSE;
-	t = rt_get_quadratic_root(r, &x.is_flip_side);
+	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));
 	return (x);
 }

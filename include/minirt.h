@@ -115,12 +115,14 @@ t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
 double		vt_rad(double deg);
 
-t_color		rt_get_ambient_color(t_vector normal, t_x x, t_scene *scene);
+t_color		rt_get_ambient_illumination(t_vector normal, t_x x, t_scene *scene);
+t_color		rt_get_point_illumination(t_color point_color,
+				t_vector point_origin, t_vector point_normal, t_light *light);
 t_color		rt_get_color(t_x intersection, t_scene *scene);
-t_x			rt_get_intersection(t_ray ray, void *obj);
+t_x			rt_get_intersection(t_ray ray, void *obj, double limit);
 t_x			rt_get_nearest_intersection(t_x x1, t_x x2);
 t_x			rt_get_no_intersection(t_ray ray, void *obj);
-t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp);
+t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit);
 t_vector	rt_sphere_normal(t_x x);
 
 void		rt_error(int error_code, const char *error_msg);

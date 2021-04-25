@@ -19,6 +19,7 @@ SRCS := \
 	rt_bmp.c \
 	rt_error.c \
 	rt_free.c \
+	rt_illumination.c \
 	rt_image.c \
 	rt_intersection.c \
 	rt_parse.c \

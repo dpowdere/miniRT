@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stdio.h>
 
 #include "minirt.h"
@@ -44,7 +45,7 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 	elem = scene->objects;
 	while (elem)
 	{
-		xx = rt_get_intersection(local_ray, elem->content);
+		xx = rt_get_intersection(local_ray, elem->content, INFINITY);
 		nearest_xx = rt_get_nearest_intersection(nearest_xx, xx);
 		elem = elem->next;
 	}
