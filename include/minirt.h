@@ -115,6 +115,7 @@ t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
 double		vt_rad(double deg);
 
+t_color		rt_get_ambient_color(t_vector normal, t_x x, t_scene *scene);
 t_color		rt_get_color(t_x intersection, t_scene *scene);
 t_x			rt_get_intersection(t_ray ray, void *obj);
 t_x			rt_get_nearest_intersection(t_x x1, t_x x2);

@@ -51,3 +51,17 @@ t_x	rt_get_intersection(t_ray ray, void *object)
 		return (rt_sphere_intersection(ray, object));
 	return (rt_get_no_intersection(ray, object));
 }
+
+t_color	rt_get_color(t_x intersection, t_scene *scene)
+{
+	t_otype		objtype;
+	t_vector	normal;
+
+	if (intersection.object == NULL)
+		return (rt_init_color(0, 0, 0));
+	objtype = (t_objtype)((t_object *)intersection.object)->type;
+	normal = vt_init(0, 0, 0);
+	if (objtype == RT_SPHERE)
+		normal = rt_sphere_normal(intersection);
+	return (rt_get_ambient_color(normal, intersection, scene));
+}
