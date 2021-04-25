@@ -17,18 +17,18 @@
 t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
 {
 	t_ray	ray;
-	t_float	x;
-	t_float	y;
-	t_float	z;
+	double	x;
+	double	y;
+	double	z;
 
-	x = u / (t_float)scene->width * camera->width - camera->width / 2.;
-	y = camera->height / 2. - v / (t_float)scene->height * camera->height;
+	x = u / (double)scene->width * camera->width - camera->width / 2.;
+	y = camera->height / 2. - v / (double)scene->height * camera->height;
 	z = 1.;
 	ray.origin = camera->origin;
 	ray.orientation = vt_init(
-		camera->x_ornt.x * x + camera->y_ornt.x * y + camera->z_ornt.x * z,
-		camera->x_ornt.y * x + camera->y_ornt.y * y + camera->z_ornt.y * z,
-		camera->x_ornt.z * x + camera->y_ornt.z * y + camera->z_ornt.z * z);
+			camera->x_ornt.x * x + camera->y_ornt.x * y + camera->z_ornt.x * z,
+			camera->x_ornt.y * x + camera->y_ornt.y * y + camera->z_ornt.y * z,
+			camera->x_ornt.z * x + camera->y_ornt.z * y + camera->z_ornt.z * z);
 	return (ray);
 }
 

@@ -16,32 +16,32 @@
 
 #define T_LIMIT	0.0
 
-t_roots	rt_quadratic_equation(t_float a, t_float b, t_float c)
+t_roots	rt_quadratic_equation(double a, double b, double c)
 {
 	t_roots	roots;
-	t_float	a2;
-	t_float	dsqrt;
+	double	a2;
+	double	dsqrt;
 
 	roots.discriminant = b * b - 4 * a * c;
 	roots.root1 = NAN;
 	roots.root2 = NAN;
-	if (roots.discriminant >= 0.)
+	if (roots.discriminant > -EPS)
 	{
 		a2 = a * 2;
-		dsqrt = SQRT(roots.discriminant);
+		dsqrt = sqrt(roots.discriminant);
 		roots.root1 = (-b + dsqrt) / a2;
-		if (roots.discriminant > 0.)
+		if (roots.discriminant >= EPS)
 			roots.root2 = (-b - dsqrt) / a2;
 	}
 	return (roots);
 }
 
-t_float	rt_get_quadratic_root(t_roots r, int *is_inside)
+double	rt_get_quadratic_root(t_roots r, int *is_inside)
 {
 	*is_inside = FALSE;
-	if (r.discriminant == 0. && r.root1 > T_LIMIT)
+	if (fabs(r.discriminant) < EPS && r.root1 > T_LIMIT)
 		return (r.root1);
-	if (r.discriminant > 0.)
+	if (r.discriminant >= EPS)
 	{
 		if (r.root1 > T_LIMIT && r.root2 <= T_LIMIT)
 		{

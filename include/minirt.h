@@ -27,13 +27,26 @@
 #  define DEBUG	0
 # endif
 
+# ifdef __APPLE__
+#  define ON_MACOS	1
+# else
+#  define ON_MACOS	0
+# endif
+
+# ifdef __linux__
+#  define ON_LINUX	1
+#  define O_SYMLINK	0
+# else
+#  define ON_LINUX	0
+# endif
+
 typedef struct s_scene
 {
 	void		*mlx;
 	void		*window;
 	int			width;
 	int			height;
-	t_float		ambient;
+	double		ambient;
 	t_color		ambient_color;
 	t_list		*cameras;
 	t_list		*active_camera;
@@ -72,7 +85,7 @@ void		rt_tweak_resolution(t_scene *scene);
 
 t_color		rt_parse_color(t_config_line *c, int ix, const char *sname);
 void		rt_parse_config_line(const char *line, size_t lnum, t_scene *s);
-t_float		rt_parse_float(t_config_line *c, int ix, const char *sname);
+double		rt_parse_float(t_config_line *c, int ix, const char *sname);
 void		rt_parse_triplet(t_config_line *c, int ix, const char *sname);
 void		rt_parse_type(t_config_line *c);
 t_vector	rt_parse_vector(t_config_line *c, int ix, const char *sname,
@@ -91,7 +104,7 @@ void		rt_parse_triangle(t_config_line *cline);
 t_vector	vt_add(t_vector a, t_vector b);
 t_scalar	vt_angle(t_vector v, t_vector w);
 t_scalar	vt_distance(t_point p1, t_point p2);
-t_vector	vt_init(t_float x, t_float y, t_float z);
+t_vector	vt_init(double x, double y, double z);
 int			vt_isequal(t_vector a, t_vector b);
 int			vt_isinf(t_vector v);
 t_vector	vt_inv(t_vector v);
@@ -100,7 +113,7 @@ t_vector	vt_mul_cross(t_vector v, t_vector w);
 t_scalar	vt_mul_dot(t_vector v, t_vector w);
 t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
-t_float		vt_rad(t_float deg);
+double		vt_rad(double deg);
 
 t_color		rt_get_color(t_x intersection, t_scene *scene);
 t_x			rt_get_intersection(t_ray ray, void *obj);
@@ -116,18 +129,5 @@ void		rt_perror(void *info, t_infotype infotype);
 void		rt_scheme_error(void *info, t_infotype infotype,
 				const char *scope_name, const char *error_msg);
 void		rt_xerror(t_scene *s, int error_code, const char *error_msg);
-
-# ifdef __APPLE__
-#  define RT_O_RDONLY			O_RDONLY | O_SYMLINK
-#  define DESTROY_XDISPLAY(x)	NULL
-# elif __linux__
-#  define RT_O_RDONLY			O_RDONLY
-#  define DESTROY_XDISPLAY(x)	mlx_destroy_display(x)
-# else
-#  define RT_O_RDONLY			O_RDONLY
-#  define DESTROY_XDISPLAY(x)	NULL
-# endif
-
-# define UNDEFINED	-1
 
 #endif

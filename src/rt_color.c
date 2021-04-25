@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stdint.h>
 
 #include "minirt.h"
@@ -52,14 +53,14 @@ t_color	rt_init_color(int red, int green, int blue)
 t_color	rt_get_ambient_color(t_vector normal, t_x x, t_scene *scene)
 {
 	const t_sphere	*sp = x.object;
-	t_float			angle;
-	t_float			factor;
+	double			angle;
+	double			factor;
 	t_color			color;
 
 	if (sp != NULL && !vt_isinf(x.point))
 	{
 		angle = vt_angle(normal, x.ray.orientation);
-		factor = (angle - PI_2) / PI_2;
+		factor = (angle - acos(0)) / acos(0);
 		if (x.is_flip_side)
 			factor = 1. - factor;
 		factor *= scene->ambient;

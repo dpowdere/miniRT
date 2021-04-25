@@ -44,7 +44,7 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 {
 	const t_vector	dir = ray.orientation;//vt_add(ray.orientation, vt_inv(ray.origin));
 	const t_vector	dis = vt_add(ray.origin, vt_inv(sp->origin));
-	t_float			t;
+	double			t;
 	t_roots			r;
 	t_x				x;
 
@@ -52,7 +52,7 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp)
 			vt_mul_dot(dir, dir),
 			vt_mul_dot(dis, dir) * 2,
 			vt_mul_dot(dis, dis) - sp->radius * sp->radius);
-	if (r.discriminant < 0.)
+	if (r.discriminant < -EPS)
 		return (rt_get_no_intersection(ray, sp));
 	x.object = sp;
 	x.ray = ray;

@@ -63,8 +63,8 @@
 
 t_vector	rt_calc_camera_x_orientation(t_vector z_ornt)
 {
-	t_float		u1;
-	t_float		u3;
+	double		u1;
+	double		u3;
 
 	u3 = 0.;
 	if (fabs(z_ornt.x) < EPS && z_ornt.z >= 0)
@@ -127,7 +127,7 @@ void	rt_init_camera_viewports(t_scene *scene)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
-		camera->width = TAN(vt_rad(camera->view_angle / 2.)) * 2.;
+		camera->width = tan(vt_rad(camera->view_angle / 2.)) * 2.;
 		camera->height = camera->width / scene->width * scene->height;
 		elem = elem->next;
 	}

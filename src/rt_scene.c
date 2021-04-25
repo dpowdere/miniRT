@@ -65,9 +65,9 @@ void	rt_free_scene(t_scene *scene)
 	ft_lstclear(&scene->cameras, rt_free_camera);
 	ft_lstclear(&scene->lights, free);
 	ft_lstclear(&scene->objects, free);
-	if (scene->mlx != NULL)
+	if (scene->mlx != NULL && ON_LINUX)
 	{
-		DESTROY_XDISPLAY(scene->mlx);
+		mlx_destroy_display(scene->mlx);
 		scene->mlx = NULL;
 	}
 }
@@ -111,10 +111,14 @@ void	rt_check_scene(t_scene *scene)
 void	rt_load_scene(const char *pathname, t_scene *scene)
 {
 	int	fd;
+	int	rt_o_rdonly;
 
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
-	fd = open(pathname, RT_O_RDONLY);
+	rt_o_rdonly = O_RDONLY;
+	if (ON_MACOS)
+		rt_o_rdonly |= O_SYMLINK;
+	fd = open(pathname, rt_o_rdonly);
 	if (fd == -1)
 		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);

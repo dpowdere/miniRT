@@ -27,13 +27,13 @@ typedef struct s_color
 
 typedef struct s_point
 {
-	t_float	x;
-	t_float	y;
-	t_float	z;
+	double	x;
+	double	y;
+	double	z;
 }						t_point;
 
 typedef t_point			t_vector;
-typedef t_float			t_scalar;
+typedef double			t_scalar;
 
 # define NORMALIZED		1
 # define NON_NORMALIZED	0
@@ -73,16 +73,16 @@ typedef struct s_camera
 	t_vector	x_ornt;
 	t_vector	y_ornt;
 	t_vector	z_ornt;
-	t_float		view_angle;
+	double		view_angle;
 	t_image		*viewport;
-	t_float		width;
-	t_float		height;
+	double		width;
+	double		height;
 }						t_camera;
 
 typedef struct s_light
 {
 	t_vector	origin;
-	t_float		intensity;
+	double		intensity;
 	t_color		color;
 }						t_light;
 
@@ -96,8 +96,8 @@ typedef struct s_cylinder
 	t_objtype	type;
 	t_vector	origin;
 	t_vector	orientation;
-	t_float		diameter;
-	t_float		height;
+	double		diameter;
+	double		height;
 	t_color		color;
 }						t_cylinder;
 
@@ -113,7 +113,7 @@ typedef struct s_sphere
 {
 	t_objtype	type;
 	t_vector	origin;
-	t_float		radius;
+	double		radius;
 	t_color		color;
 }						t_sphere;
 
@@ -122,7 +122,7 @@ typedef struct s_square
 	t_objtype	type;
 	t_vector	origin;
 	t_vector	orientation;
-	t_float		side_size;
+	double		side_size;
 	t_color		color;
 }						t_square;
 
