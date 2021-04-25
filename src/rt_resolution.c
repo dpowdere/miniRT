@@ -17,7 +17,8 @@
 
 #include "minirt.h"
 
-#define BASE 10
+#define BASE	10
+#define SCREEN_HEADER_HEIGHT	100
 
 void	rt_parse_resolution(t_config_line *c)
 {
@@ -47,12 +48,12 @@ void	rt_tweak_resolution(t_scene *scene)
 	int	screen_height;
 
 	screen_width = 8192;
-	screen_height = 8192;
-	//if (scene->mlx)
-	//	if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
-	//		rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	screen_height = 8192 + SCREEN_HEADER_HEIGHT;
+	if (scene->mlx)
+		if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
+			rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	if (scene->width > screen_width)
 		scene->width = screen_width;
-	if (scene->height > screen_height)
-		scene->height = screen_height;
+	if (scene->height > screen_height - SCREEN_HEADER_HEIGHT)
+		scene->height = screen_height - SCREEN_HEADER_HEIGHT;
 }
