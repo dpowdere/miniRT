@@ -104,7 +104,7 @@ void		rt_parse_square(t_config_line *cline);
 void		rt_parse_triangle(t_config_line *cline);
 
 t_vector	vt_add(t_vector a, t_vector b);
-t_scalar	vt_angle(t_vector v, t_vector w);
+t_scalar	vt_cos_angle(t_vector v, t_vector w);
 t_scalar	vt_distance(t_point p1, t_point p2);
 t_vector	vt_init(double x, double y, double z);
 int			vt_isequal(t_vector a, t_vector b);
@@ -117,7 +117,6 @@ t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
 double		vt_rad(double deg);
 
-t_color		rt_ambient_illumination_only(t_x x, t_scene *scene);
 t_color		rt_get_point_illumination(t_x x, t_light *light);
 t_color		rt_get_color(t_x intersection, t_scene *scene);
 

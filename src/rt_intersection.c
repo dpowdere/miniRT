@@ -12,7 +12,6 @@
 
 #include <math.h>
 #include <stddef.h>
-#include <stdio.h>
 
 #include "minirt.h"
 
@@ -62,25 +61,14 @@ t_color	rt_get_illumination(t_x x, t_scene *scene)
 	t_color color;
 
 	elem = scene->lights;
-	if (elem == NULL)
-		color = rt_ambient_illumination_only(x, scene);
-	else
-		color = rt_color_brightness(
-			rt_color_merge(x.color, scene->ambient_color), scene->ambient);
-	dprintf(2, "\n--------------\n\n");
-	dprintf(2, "(%i, %i, %i)", x.color.red, x.color.green, x.color.blue);
-	dprintf(2, " * (%i, %i, %i)", scene->ambient_color.red, scene->ambient_color.green, scene->ambient_color.blue);
-	dprintf(2, " * %g", scene->ambient);
-	dprintf(2, " --> (%i, %i, %i)", color.red, color.green, color.blue);
+	color = rt_color_merge(x.color, scene->ambient_color);
+	color = rt_color_brightness(color, scene->ambient);
 	while (elem)
 	{
-		dprintf(2, " :");
 		light = (t_light *)elem->content;
 		color = rt_color_add(color, rt_get_point_illumination(x, light));
-		dprintf(2, " --> (%i, %i, %i)", color.red, color.green, color.blue);
 		elem = elem->next;
 	}
-	dprintf(2, "\n");
 	return (color);
 }
 

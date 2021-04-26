@@ -39,13 +39,13 @@ t_vector	vt_normalize(t_vector v)
 	return (v);
 }
 
-t_scalar	vt_angle(t_vector v, t_vector w)
+t_scalar	vt_cos_angle(t_vector v, t_vector w)
 {
 	const t_scalar	vm = vt_magnitude(v);
 	const t_scalar	wm = vt_magnitude(w);
 	const t_scalar	x = vt_mul_dot(v, w) / (vm * wm);
 
-	return (acos(x));
+	return (x);
 }
 
 t_scalar	vt_distance(t_point p1, t_point p2)
