@@ -123,8 +123,10 @@ t_color		rt_get_color(t_x intersection, t_scene *scene);
 t_x			rt_get_intersection(t_ray ray, void *obj, double limit);
 t_x			rt_get_nearest_intersection(t_x x1, t_x x2);
 t_x			rt_get_no_intersection(t_ray ray, void *obj);
+t_x			rt_plane_intersection(t_ray ray, t_plane *pl, double limit);
 t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit);
 
+void		rt_plane_normal(t_x *x);
 void		rt_sphere_normal(t_x *x);
 
 void		rt_error(int error_code, const char *error_msg);

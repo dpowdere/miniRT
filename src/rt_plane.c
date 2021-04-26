@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -38,4 +39,38 @@ void	rt_parse_plane(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	}
 	ft_lstadd_back(&c->scene->objects, list_element);
+}
+
+t_x	rt_plane_intersection(t_ray ray, t_plane *pl, double limit)
+{
+	const t_scalar	a = vt_mul_dot(ray.orientation, pl->orientation);
+	t_scalar		b;
+	double			t;
+	t_x				x;
+
+	x = rt_get_no_intersection(ray, pl);
+	if (fabs(a) < EPS)
+		return (x);
+	b = vt_mul_dot(vt_add(ray.origin, vt_inv(pl->origin)), pl->orientation);
+	if (fabs(b) < EPS)
+		return (x);
+	t = -b / a;
+	if (t < EPS || limit - t < EPS)
+		return (x);
+	if (b <= -EPS)
+		x.is_flip_side = TRUE;
+	x.point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
+	x.color = pl->color;
+	return (x);
+}
+
+void	rt_plane_normal(t_x *x)
+{
+	const t_plane	*pl = x->object;
+
+	if (pl == NULL)
+		return ;
+	x->normal = pl->orientation;
+	if (x->is_flip_side)
+		x->normal = vt_inv(pl->orientation);
 }

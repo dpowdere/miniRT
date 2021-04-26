@@ -52,10 +52,9 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 			vt_mul_dot(dir, dir),
 			vt_mul_dot(dis, dir) * 2,
 			vt_mul_dot(dis, dis) - sp->radius * sp->radius);
+	x = rt_get_no_intersection(ray, sp);
 	if (r.discriminant < -EPS)
-		return (rt_get_no_intersection(ray, sp));
-	x.object = sp;
-	x.ray = ray;
+		return (x);
 	x.is_flip_side = FALSE;
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));

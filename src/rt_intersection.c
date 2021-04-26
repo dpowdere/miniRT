@@ -51,6 +51,8 @@ t_x	rt_get_intersection(t_ray ray, void *object, double limit)
 
 	if (objtype == RT_SPHERE)
 		return (rt_sphere_intersection(ray, object, limit));
+	else if (objtype == RT_PLANE)
+		return (rt_plane_intersection(ray, object, limit));
 	return (rt_get_no_intersection(ray, object));
 }
 
@@ -81,6 +83,8 @@ t_color	rt_get_color(t_x intersection, t_scene *scene)
 	objtype = (t_objtype)((t_object *)intersection.object)->type;
 	if (objtype == RT_SPHERE)
 		rt_sphere_normal(&intersection);
+	else if (objtype == RT_PLANE)
+		rt_plane_normal(&intersection);
 	else
 		return (rt_init_color(0, 0, 0));
 	return (rt_get_illumination(intersection, scene));
