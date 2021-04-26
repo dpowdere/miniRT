@@ -137,10 +137,12 @@ typedef struct s_triangle
 
 typedef struct s_intersection
 {
-	void	*object;
-	t_ray	ray;
-	t_point	point;
-	int		is_flip_side;
+	void		*object;
+	t_ray		ray;
+	t_point		point;
+	t_vector	normal;
+	int			is_flip_side;
+	t_color		color;
 }						t_x;
 
 #endif

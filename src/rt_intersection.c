@@ -12,6 +12,7 @@
 
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #include "minirt.h"
 
@@ -22,7 +23,9 @@ t_x	rt_get_no_intersection(t_ray ray, void *obj)
 	x.object = obj;
 	x.ray = ray;
 	x.point = vt_init(INFINITY, INFINITY, INFINITY);
+	x.normal = vt_init(0, 0, 0);
 	x.is_flip_side = FALSE;
+	x.color = rt_init_color(0, 0, 0);
 	return (x);
 }
 
@@ -52,33 +55,45 @@ t_x	rt_get_intersection(t_ray ray, void *object, double limit)
 	return (rt_get_no_intersection(ray, object));
 }
 
-t_color	rt_get_illumination(t_vector normal, t_x x, t_scene *scene)
+t_color	rt_get_illumination(t_x x, t_scene *scene)
 {
 	t_list	*elem;
 	t_light	*light;
 	t_color color;
 
-	color = rt_get_ambient_illumination(normal, x, scene);
 	elem = scene->lights;
+	if (elem == NULL)
+		color = rt_ambient_illumination_only(x, scene);
+	else
+		color = rt_color_brightness(
+			rt_color_merge(x.color, scene->ambient_color), scene->ambient);
+	dprintf(2, "\n--------------\n\n");
+	dprintf(2, "(%i, %i, %i)", x.color.red, x.color.green, x.color.blue);
+	dprintf(2, " * (%i, %i, %i)", scene->ambient_color.red, scene->ambient_color.green, scene->ambient_color.blue);
+	dprintf(2, " * %g", scene->ambient);
+	dprintf(2, " --> (%i, %i, %i)", color.red, color.green, color.blue);
 	while (elem)
 	{
+		dprintf(2, " :");
 		light = (t_light *)elem->content;
-		color = rt_get_point_illumination(color, x.point, normal, light);
+		color = rt_color_add(color, rt_get_point_illumination(x, light));
+		dprintf(2, " --> (%i, %i, %i)", color.red, color.green, color.blue);
 		elem = elem->next;
 	}
+	dprintf(2, "\n");
 	return (color);
 }
 
 t_color	rt_get_color(t_x intersection, t_scene *scene)
 {
 	t_otype		objtype;
-	t_vector	normal;
 
-	if (intersection.object == NULL)
+	if (intersection.object == NULL || vt_isinf(intersection.point))
 		return (rt_init_color(0, 0, 0));
 	objtype = (t_objtype)((t_object *)intersection.object)->type;
-	normal = vt_init(0, 0, 0);
 	if (objtype == RT_SPHERE)
-		normal = rt_sphere_normal(intersection);
-	return (rt_get_illumination(normal, intersection, scene));
+		rt_sphere_normal(&intersection);
+	else
+		return (rt_init_color(0, 0, 0));
+	return (rt_get_illumination(intersection, scene));
 }

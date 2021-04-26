@@ -15,37 +15,73 @@
 
 #include "minirt.h"
 
-static inline int	rt_color_normalize(int x)
-{
-	if (x < 0)
-		x = 0;
-	else if (x > 255)
-		x = 255;
-	return (x);
-}
-
-int32_t	rt_color_channels_to_int(int red, int green, int blue)
+int32_t	rt_color_to_int(t_color c)
 {
 	uint32_t	color;
 
-	color = 0u;
-	color |= rt_color_normalize(red) << 16;
-	color |= rt_color_normalize(green) << 8;
-	color |= rt_color_normalize(blue);
+	color = (uint32_t)0;
+	color |= (uint32_t)c.red << 16;
+	color |= (uint32_t)c.green << 8;
+	color |= (uint32_t)c.blue;
 	return (*(int32_t *)&color);
-}
-
-int32_t	rt_color_to_int(t_color c)
-{
-	return (rt_color_channels_to_int(c.red, c.green, c.blue));
 }
 
 t_color	rt_init_color(int red, int green, int blue)
 {
 	t_color	c;
 
-	c.red = rt_color_normalize(red);
-	c.green = rt_color_normalize(green);
-	c.blue = rt_color_normalize(blue);
+	if (red < 0)
+		red = 0;
+	else if (red > 255)
+		red = 255;
+	if (green < 0)
+		green = 0;
+	else if (green > 255)
+		green = 255;
+	if (blue < 0)
+		blue = 0;
+	else if (blue > 255)
+		blue = 255;
+	c.red = red;
+	c.green = green;
+	c.blue = blue;
 	return (c);
+}
+
+t_color	rt_color_brightness(t_color color, double brightness)
+{
+	if (brightness < 0.)
+		brightness = 0.;
+	color.red *= brightness;
+	color.green *= brightness;
+	color.blue *= brightness;
+	if (color.red > 255)
+		color.red = 255;
+	if (color.green > 255)
+		color.green = 255;
+	if (color.blue > 255)
+		color.blue = 255;
+	return (color);
+}
+
+t_color rt_color_merge(t_color c1, t_color c2)
+{
+	c1.red = (c1.red * c2.red) / 255;
+	c1.green = (c1.green * c2.green) / 255;
+	c1.blue = (c1.blue * c2.blue) / 255;
+	return (c1);
+}
+
+t_color rt_color_add(t_color c1, t_color c2)
+{
+	c1.red += c2.red;
+	c1.green += c2.green;
+	c1.blue += c2.blue;
+	if (c1.red > 255)
+		c1.red = 255;
+	if (c1.green > 255)
+		c1.green = 255;
+	if (c1.blue > 255)
+		c1.blue = 255;
+	return (c1);
 }

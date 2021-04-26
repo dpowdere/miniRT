@@ -65,7 +65,9 @@ typedef struct s_config_line
 }			t_config_line;
 
 void		rt_check_scene(t_scene *scene);
-int32_t		rt_color_channels_to_int(int red, int green, int blue);
+t_color 	rt_color_add(t_color c1, t_color c2);
+t_color		rt_color_brightness(t_color color, double brightness);
+t_color 	rt_color_merge(t_color c1, t_color c2);
 int32_t		rt_color_to_int(t_color c);
 void		rt_config_line_regular_free(t_config_line *cline);
 void		rt_config_line_emergency_free(t_config_line *cline);
@@ -115,15 +117,16 @@ t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
 double		vt_rad(double deg);
 
-t_color		rt_get_ambient_illumination(t_vector normal, t_x x, t_scene *scene);
-t_color		rt_get_point_illumination(t_color point_color,
-				t_vector point_origin, t_vector point_normal, t_light *light);
+t_color		rt_ambient_illumination_only(t_x x, t_scene *scene);
+t_color		rt_get_point_illumination(t_x x, t_light *light);
 t_color		rt_get_color(t_x intersection, t_scene *scene);
+
 t_x			rt_get_intersection(t_ray ray, void *obj, double limit);
 t_x			rt_get_nearest_intersection(t_x x1, t_x x2);
 t_x			rt_get_no_intersection(t_ray ray, void *obj);
 t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit);
-t_vector	rt_sphere_normal(t_x x);
+
+void		rt_sphere_normal(t_x *x);
 
 void		rt_error(int error_code, const char *error_msg);
 void		rt_parsing_error(t_config_line *cline,

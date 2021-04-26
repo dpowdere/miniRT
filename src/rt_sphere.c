@@ -47,7 +47,6 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 	double			t;
 	t_roots			r;
 	t_x				x;
-	//const t_vector	dir = vt_add(ray.orientation, vt_inv(ray.origin));
 
 	r = rt_quadratic_equation(
 			vt_mul_dot(dir, dir),
@@ -60,18 +59,19 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 	x.is_flip_side = FALSE;
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));
+	x.color = sp->color;
 	return (x);
 }
 
-t_vector	rt_sphere_normal(t_x x)
+void	rt_sphere_normal(t_x *x)
 {
-	const t_sphere	*sp = x.object;
+	const t_sphere	*sp = x->object;
 	t_vector		normal;
 
 	if (sp == NULL)
-		return (vt_init(0, 0, 0));
-	normal = vt_normalize(vt_add(x.point, vt_inv(sp->origin)));
-	if (x.is_flip_side)
+		return ;
+	normal = vt_normalize(vt_add(x->point, vt_inv(sp->origin)));
+	if (x->is_flip_side)
 		normal = vt_inv(normal);
-	return (normal);
+	x->normal = normal;
 }
