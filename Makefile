@@ -22,6 +22,7 @@ SRCS := \
 	rt_illumination.c \
 	rt_image.c \
 	rt_intersection.c \
+	rt_orientation.c \
 	rt_parse.c \
 	rt_parse_config_line.c \
 	rt_quadratic.c \

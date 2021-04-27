@@ -55,7 +55,6 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 	x = rt_get_no_intersection(ray, sp);
 	if (r.discriminant < -EPS)
 		return (x);
-	x.is_flip_side = FALSE;
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));
 	x.color = sp->color;

@@ -116,6 +116,8 @@ t_scalar	vt_mul_dot(t_vector v, t_vector w);
 t_vector	vt_mul_sc(t_vector v, t_scalar k);
 t_vector	vt_normalize(t_vector v);
 double		vt_rad(double deg);
+t_vector	rt_zx_orientation(t_vector z_ornt);
+t_vector	rt_zxy_orientation(t_vector z_ornt, t_vector x_ornt);
 
 t_color		rt_get_point_illumination(t_x x, t_light *light);
 t_color		rt_get_color(t_x intersection, t_scene *scene);

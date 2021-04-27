@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
+
 #include "minirt.h"
 
 t_color	rt_get_point_illumination(t_x x, t_light *light)
@@ -36,8 +38,15 @@ int	rt_is_point_shaded(t_x x_old, t_light *light, t_scene *scene)
 	elem = scene->objects;
 	ray.origin = x_old.point;
 	ray.orientation = vt_add(light->origin, vt_inv(x_old.point));
-	while (elem && vt_isinf(x.point))
+	if (vt_cos_angle(x_old.normal, ray.orientation) < EPS)
+		return (FALSE);
+	while (elem)
 	{
+		if (elem->content == x_old.object)
+		{
+			elem = elem->next;
+			continue ;
+		}
 		x = rt_get_intersection(ray, elem->content, 1.);
 		if (!vt_isinf(x.point))
 			return (TRUE);
