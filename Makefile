@@ -145,7 +145,7 @@ debug:
 	test $(NAME) -nt core && gdb ./$(NAME) || gdb ./$(NAME) core
 
 norm:
-	norminette $(SRCDIR) $(INCDIR) $(LIBFT) | grep -v 'OK!'
+	norminette $(SRCDIR) $(INCDIR) $(LIBFT) | grep -v 'OK!' || true
 
 deps-install-linux:
 	sudo apt-get install gcc make xorg libxext-dev libbsd-dev

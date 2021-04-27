@@ -65,9 +65,9 @@ typedef struct s_config_line
 }			t_config_line;
 
 void		rt_check_scene(t_scene *scene);
-t_color 	rt_color_add(t_color c1, t_color c2);
+t_color		rt_color_add(t_color c1, t_color c2);
 t_color		rt_color_brightness(t_color color, double brightness);
-t_color 	rt_color_merge(t_color c1, t_color c2);
+t_color		rt_color_merge(t_color c1, t_color c2);
 int32_t		rt_color_to_int(t_color c);
 void		rt_config_line_regular_free(t_config_line *cline);
 void		rt_config_line_emergency_free(t_config_line *cline);

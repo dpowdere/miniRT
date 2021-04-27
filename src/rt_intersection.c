@@ -55,37 +55,3 @@ t_x	rt_get_intersection(t_ray ray, void *object, double limit)
 		return (rt_plane_intersection(ray, object, limit));
 	return (rt_get_no_intersection(ray, object));
 }
-
-t_color	rt_get_illumination(t_x x, t_scene *scene)
-{
-	t_list	*elem;
-	t_light	*light;
-	t_color color;
-
-	elem = scene->lights;
-	color = rt_color_merge(x.color, scene->ambient_color);
-	color = rt_color_brightness(color, scene->ambient);
-	while (elem)
-	{
-		light = (t_light *)elem->content;
-		color = rt_color_add(color, rt_get_point_illumination(x, light));
-		elem = elem->next;
-	}
-	return (color);
-}
-
-t_color	rt_get_color(t_x intersection, t_scene *scene)
-{
-	t_otype		objtype;
-
-	if (intersection.object == NULL || vt_isinf(intersection.point))
-		return (rt_init_color(0, 0, 0));
-	objtype = (t_objtype)((t_object *)intersection.object)->type;
-	if (objtype == RT_SPHERE)
-		rt_sphere_normal(&intersection);
-	else if (objtype == RT_PLANE)
-		rt_plane_normal(&intersection);
-	else
-		return (rt_init_color(0, 0, 0));
-	return (rt_get_illumination(intersection, scene));
-}

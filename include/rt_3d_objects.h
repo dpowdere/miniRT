@@ -35,8 +35,8 @@ typedef struct s_point
 typedef t_point			t_vector;
 typedef double			t_scalar;
 
-# define NORMALIZED		1
 # define NON_NORMALIZED	0
+# define NORMALIZED		1
 
 typedef struct s_ray
 {

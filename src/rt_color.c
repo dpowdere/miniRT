@@ -64,7 +64,7 @@ t_color	rt_color_brightness(t_color color, double brightness)
 	return (color);
 }
 
-t_color rt_color_merge(t_color c1, t_color c2)
+t_color	rt_color_merge(t_color c1, t_color c2)
 {
 	c1.red = (c1.red * c2.red) / 255;
 	c1.green = (c1.green * c2.green) / 255;
@@ -72,7 +72,7 @@ t_color rt_color_merge(t_color c1, t_color c2)
 	return (c1);
 }
 
-t_color rt_color_add(t_color c1, t_color c2)
+t_color	rt_color_add(t_color c1, t_color c2)
 {
 	c1.red += c2.red;
 	c1.green += c2.green;
