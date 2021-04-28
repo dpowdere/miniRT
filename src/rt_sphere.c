@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -56,6 +57,8 @@ t_x	rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit)
 	if (r.discriminant < -EPS)
 		return (x);
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
+	if (isnan(t))
+		return (x);
 	x.point = vt_add(ray.origin, vt_mul_sc(dir, t));
 	x.color = sp->color;
 	return (x);
