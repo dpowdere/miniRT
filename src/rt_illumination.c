@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 07:13:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/04/27 07:13:45 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/28 20:05:03 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ t_color	rt_get_color(t_x intersection, t_scene *scene)
 		rt_sphere_normal(&intersection);
 	else if (objtype == RT_PLANE)
 		rt_plane_normal(&intersection);
+	else if (objtype == RT_CYLINDER)
+		rt_cylinder_normal(&intersection);
 	else
 		return (rt_init_color(0, 0, 0));
 	return (rt_get_illumination(intersection, scene));
