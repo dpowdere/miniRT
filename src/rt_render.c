@@ -70,8 +70,8 @@ void	rt_render_viewport(int serial_number, t_camera *camera, t_scene *scene)
 			color = rt_trace_ray(u, v, camera, scene);
 			rt_put_pixel(camera->viewport, u, v, rt_color_to_int(color));
 			progress = ((u + 1) + (v + 1) * scene->width) * 100 / total;
-			printf("\rViewport rendering for camera %i [ %i%% ]" AEC_ERASE_EOL,
-				serial_number, progress);
+			printf("\rViewport rendering for camera %i . . .%3i%%"
+				AEC_ERASE_EOL, serial_number, progress);
 			++u;
 		}
 		++v;
