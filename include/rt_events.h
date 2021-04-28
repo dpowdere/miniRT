@@ -13,18 +13,6 @@
 #ifndef RT_EVENTS_H
 # define RT_EVENTS_H
 
-# ifdef __APPLE__
-#  define KEY_ENTER	36
-#  define KEY_ESQ	53
-#  define KEY_Q		12
-# endif
-
-# ifdef __linux__
-#  define KEY_ENTER	65293
-#  define KEY_ESQ	65307
-#  define KEY_Q		113
-# endif
-
 # define XEVENT_KEY_PRESS				2
 # define XEVENT_KEY_RELEASE				3
 # define XEVENT_BUTTON_PRESS			4
@@ -67,5 +55,28 @@
 # define XMASK_SUBSTRUCTURE_NOTIFY		524288L
 # define XMASK_SUBSTRUCTURE_REDIRECT	1048576L
 # define XMASK_FOCUS_CHANGE				2097152L
+
+# ifdef __APPLE__
+#  define KEY_ENTER	36
+#  define KEY_ESQ	53
+#  define KEY_Q		12
+
+#  define XEVENT_X  XEVENT_DESTROY_NOTIFY
+#  define XMASK_X   XMASK_VISIBILITY_CHANGE
+# endif
+
+# ifdef __linux__
+#  define KEY_ENTER	65293
+#  define KEY_ESQ	65307
+#  define KEY_Q		113
+
+/*
+** NOTE: For closing a window on Linux see `ClientMessage` X event
+** https://tronche.com/gui/x/xlib/events/ and `WM_DELETE_WINDOW` ICCCM
+** protocol https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
+*/
+#  define XEVENT_X  XEVENT_CLIENT_MESSAGE
+#  define XMASK_X   XMASK_NO_EVENT
+# endif
 
 #endif

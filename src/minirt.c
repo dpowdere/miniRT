@@ -44,17 +44,11 @@ void	rt_show_in_window(t_scene *s)
 	mlx_clear_window(s->mlx, s->window);
 	camera = s->active_camera->content;
 	mlx_put_image_to_window(s->mlx, s->window, camera->viewport->img, 0, 0);
-	mlx_hook(s->window, XEVENT_CLIENT_MESSAGE, XMASK_NO_EVENT, rt_on_close, s);
+	mlx_hook(s->window, XEVENT_X, XMASK_X, rt_on_close, s);
 	mlx_key_hook(s->window, rt_on_keypress, s);
 	mlx_loop(s->mlx);
 	rt_xerror(s, RT_ERROR_XLOOP, RT_ERROR_XLOOP_MSG);
 }
-
-/*
-** NOTE: For closing a window see `ClientMessage` X event
-** https://tronche.com/gui/x/xlib/events/ and `WM_DELETE_WINDOW` ICCCM
-** protocol https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
-*/
 
 int	main(int argc, char **argv)
 {

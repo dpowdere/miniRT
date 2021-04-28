@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 09:22:34 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/04/27 09:22:36 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/28 12:53:44 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_vector	rt_zx_orientation(t_vector z_ornt)
 	double	u3;
 
 	u3 = 0.;
+	u1 = 1.;
 	if (fabs(z_ornt.x) < EPS && z_ornt.z >= 0)
 		u1 = +1.;
 	else if (fabs(z_ornt.x) < EPS && z_ornt.z <= -EPS)

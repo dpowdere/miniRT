@@ -46,12 +46,16 @@ void	rt_tweak_resolution(t_scene *scene)
 {
 	int	screen_width;
 	int	screen_height;
+	int	ret;
 
 	screen_width = 8192;
 	screen_height = 8192 + SCREEN_HEADER_HEIGHT;
 	if (scene->mlx)
-		if (!mlx_get_screen_size(scene->mlx, &screen_width, &screen_height))
+	{
+		ret = mlx_get_screen_size(scene->mlx, &screen_width, &screen_height);
+		if ((ret && ON_MACOS) || (!ret && ON_LINUX))
 			rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
+	}
 	if (scene->width > screen_width)
 		scene->width = screen_width;
 	if (scene->height > screen_height - SCREEN_HEADER_HEIGHT)

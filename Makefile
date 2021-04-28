@@ -6,7 +6,7 @@
 #    By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 22:31:34 by dpowdere          #+#    #+#              #
-#    Updated: 2021/04/15 16:19:46 by dpowdere         ###   ########.fr        #
+#    Updated: 2021/04/28 15:23:38 by dpowdere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ clean:
 	$(RM) -r $(OBJDIR)/*.o $(OBJDIR)/*.d
 
 fclean: clean
-	$(RM) $(NAME) *.dSYM core* *.bmp
+	$(RM) -r $(NAME) *.dSYM core* *.bmp
 
 re: fclean all
 

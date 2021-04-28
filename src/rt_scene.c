@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 18:22:47 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/11 18:38:43 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/04/28 12:56:24 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ void	rt_free_scene(t_scene *scene)
 	ft_lstclear(&scene->cameras, rt_free_camera);
 	ft_lstclear(&scene->lights, free);
 	ft_lstclear(&scene->objects, free);
-	if (scene->mlx != NULL && ON_LINUX)
-	{
-		mlx_destroy_display(scene->mlx);
-		scene->mlx = NULL;
-	}
+	scene->mlx = NULL;
 }
 
 void	rt_read_scene(int fd, t_scene *scene)
@@ -111,14 +107,10 @@ void	rt_check_scene(t_scene *scene)
 void	rt_load_scene(const char *pathname, t_scene *scene)
 {
 	int	fd;
-	int	rt_o_rdonly;
 
 	if (!ft_str_endswith(pathname, ".rt"))
 		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
-	rt_o_rdonly = O_RDONLY;
-	if (ON_MACOS)
-		rt_o_rdonly |= O_SYMLINK;
-	fd = open(pathname, rt_o_rdonly);
+	fd = open(pathname, O_RDONLY);
 	if (fd == -1)
 		rt_perror((void *)scene, RT_SCENE);
 	rt_read_scene(fd, scene);

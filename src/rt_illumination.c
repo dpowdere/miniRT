@@ -39,7 +39,7 @@ int	rt_is_point_shaded(t_x x_old, t_light *light, t_scene *scene)
 	ray.origin = x_old.point;
 	ray.orientation = vt_add(light->origin, vt_inv(x_old.point));
 	if (vt_cos_angle(x_old.normal, ray.orientation) < EPS)
-		return (FALSE);
+		return (TRUE);
 	while (elem)
 	{
 		if (elem->content == x_old.object)
