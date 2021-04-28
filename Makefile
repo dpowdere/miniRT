@@ -6,7 +6,7 @@
 #    By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/01 22:31:34 by dpowdere          #+#    #+#              #
-#    Updated: 2021/04/28 15:23:38 by dpowdere         ###   ########.fr        #
+#    Updated: 2021/04/28 16:07:09 by dpowdere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,9 +59,7 @@ OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
 
 LIBFT	:=	libft
-LIBXMTL	:=	libmlx/macos_metal
-LIBXOGL	:=	libmlx/macos_opengl
-LIBX	:=	$(LIBXMTL)
+LIBX	:=	libmlx/macos_metal
 ifdef ON_LINUX
   LIBX	:=	libmlx/linux
 endif
@@ -84,9 +82,6 @@ CPPFLAGS	=	-MMD -MP -MT $@ -I$(INCDIR) -I$(LIBX) -I$(LIBFT)
 CFLAGS		:=	-Wall -Wextra -Werror -c
 LDFLAGS		:=	-L$(LIBX) -L$(LIBFT)
 LDLIBS		:=	-lm -lft -lmlx
-ifeq ($(LIBX),$(LIBOGL))
-  LDLIBS	+=	-framework OpenGL -framework AppKit -lz
-endif
 ifdef ON_LINUX
   LDLIBS	+=	-lXext -lX11
 endif
@@ -107,8 +102,8 @@ $(shell mkdir -p $(OBJDIR))
 
 $(NAME): $(OBJS) $(STUBFT) $(STUBX)
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
-ifeq ($(LIBX),$(LIBXMTL))
-	install_name_tool -change libmlx.dylib $(LIBXMTL)/libmlx.dylib $(NAME)
+ifndef ON_LINUX
+	install_name_tool -change libmlx.dylib $(LIBX)/libmlx.dylib $(NAME)
 endif
 
 %.o: %.c
