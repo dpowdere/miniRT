@@ -126,7 +126,7 @@ t_x			rt_get_intersection(t_ray ray, void *obj, double limit);
 t_x			rt_get_nearest_intersection(t_x x1, t_x x2);
 t_x			rt_get_no_intersection(t_ray ray, void *obj);
 
-t_x			rt_cylinder_intersection(t_ray ray, t_plane *pl, double limit);
+t_x			rt_cylinder_intersection(t_ray ray, t_cylinder *cy, double limit);
 t_x			rt_plane_intersection(t_ray ray, t_plane *pl, double limit);
 t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit);
 

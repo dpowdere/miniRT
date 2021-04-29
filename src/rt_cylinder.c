@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -30,7 +31,7 @@ void	rt_parse_cylinder(t_config_line *c)
 	*(int *)&cy->type = RT_CYLINDER;
 	cy->origin = rt_parse_vector(c, 1, "Cylinder origin", NON_NORMALIZED);
 	cy->orientation = rt_parse_vector(c, 2, "Cylinder orientation", NORMALIZED);
-	cy->diameter = rt_parse_float(c, 3, "Cylinder diameter");
+	cy->radius = rt_parse_float(c, 3, "Cylinder diameter") / 2.;
 	cy->height = rt_parse_float(c, 4, "Cylinder height");
 	cy->color = rt_parse_color(c, 5, "Cylinder color");
 	list_element = ft_lstnew(cy);
@@ -42,12 +43,27 @@ void	rt_parse_cylinder(t_config_line *c)
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
 
-t_x	rt_cylinder_intersection(t_ray ray, t_plane *pl, double limit)
+t_x	rt_cylinder_intersection(t_ray ray, t_cylinder *cy, double limit)
 {
-	t_x	x;
+	const t_vector	ab = vt_add(ray.origin, vt_inv(cy->origin));
+	const t_vector	alpha = vt_add(ab, vt_inv(vt_mul_sc(cy->orientation, vt_mul_dot(cy->orientation, ab))));
+	const t_vector	beta = vt_add(ray.orientation, vt_mul_sc(cy->orientation, vt_mul_dot(cy->orientation, ray.orientation)));
+	t_x				x;
+	t_roots			r;
+	double			t;
 
-	(void)limit;
-	x = rt_get_no_intersection(ray, pl);
+	x = rt_get_no_intersection(ray, cy);
+	r = rt_quadratic_equation(
+		vt_mul_dot(beta, beta),
+		vt_mul_dot(alpha, beta) * 2,
+		vt_mul_dot(alpha, alpha) - cy->radius * cy->radius);
+	if (r.discriminant < -EPS)
+		return (x);
+	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
+	if (isnan(t))
+		return (x);
+	x.point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
+	x.color = cy->color;
 	return (x);
 }
 
