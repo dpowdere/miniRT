@@ -80,6 +80,9 @@ CC := gcc
 AR := ar
 CFLAGS := -Wall -Wextra -Werror -MMD -MP -c
 ARFLAGS := rcsv
+ifdef DEBUG
+  CFLAGS += -g3
+endif
 
 NAME := $(LIBNAME).a
 OBJS := $(CONTENTS:.c=.o)

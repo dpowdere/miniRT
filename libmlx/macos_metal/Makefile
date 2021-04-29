@@ -1,6 +1,3 @@
-
-
-
 MODULE_SRC= mlx_image.swift mlx_window.swift mlx_init.swift
 MODULE_OBJ=$(MODULE_SRC:.swift=.swiftmodule)
 
@@ -10,6 +7,9 @@ OBJ=$(SRC:.swift=.o)
 C_SRC= mlx_xpm.c mlx_png.c mlx_string_put.c
 C_OBJ=$(C_SRC:.c=.o)
 CFLAGS=-O3
+ifdef DEBUG
+  CFLAGS=-g3
+endif
 
 NAME=libmlx.dylib
 
