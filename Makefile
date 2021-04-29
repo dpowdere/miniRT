@@ -15,16 +15,15 @@ NAME := miniRT
 SRCS := \
 	minirt.c \
 \
-	rt_color.c \
 	rt_bmp.c \
+	rt_color.c \
+	rt_config_line.c \
 	rt_error.c \
-	rt_free.c \
 	rt_illumination.c \
 	rt_image.c \
 	rt_intersection.c \
 	rt_orientation.c \
 	rt_parse.c \
-	rt_parse_config_line.c \
 	rt_quadratic.c \
 	rt_render.c \
 	rt_scene.c \

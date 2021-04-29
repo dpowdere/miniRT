@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse_config_line.c                             :+:      :+:    :+:   */
+/*   rt_config_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,6 +18,20 @@
 #include "minirt.h"
 
 #define SPACES	" \f\n\r\t\v"
+
+void	rt_config_line_regular_free(t_config_line *c)
+{
+	ft_free_null((void **)&c->segments);
+	ft_free_null((void **)&c->triplet);
+}
+
+void	rt_config_line_emergency_free(t_config_line *c)
+{
+	rt_config_line_regular_free(c);
+	ft_free_null((void **)&c->line);
+	rt_free_scene(c->scene);
+	c->scene = NULL;
+}
 
 void	rt_parse_config_line(const char *line, size_t line_num, t_scene *scene)
 {
