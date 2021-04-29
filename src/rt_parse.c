@@ -80,6 +80,7 @@ t_color	rt_parse_color(t_config_line *c, int ix, const char *scope_name)
 	color.blue = ft_strtoi(c->triplet[2], &endptr, BASE);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "Blue channel: Invalid value");
+	ft_free_null((void **)&c->triplet);
 	if (color.red < 0 || color.red > 255
 		|| color.green < 0 || color.green > 255
 		|| color.blue < 0 || color.blue > 255)
@@ -105,6 +106,7 @@ t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
 	vec.z = ft_strtod(c->triplet[2], &endptr);
 	if (endptr == NULL || *endptr != '\0')
 		rt_parsing_error(c, scope_name, "Z attribute: Invalid value");
+	ft_free_null((void **)&c->triplet);
 	if (should_be_normalized && (vec.x < -1.0 || vec.x > 1.0
 			|| vec.y < -1.0 || vec.y > 1.0 || vec.z < -1.0 || vec.z > 1.0))
 		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
