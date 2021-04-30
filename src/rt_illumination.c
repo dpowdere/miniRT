@@ -14,19 +14,31 @@
 
 #include "minirt.h"
 
-#define MAX_LIGHT_INTENSITY	25
+/* Light distribution
+**
+**   https://www.pbr-book.org/3ed-2018/Introduction/
+**   Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#LightDistribution
+**
+** The differential irradiance, the differential power per area:
+**
+**   $ \fraq{I \cos\theta}{4\pi r^2} $
+**
+** The cosine falloff of light (of power $I$) for tilted surfaces, and the
+** one-over-$r$-squared falloff of light with distance.
+*/
 
 t_color	rt_get_point_illumination(t_x x, t_light *light)
 {
 	const t_vector	light_source = vt_add(light->origin, vt_inv(x.point));
+	const t_scalar	light_distance = vt_magnitude(light_source) * 0.5;
 	double			factor;
 	t_color			color;
 
 	factor = vt_cos_angle(x.normal, light_source);
 	if (factor < EPS)
 		return (rt_init_color(0, 0, 0));
-	factor *= light->intensity * MAX_LIGHT_INTENSITY;
-	factor /= vt_magnitude(light_source) * acos(-1) * 4;
+	factor *= light->intensity;
+	factor /= light_distance * light_distance;
 	color = rt_color_merge(x.color, light->color);
 	color = rt_color_brightness(color, factor);
 	return (color);

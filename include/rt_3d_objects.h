@@ -97,7 +97,7 @@ typedef struct s_cylinder
 	t_vector	origin;
 	t_vector	orientation;
 	double		radius;
-	double		height;
+	double		half_height;
 	t_color		color;
 }						t_cylinder;
 

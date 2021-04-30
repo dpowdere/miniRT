@@ -17,7 +17,8 @@
 
 #include "minirt.h"
 
-#define BASE		10
+#define BASE	10
+#define RT_ERRMSG_VECTOR_RANGE	"Individual values must be in the range [-1, 1]"
 
 void	rt_parse_type(t_config_line *cline)
 {
@@ -109,8 +110,7 @@ t_vector	rt_parse_vector(t_config_line *c, int ix, const char *scope_name,
 	ft_free_null((void **)&c->triplet);
 	if (should_be_normalized && (vec.x < -1.0 || vec.x > 1.0
 			|| vec.y < -1.0 || vec.y > 1.0 || vec.z < -1.0 || vec.z > 1.0))
-		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
-			"Individual values must be in the range [-1, 1]");
+		rt_scheme_error(c, RT_CONFIG_LINE, scope_name, RT_ERRMSG_VECTOR_RANGE);
 	if (should_be_normalized && fabs(vec.x) < EPS
 		&& fabs(vec.y) < EPS && fabs(vec.z) < EPS)
 		rt_scheme_error(c, RT_CONFIG_LINE, scope_name,
