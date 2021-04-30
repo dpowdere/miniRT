@@ -27,7 +27,7 @@ void	rt_parse_triangle(t_config_line *c)
 	tr = (t_triangle *)malloc(sizeof(t_triangle));
 	if (tr == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
-	*(int *)&tr->type = RT_TRIANGLE;
+	*(t_otype *)&tr->type = RT_TRIANGLE;
 	tr->p1 = rt_parse_vector(c, 1, "Triangle, point 1", NON_NORMALIZED);
 	tr->p2 = rt_parse_vector(c, 2, "Triangle, point 2", NON_NORMALIZED);
 	tr->p3 = rt_parse_vector(c, 3, "Triangle, point 3", NON_NORMALIZED);

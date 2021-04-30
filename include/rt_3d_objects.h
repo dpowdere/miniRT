@@ -120,9 +120,11 @@ typedef struct s_sphere
 typedef struct s_square
 {
 	t_objtype	type;
-	t_vector	origin;
-	t_vector	orientation;
-	double		side_size;
+	t_point		origin;
+	t_vector	x_ornt;
+	t_vector	y_ornt;
+	t_vector	z_ornt;
+	double		half_side_size;
 	t_color		color;
 }						t_square;
 

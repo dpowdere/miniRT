@@ -55,5 +55,7 @@ t_x	rt_get_intersection(t_ray ray, void *object, double limit)
 		return (rt_plane_intersection(ray, object, limit));
 	else if (objtype == RT_CYLINDER)
 		return (rt_cylinder_intersection(ray, object, limit));
+	else if (objtype == RT_SQUARE)
+		return (rt_square_intersection(ray, object, limit));
 	return (rt_get_no_intersection(ray, object));
 }

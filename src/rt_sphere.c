@@ -28,7 +28,7 @@ void	rt_parse_sphere(t_config_line *c)
 	sp = (t_sphere *)malloc(sizeof(t_sphere));
 	if (sp == NULL)
 		rt_perror((void *)c, RT_CONFIG_LINE);
-	*(int *)&sp->type = RT_SPHERE;
+	*(t_otype *)&sp->type = RT_SPHERE;
 	sp->origin = rt_parse_vector(c, 1, "Sphere origin", NON_NORMALIZED);
 	sp->radius = rt_parse_float(c, 2, "Sphere diameter") / 2.0;
 	sp->color = rt_parse_color(c, 3, "Sphere color");

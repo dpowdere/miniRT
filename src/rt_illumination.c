@@ -27,10 +27,12 @@
 ** one-over-$r$-squared falloff of light with distance.
 */
 
+#define POWER_COEF	0.5
+
 t_color	rt_get_point_illumination(t_x x, t_light *light)
 {
 	const t_vector	light_source = vt_add(light->origin, vt_inv(x.point));
-	const t_scalar	light_distance = vt_magnitude(light_source) * 0.5;
+	const t_scalar	light_distance = vt_magnitude(light_source) * POWER_COEF;
 	double			factor;
 	t_color			color;
 
@@ -104,6 +106,8 @@ t_color	rt_get_color(t_x intersection, t_scene *scene)
 		rt_plane_normal(&intersection);
 	else if (objtype == RT_CYLINDER)
 		rt_cylinder_normal(&intersection);
+	else if (objtype == RT_SQUARE)
+		rt_square_normal(&intersection);
 	else
 		return (rt_init_color(0, 0, 0));
 	return (rt_get_illumination(intersection, scene));
