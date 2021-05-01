@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 22:36:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/04/15 17:00:36 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 22:01:55 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	main(int argc, char **argv)
 {
 	t_scene	scene;
 
-	if (argc < 2 || argc > 3 || (argc == 3 && ft_strcmp("--save", argv[2])))
-		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG);
+	if (argc < 2 || argc > 3)
+		rt_error(RT_ERROR_ARGS, RT_ERROR_ARGS_MSG RT_HELP);
+	if (argc == 3 && ft_strcmp("--save", argv[2]))
+		rt_error(RT_ERROR_ARGS, "Second argument must be --save" RT_HELP);
 	scene = rt_init_scene(argc == 3);
 	rt_load_scene(argv[1], &scene);
 	rt_check_scene(&scene);

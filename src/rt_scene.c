@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 18:22:47 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/05/01 20:08:03 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 22:01:44 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	rt_load_scene(const char *pathname, t_scene *scene)
 	int	fd;
 
 	if (!ft_str_endswith(pathname, ".rt"))
-		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG);
+		rt_error(RT_ERROR_NO_RTFILE, RT_ERROR_NO_RTFILE_MSG RT_HELP);
 	fd = open(pathname, O_RDONLY);
 	if (fd == -1)
 		rt_perror((void *)scene, RT_SCENE);

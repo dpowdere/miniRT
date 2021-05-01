@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 17:08:56 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 17:09:49 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 22:04:36 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define RT_ERROR_PARSE_MSG		"Can't parse the scene config file"
 # define RT_ERROR_SCHEME_MSG	"Scene config does not comply with the scheme"
 # define RT_ERROR_XIMAGE_MSG	"Can't create an image buffer"
+
+# define RT_HELP	"\n\nUse `miniRT file [--save]`\n"
 
 typedef const enum e_infotype
 {
