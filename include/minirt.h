@@ -118,8 +118,8 @@ t_vector	vt_normalize(t_vector v);
 t_vector	vt_proj_geom(t_vector a, t_vector b);
 t_scalar	vt_proj_alg(t_vector a, t_vector b);
 double		vt_rad(double deg);
-t_vector	rt_zx_orientation(t_vector z_ornt);
-t_vector	rt_zxy_orientation(t_vector z_ornt, t_vector x_ornt);
+t_vector	vt_zx_orientation(t_vector z_ornt);
+t_vector	vt_zxy_orientation(t_vector z_ornt, t_vector x_ornt);
 
 t_color		rt_get_point_illumination(t_x x, t_light *light);
 t_color		rt_get_color(t_x intersection, t_scene *scene);
@@ -132,11 +132,13 @@ t_x			rt_cylinder_intersection(t_ray ray, t_cylinder *cy, double limit);
 t_x			rt_plane_intersection(t_ray ray, t_plane *pl, double limit);
 t_x			rt_sphere_intersection(t_ray ray, t_sphere *sp, double limit);
 t_x			rt_square_intersection(t_ray ray, t_square *sq, double limit);
+t_x			rt_triangle_intersection(t_ray ray, t_triangle *tr, double limit);
 
 void		rt_cylinder_normal(t_x *x);
 void		rt_plane_normal(t_x *x);
 void		rt_sphere_normal(t_x *x);
 void		rt_square_normal(t_x *x);
+void		rt_triangle_normal(t_x *x);
 
 void		rt_error(int error_code, const char *error_msg);
 void		rt_parsing_error(t_config_line *cline,

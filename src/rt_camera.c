@@ -37,8 +37,8 @@ void	rt_parse_camera(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	camera->origin = rt_parse_vector(c, 1, ORIG_PROP, NON_NORMALIZED);
 	camera->z_ornt = rt_parse_vector(c, 2, ORNT_PROP, NORMALIZED);
-	camera->x_ornt = rt_zx_orientation(camera->z_ornt);
-	camera->y_ornt = rt_zxy_orientation(camera->z_ornt, camera->x_ornt);
+	camera->x_ornt = vt_zx_orientation(camera->z_ornt);
+	camera->y_ornt = vt_zxy_orientation(camera->z_ornt, camera->x_ornt);
 	camera->view_angle = rt_parse_float(c, 3, VANG_PROP);
 	if (camera->view_angle <= 0.0 || camera->view_angle > 180.0)
 		rt_scheme_error(c, RT_CONFIG_LINE, OBJECT, VANG_EMSG);

@@ -100,14 +100,16 @@ t_color	rt_get_color(t_x intersection, t_scene *scene)
 	if (intersection.object == NULL || vt_isinf(intersection.point))
 		return (rt_init_color(0, 0, 0));
 	objtype = (t_objtype)((t_object *)intersection.object)->type;
-	if (objtype == RT_SPHERE)
-		rt_sphere_normal(&intersection);
+	if (objtype == RT_CYLINDER)
+		rt_cylinder_normal(&intersection);
 	else if (objtype == RT_PLANE)
 		rt_plane_normal(&intersection);
-	else if (objtype == RT_CYLINDER)
-		rt_cylinder_normal(&intersection);
+	else if (objtype == RT_SPHERE)
+		rt_sphere_normal(&intersection);
 	else if (objtype == RT_SQUARE)
 		rt_square_normal(&intersection);
+	else if (objtype == RT_TRIANGLE)
+		rt_triangle_normal(&intersection);
 	else
 		return (rt_init_color(0, 0, 0));
 	return (rt_get_illumination(intersection, scene));

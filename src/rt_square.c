@@ -31,8 +31,8 @@ void	rt_parse_square(t_config_line *c)
 	*(t_otype *)&sq->type = RT_SQUARE;
 	sq->origin = rt_parse_vector(c, 1, "Square origin", NON_NORMALIZED);
 	sq->z_ornt = rt_parse_vector(c, 2, "Square orientation", NORMALIZED);
-	sq->x_ornt = rt_zx_orientation(sq->z_ornt);
-	sq->y_ornt = rt_zxy_orientation(sq->z_ornt, sq->x_ornt);
+	sq->x_ornt = vt_zx_orientation(sq->z_ornt);
+	sq->y_ornt = vt_zxy_orientation(sq->z_ornt, sq->x_ornt);
 	sq->half_side_size = rt_parse_float(c, 3, "Square side size") / 2.;
 	sq->color = rt_parse_color(c, 4, "Square color");
 	list_element = ft_lstnew(sq);
@@ -61,7 +61,7 @@ t_x	rt_square_intersection(t_ray ray, t_square *sq, double limit)
 		return (x);
 	p = vt_add(pl_x.point, vt_inv(sq->origin));
 	if (fabs(vt_proj_alg(p, sq->x_ornt)) - sq->half_side_size >= EPS
-			|| fabs(vt_proj_alg(p, sq->y_ornt)) - sq->half_side_size >= EPS)
+		|| fabs(vt_proj_alg(p, sq->y_ornt)) - sq->half_side_size >= EPS)
 		return (x);
 	pl_x.object = sq;
 	return (pl_x);

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -39,4 +40,58 @@ void	rt_parse_triangle(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	}
 	ft_lstadd_back(&c->scene->objects, list_element);
+}
+
+/*
+** The Moeller–Trumbore ray-triangle intersection algorithm, a fast method for
+** calculating the intersection of a ray and a triangle in three dimensions
+** without needing precomputation of the plane equation of the plane containing
+** the triangle.
+*/
+t_x	rt_triangle_intersection(t_ray ray, t_triangle *tr, double limit)
+{
+	const t_vector	e1 = vt_add(tr->p2, vt_inv(tr->p1));
+	const t_vector	e2 = vt_add(tr->p3, vt_inv(tr->p1));
+	const t_vector	h = vt_mul_cross(ray.orientation, e2);
+	const t_scalar	a = vt_mul_dot(e1, h);
+	t_x				x;
+	t_vector		s;
+	t_vector		q;
+	t_scalar		f;
+	t_scalar		u;
+	t_scalar		v;
+	t_scalar		t;
+
+	x = rt_get_no_intersection(ray, tr);
+	if (fabs(a) < EPS)
+		return (x);
+	f = 1. / a;
+	s = vt_add(ray.origin, vt_inv(tr->p1));
+	u = f * vt_mul_dot(s, h);
+	if (u < 0. || u > 1.)
+		return (x);
+	q = vt_mul_cross(s, e1);
+	v = f * vt_mul_dot(ray.orientation, q);
+	if (v < 0. || u + v > 1.)
+		return (x);
+	t = f * vt_mul_dot(e2, q);
+	if (t > EPS && t < limit)
+	{
+		x.point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
+		x.color = tr->color;
+	}
+	return (x);
+}
+
+void	rt_triangle_normal(t_x *x)
+{
+	const t_triangle	*tr = x->object;
+	const t_vector		e1 = vt_add(tr->p2, vt_inv(tr->p1));
+	const t_vector		e2 = vt_add(tr->p3, vt_inv(tr->p1));
+	t_vector			normal;
+
+	normal = vt_normalize(vt_mul_cross(e1, e2));
+	if (vt_cos_angle(normal, x->ray.orientation) < EPS)
+		normal = vt_inv(normal);
+	x->normal = normal;
 }

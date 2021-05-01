@@ -50,7 +50,7 @@
 ** And finally u_2 is always zero.
 */
 
-t_vector	rt_zx_orientation(t_vector z_ornt)
+t_vector	vt_zx_orientation(t_vector z_ornt)
 {
 	double	u1;
 	double	u3;
@@ -78,7 +78,7 @@ t_vector	rt_zx_orientation(t_vector z_ornt)
 	return (vt_normalize(vt_init(u1, 0., u3)));
 }
 
-t_vector	rt_zxy_orientation(t_vector z_ornt, t_vector x_ornt)
+t_vector	vt_zxy_orientation(t_vector z_ornt, t_vector x_ornt)
 {
 	return (vt_normalize(vt_mul_cross(z_ornt, x_ornt)));
 }
