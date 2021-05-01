@@ -6,13 +6,14 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 18:22:47 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/04/28 12:56:24 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 20:08:03 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -90,6 +91,8 @@ void	rt_read_scene(int fd, t_scene *scene)
 
 void	rt_check_scene(t_scene *scene)
 {
+	int	resolution_changed;
+
 	if (scene->width == UNDEFINED || scene->height == UNDEFINED)
 		rt_scheme_error(scene, RT_SCENE, NULL, "No resolution is specified");
 	if (isnan(scene->ambient))
@@ -100,7 +103,9 @@ void	rt_check_scene(t_scene *scene)
 	if (scene->objects == NULL)
 		rt_scheme_error(scene, RT_SCENE, NULL,
 			"There is no geometric object in the scene");
-	rt_tweak_resolution(scene);
+	resolution_changed = rt_tweak_resolution(scene);
+	if (resolution_changed)
+		printf("Resolution changed to %i x %i\n", scene->width, scene->height);
 	rt_init_camera_viewports(scene);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 17:16:58 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 20:10:02 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		rt_put_pixel(t_image *img, int x, int y, int color);
 void		rt_render_scene(t_scene *scene);
 void		rt_save_to_bmp_files(t_scene *scene);
 void		rt_switch_camera(t_scene *scene);
-void		rt_tweak_resolution(t_scene *scene);
+int			rt_tweak_resolution(t_scene *scene);
 
 t_color		rt_parse_color(t_config_line *c, int ix, const char *sname);
 void		rt_parse_config_line(const char *line, size_t lnum, t_scene *s);

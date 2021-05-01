@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 02:04:59 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/04/15 17:00:33 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/01 20:05:29 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ void	rt_parse_resolution(t_config_line *c)
 	c->scene->height = height;
 }
 
-void	rt_tweak_resolution(t_scene *scene)
+int	rt_tweak_resolution(t_scene *scene)
 {
+	int	resolution_changed;
 	int	screen_width;
 	int	screen_height;
 	int	ret;
 
 	screen_width = 8192;
 	screen_height = 8192 + SCREEN_HEADER_HEIGHT;
+	resolution_changed = FALSE;
 	if (scene->mlx)
 	{
 		ret = mlx_get_screen_size(scene->mlx, &screen_width, &screen_height);
@@ -57,7 +59,14 @@ void	rt_tweak_resolution(t_scene *scene)
 			rt_xerror(scene, RT_ERROR_XSERVER, RT_ERROR_XSERVER_MSG);
 	}
 	if (scene->width > screen_width)
+	{
 		scene->width = screen_width;
+		resolution_changed = TRUE;
+	}
 	if (scene->height > screen_height - SCREEN_HEADER_HEIGHT)
+	{
 		scene->height = screen_height - SCREEN_HEADER_HEIGHT;
+		resolution_changed = TRUE;
+	}
+	return (resolution_changed);
 }
