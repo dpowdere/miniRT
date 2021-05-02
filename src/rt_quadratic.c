@@ -19,17 +19,23 @@ t_roots	rt_quadratic_equation(double a, double b, double c)
 	t_roots	roots;
 	double	a2;
 	double	dsqrt;
+	double	magic;
 
 	roots.discriminant = b * b - 4 * a * c;
 	roots.root1 = NAN;
 	roots.root2 = NAN;
-	if (roots.discriminant > -EPS)
+	a2 = a * 2;
+	if (fabs(roots.discriminant) < EPS)
+		roots.root1 = -b / a2;
+	else if (roots.discriminant >= EPS)
 	{
-		a2 = a * 2;
 		dsqrt = sqrt(roots.discriminant);
-		roots.root1 = (-b + dsqrt) / a2;
-		if (roots.discriminant >= EPS)
-			roots.root2 = (-b - dsqrt) / a2;
+		if (b > 0)
+			magic = -1 * (b + dsqrt) / 2;
+		else
+			magic = -1 * (b - dsqrt) / 2;
+		roots.root1 = magic / a;
+		roots.root2 = c / magic;
 	}
 	return (roots);
 }

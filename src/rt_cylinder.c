@@ -74,7 +74,7 @@ static inline t_x	rt__finite_cylinder(
 	point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
 	vec = vt_add(point, vt_inv(cy->origin));
 	vec = vt_mul_sc(cy->orientation, vt_mul_dot(vec, cy->orientation));
-	if (vt_magnitude(vec) > cy->half_height)
+	if (vt_magnitude(vec) - cy->half_height >= EPS)
 	{
 		if (t == r.root1 || r.discriminant < EPS)
 			return (x);
@@ -84,7 +84,7 @@ static inline t_x	rt__finite_cylinder(
 			point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
 			vec = vt_add(point, vt_inv(cy->origin));
 			vec = vt_mul_sc(cy->orientation, vt_mul_dot(vec, cy->orientation));
-			if (vt_magnitude(vec) > cy->half_height)
+			if (vt_magnitude(vec) - cy->half_height >= EPS)
 				return (x);
 			x.is_flip_side = TRUE;
 		}
@@ -104,7 +104,7 @@ t_x	rt_cylinder_intersection(t_ray ray, t_cylinder *cy, double limit)
 
 	r = rt__calc_quadeq(ray, cy);
 	x = rt_get_no_intersection(ray, cy);
-	if (r.discriminant < -EPS)
+	if (r.discriminant <= -EPS)
 		return (x);
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	if (isnan(t))
