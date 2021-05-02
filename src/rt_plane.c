@@ -41,6 +41,10 @@ void	rt_parse_plane(t_config_line *c)
 	ft_lstadd_back(&c->scene->objects, list_element);
 }
 
+/*
+** https://mrl.cs.nyu.edu/~dzorin/rend05/lecture1a.pdf
+*/
+
 t_x	rt_plane_intersection(t_ray ray, t_plane *pl, double limit)
 {
 	const t_scalar	a = vt_mul_dot(ray.orientation, pl->orientation);

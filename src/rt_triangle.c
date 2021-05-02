@@ -74,7 +74,7 @@ t_x	rt_triangle_intersection(t_ray ray, t_triangle *tr, double limit)
 	if (mt.v < 0. || mt.u + mt.v > 1.)
 		return (mt.x);
 	mt.t = mt.f * vt_mul_dot(mt.e2, mt.q);
-	if (mt.t > EPS && mt.t < limit)
+	if (mt.t >= EPS && mt.t < limit)
 	{
 		mt.x.point = vt_add(ray.origin, vt_mul_sc(ray.orientation, mt.t));
 		mt.x.color = tr->color;
@@ -90,7 +90,7 @@ void	rt_triangle_normal(t_x *x)
 	t_vector			normal;
 
 	normal = vt_normalize(vt_mul_cross(e1, e2));
-	if (vt_cos_angle(normal, x->ray.orientation) < EPS)
+	if (vt_cos_angle(normal, x->ray.orientation) >= EPS)
 		normal = vt_inv(normal);
 	x->normal = normal;
 }
