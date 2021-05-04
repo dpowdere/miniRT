@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 22:36:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/05/04 23:20:01 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/05 00:13:19 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 ** stddef.h - NULL
-** stdlib.h - exit
+** stdlib.h - exit, free
 */
 
 #include <mlx.h>
@@ -39,11 +39,16 @@ int	rt_on_keypress(int keycode, t_scene *scene)
 	return (0);
 }
 
-void	rt_show_in_window(t_scene *s)
+void	rt_show_in_window(t_scene *s, const char *filename)
 {
 	t_camera	*camera;
+	char		*header;
 
-	s->window = mlx_new_window(s->mlx, s->width, s->height, "miniRT");
+	header = ft_strjoin("miniRT - ", filename);
+	if (header == NULL)
+		rt_perror((void *)s, RT_SCENE);
+	s->window = mlx_new_window(s->mlx, s->width, s->height, header);
+	free(header);
 	if (s->window == NULL)
 		rt_xerror(s, RT_ERROR_XWINDOW, RT_ERROR_XWINDOW_MSG);
 	mlx_clear_window(s->mlx, s->window);
@@ -70,6 +75,6 @@ int	main(int argc, char **argv)
 	if (scene.mlx == NULL)
 		rt_save_to_bmp_files(&scene);
 	else
-		rt_show_in_window(&scene);
+		rt_show_in_window(&scene, argv[1]);
 	return (0);
 }
