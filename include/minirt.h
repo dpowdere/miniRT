@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/05/01 20:10:02 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 21:28:35 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_image		*rt_init_image(t_scene *scene);
 t_scene		rt_init_scene(int save);
 t_vector	rt_init_ray_on_cylinder(int u, int v, t_camera *camera);
 t_vector	rt_init_ray_on_plane(
-                int u, int v, t_camera *camera, t_scene *scene);
+				int u, int v, t_camera *camera, t_scene *scene);
 t_vector	rt_init_ray_on_sphere(int u, int v, t_camera *camera);
 void		rt_load_scene(const char *pathname, t_scene *scene);
 void		rt_put_pixel(t_image *img, int x, int y, int color);
