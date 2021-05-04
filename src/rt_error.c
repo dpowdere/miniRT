@@ -6,25 +6,25 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 18:58:04 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/12 12:44:44 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 23:07:14 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+/*
+** stddef.h - NULL
+** stdio.h  - perror
+** stdlib.h - exit, free
+*/
 
 #include <libft.h>
 
 #include "minirt.h"
 
 #define DO_NOT_FREE_ERROR_MSG 0
-
-/*
-** stddef.h - NULL
-** stdio.h  - perror
-** stdlib.h - exit
-*/
 
 void	rt_error(int error_code, const char *error_msg)
 {

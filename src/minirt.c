@@ -6,13 +6,17 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 22:36:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/05/01 22:01:55 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 23:20:01 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
+
+/*
+** stddef.h - NULL
+** stdlib.h - exit
+*/
 
 #include <mlx.h>
 #include <libft.h>

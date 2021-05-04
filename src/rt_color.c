@@ -6,11 +6,10 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:44:50 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/02 17:55:18 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 23:04:02 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <stdint.h>
 
 #include "minirt.h"

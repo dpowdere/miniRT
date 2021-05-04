@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:55:37 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/05/04 21:28:35 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 22:53:30 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 # ifdef __linux__
 #  define ON_LINUX	1
-#  define O_SYMLINK	0
 # else
 #  define ON_LINUX	0
 # endif

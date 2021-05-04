@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 23:01:39 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/03 23:08:16 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 22:59:10 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@
 #  define KEY_ESQ	53
 #  define KEY_Q		12
 
-#  define XEVENT_X  XEVENT_DESTROY_NOTIFY
-#  define XMASK_X   XMASK_VISIBILITY_CHANGE
+/*
+** Closing a window with X button
+*/
+#  define XEVENT_X	XEVENT_DESTROY_NOTIFY
+#  define XMASK_X	XMASK_VISIBILITY_CHANGE
 # endif
 
 # ifdef __linux__
@@ -75,8 +78,8 @@
 ** https://tronche.com/gui/x/xlib/events/ and `WM_DELETE_WINDOW` ICCCM
 ** protocol https://tronche.com/gui/x/icccm/sec-4.html#s-4.2.8.1
 */
-#  define XEVENT_X  XEVENT_CLIENT_MESSAGE
-#  define XMASK_X   XMASK_NO_EVENT
+#  define XEVENT_X	XEVENT_CLIENT_MESSAGE
+#  define XMASK_X	XMASK_NO_EVENT
 # endif
 
 #endif

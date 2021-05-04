@@ -6,7 +6,7 @@
 /*   By: dpowdere <dpowdere@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 16:20:23 by dpowdere          #+#    #+#             */
-/*   Updated: 2021/03/24 16:21:46 by dpowdere         ###   ########.fr       */
+/*   Updated: 2021/05/04 23:03:10 by dpowdere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	rt_save_to_bmp_files(t_scene *scene)
 		fd = rt_open_bmp_file(&serial_number, scene);
 		ft_write(fd, header, BMP_HEADER_SIZE + DIB_HEADER_SIZE);
 		ft_write(fd, img->byte_array, img->bytes_per_line * scene->height);
+		close(fd);
 		elem = elem->next;
 		++serial_number;
 	}
