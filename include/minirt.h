@@ -48,6 +48,7 @@ typedef struct s_scene
 	int			height;
 	double		ambient;
 	t_color		ambient_color;
+	int			number_of_cameras;
 	t_list		*cameras;
 	t_list		*active_camera;
 	t_list		*lights;

@@ -23,17 +23,14 @@ t_ray	rt_init_ray(int u, int v, t_camera *camera)
 	t_ray			global_ray;
 
 	local_ray = vt_init(cos(h_angle), cos(v_angle), sin(h_angle));
-	// x = u / (double)scene->width * camera->width - camera->width / 2.;
-	// y = camera->height / 2. - v / (double)scene->height * camera->height;
-	// z = 1.;
 	global_ray.origin = camera->origin;
 	global_ray.orientation = vt_init(
 			camera->x_ornt.x * local_ray.x + camera->y_ornt.x * local_ray.y
-				+ camera->z_ornt.x * local_ray.z,
+			+ camera->z_ornt.x * local_ray.z,
 			camera->x_ornt.y * local_ray.x + camera->y_ornt.y * local_ray.y
-				+ camera->z_ornt.y * local_ray.z,
+			+ camera->z_ornt.y * local_ray.z,
 			camera->x_ornt.z * local_ray.x + camera->y_ornt.z * local_ray.y
-				+ camera->z_ornt.z * local_ray.z);
+			+ camera->z_ornt.z * local_ray.z);
 	return (global_ray);
 }
 
@@ -74,8 +71,9 @@ void	rt_render_viewport(int serial_number, t_camera *camera, t_scene *scene)
 			color = rt_trace_ray(u, v, camera, scene);
 			rt_put_pixel(camera->viewport, u, v, rt_color_to_int(color));
 			progress = ((u + 1) + (v + 1) * scene->width) * 100 / total;
-			printf("\rViewport rendering for camera %i . . .%3i%%"
-				AEC_ERASE_EOL, serial_number, progress);
+			printf("\rViewport rendering for camera %i / %i . . .%3i%%"
+				AEC_ERASE_EOL, serial_number, scene->number_of_cameras,
+				progress);
 			++u;
 		}
 		++v;

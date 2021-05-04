@@ -68,6 +68,7 @@ void	rt_parse_camera(t_config_line *c)
 		rt_perror((void *)c, RT_CONFIG_LINE);
 	}
 	ft_lstadd_back(&c->scene->cameras, list_element);
+	c->scene->number_of_cameras += 1;
 }
 
 void	rt_init_camera_viewports(t_scene *scene)
@@ -85,7 +86,7 @@ void	rt_init_camera_viewports(t_scene *scene)
 		camera->height = camera->pixel_size * scene->height;
 		camera->horizontal_start = acos(-1)
 			- (acos(-1) - camera->width + camera->pixel_size) / 2.;
-		camera->vertical_start =
+		camera->vertical_start = \
 			(acos(-1) - camera->height + camera->pixel_size) / 2.;
 		elem = elem->next;
 	}

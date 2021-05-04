@@ -49,6 +49,7 @@ t_scene	rt_init_scene(int save)
 	scene.ambient_color.green = UNDEFINED;
 	scene.ambient_color.blue = UNDEFINED;
 	scene.cameras = NULL;
+	scene.number_of_cameras = 0;
 	scene.active_camera = NULL;
 	scene.lights = NULL;
 	scene.objects = NULL;
