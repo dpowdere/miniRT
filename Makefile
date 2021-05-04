@@ -95,6 +95,13 @@ ifdef ON_LINUX
   OPEN := xdg-open
 endif
 
+INSTALL_NAME_TOOL_AVAILABLE := 0
+ifndef ON_LINUX
+  INSTALL_NAME_TOOL_AVAILABLE := $(shell which install_name_tool \
+    1>/dev/null 2>&1 \
+    && echo 1 || echo 0)
+endif
+
 $(shell mkdir -p $(OBJDIR))
 
 .PHONY: all clean debug deps-install-linux fclean norm re run save
@@ -102,7 +109,11 @@ $(shell mkdir -p $(OBJDIR))
 $(NAME): $(OBJS) $(STUBFT) $(STUBX)
 	$(CC) $(LDFLAGS) -o $@ $(OBJLST) $(LDLIBS)
 ifndef ON_LINUX
-	install_name_tool -change libmlx.dylib $(LIBX)/libmlx.dylib $(NAME)
+  ifeq ($(INSTALL_NAME_TOOL_AVAILABLE), 0)
+	@cp $(LIBX)/libmlx.dylib .
+  else
+	@install_name_tool -change libmlx.dylib $(LIBX)/libmlx.dylib $(NAME)
+  endif
 endif
 
 %.o: %.c
