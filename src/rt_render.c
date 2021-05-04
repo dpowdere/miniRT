@@ -15,37 +15,41 @@
 
 #include "minirt.h"
 
-t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
+t_ray	rt_init_ray(int u, int v, t_camera *camera)
 {
-	t_ray	ray;
-	double	x;
-	double	y;
-	double	z;
+	const double	h_angle = camera->horizontal_start - camera->pixel_size * u;
+	const double	v_angle = camera->vertical_start + camera->pixel_size * v;
+	t_vector		local_ray;
+	t_ray			global_ray;
 
-	x = u / (double)scene->width * camera->width - camera->width / 2.;
-	y = camera->height / 2. - v / (double)scene->height * camera->height;
-	z = 1.;
-	ray.origin = camera->origin;
-	ray.orientation = vt_init(
-			camera->x_ornt.x * x + camera->y_ornt.x * y + camera->z_ornt.x * z,
-			camera->x_ornt.y * x + camera->y_ornt.y * y + camera->z_ornt.y * z,
-			camera->x_ornt.z * x + camera->y_ornt.z * y + camera->z_ornt.z * z);
-	return (ray);
+	local_ray = vt_init(cos(h_angle), cos(v_angle), sin(h_angle));
+	// x = u / (double)scene->width * camera->width - camera->width / 2.;
+	// y = camera->height / 2. - v / (double)scene->height * camera->height;
+	// z = 1.;
+	global_ray.origin = camera->origin;
+	global_ray.orientation = vt_init(
+			camera->x_ornt.x * local_ray.x + camera->y_ornt.x * local_ray.y
+				+ camera->z_ornt.x * local_ray.z,
+			camera->x_ornt.y * local_ray.x + camera->y_ornt.y * local_ray.y
+				+ camera->z_ornt.y * local_ray.z,
+			camera->x_ornt.z * local_ray.x + camera->y_ornt.z * local_ray.y
+				+ camera->z_ornt.z * local_ray.z);
+	return (global_ray);
 }
 
 t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 {
-	t_ray	local_ray;
+	t_ray	ray;
 	t_x		xx;
 	t_x		nearest_xx;
 	t_list	*elem;
 
-	local_ray = rt_init_ray(u, v, camera, scene);
-	nearest_xx = rt_get_no_intersection(local_ray, NULL);
+	ray = rt_init_ray(u, v, camera);
+	nearest_xx = rt_get_no_intersection(ray, NULL);
 	elem = scene->objects;
 	while (elem)
 	{
-		xx = rt_get_intersection(local_ray, elem->content, INFINITY);
+		xx = rt_get_intersection(ray, elem->content, INFINITY);
 		nearest_xx = rt_get_nearest_intersection(nearest_xx, xx);
 		elem = elem->next;
 	}

@@ -74,9 +74,12 @@ typedef struct s_camera
 	t_vector	y_ornt;
 	t_vector	z_ornt;
 	double		view_angle;
-	t_image		*viewport;
 	double		width;
 	double		height;
+	double		horizontal_start;
+	double		vertical_start;
+	double		pixel_size;
+	t_image		*viewport;
 }						t_camera;
 
 typedef struct s_light
