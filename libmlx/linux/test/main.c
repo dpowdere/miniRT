@@ -1,4 +1,3 @@
-
 #include	"mlx.h"
 #include	"mlx_int.h"
 
@@ -11,30 +10,30 @@
 
 void	*mlx;
 void	*win1;
-void    *win2;
-void    *win3;
-void    *im1;
+void	*win2;
+void	*win3;
+void	*im1;
 void	*im2;
 void	*im3;
 void	*im4;
-int	bpp1;
-int	bpp2;
-int	bpp3;
-int	bpp4;
-int	sl1;
-int	sl2;
-int	sl3;
-int	sl4;
-int	endian1;
-int	endian2;
-int	endian3;
-int	endian4;
+int		bpp1;
+int		bpp2;
+int		bpp3;
+int		bpp4;
+int		sl1;
+int		sl2;
+int		sl3;
+int		sl4;
+int		endian1;
+int		endian2;
+int		endian3;
+int		endian4;
 char	*data1;
 char	*data2;
 char	*data3;
 char	*data4;
-int	xpm1_x;
-int	xpm1_y;
+int		xpm1_x;
+int		xpm1_y;
 
 int	local_endian;
 
