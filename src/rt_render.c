@@ -17,12 +17,15 @@
 
 t_ray	rt_init_ray(int u, int v, t_camera *camera)
 {
-	const double	h_angle = camera->horizontal_start - camera->pixel_size * u;
-	const double	v_angle = camera->vertical_start + camera->pixel_size * v;
+	const double	h_angle = camera->pixel_size * u - camera->width / 2;
+	const double	v_angle = camera->pixel_size * v - camera->height / 2;
 	t_vector		local_ray;
 	t_ray			global_ray;
 
-	local_ray = vt_init(cos(h_angle), cos(v_angle), sin(h_angle));
+	local_ray = vt_init(
+			sin(h_angle) * cos(v_angle),
+			-sin(v_angle),
+			cos(h_angle) * cos(v_angle));
 	global_ray.origin = camera->origin;
 	global_ray.orientation = vt_init(
 			camera->x_ornt.x * local_ray.x + camera->y_ornt.x * local_ray.y
