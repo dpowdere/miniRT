@@ -12,6 +12,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <mlx.h>
 #include <libft.h>

@@ -46,26 +46,26 @@ t_color	rt_get_point_illumination(t_x x, t_light *light)
 	return (color);
 }
 
-int	rt_is_point_shaded(t_x x_old, t_light *light, t_scene *scene)
+int	rt_is_point_shaded(t_x x, t_light *light, t_scene *scene)
 {
 	t_list	*elem;
-	t_ray	ray;
-	t_x		x;
+	t_ray	shadow_ray;
+	t_x		shadow_x;
 
 	elem = scene->objects;
-	ray.origin = x_old.point;
-	ray.orientation = vt_add(light->origin, vt_inv(x_old.point));
-	if (vt_cos_angle(x_old.normal, ray.orientation) < EPS)
+	shadow_ray.origin = x.point;
+	shadow_ray.orientation = vt_add(light->origin, vt_inv(x.point));
+	if (vt_cos_angle(x.normal, shadow_ray.orientation) < EPS)
 		return (TRUE);
 	while (elem)
 	{
-		if (elem->content == x_old.object)
+		if (elem->content == x.object)
 		{
 			elem = elem->next;
 			continue ;
 		}
-		x = rt_get_intersection(ray, elem->content, 1.);
-		if (!vt_isinf(x.point))
+		shadow_x = rt_get_intersection(shadow_ray, elem->content, 1.);
+		if (!vt_isinf(shadow_x.point))
 			return (TRUE);
 		elem = elem->next;
 	}

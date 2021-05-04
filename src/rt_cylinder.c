@@ -63,15 +63,13 @@ static inline t_roots	rt__calc_quadeq(t_ray ray, t_cylinder *cy)
 	return (r);
 }
 
-static inline t_x	rt__finite_cylinder(
-						t_ray ray, t_cylinder *cy, t_roots r, double t)
+static inline t_x	rt__finite_cylinder(t_x x, t_roots r, double t)
 {
-	t_x				x;
-	t_vector		vec;
-	t_point			point;
+	const t_cylinder	*cy = (t_cylinder *)x.object;
+	t_vector			vec;
+	t_point				point;
 
-	x = rt_get_no_intersection(ray, cy);
-	point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
+	point = vt_add(x.ray.origin, vt_mul_sc(x.ray.orientation, t));
 	vec = vt_add(point, vt_inv(cy->origin));
 	vec = vt_mul_sc(cy->orientation, vt_mul_dot(vec, cy->orientation));
 	if (vt_magnitude(vec) > cy->half_height)
@@ -81,7 +79,7 @@ static inline t_x	rt__finite_cylinder(
 		else
 		{
 			t = r.root1;
-			point = vt_add(ray.origin, vt_mul_sc(ray.orientation, t));
+			point = vt_add(x.ray.origin, vt_mul_sc(x.ray.orientation, t));
 			vec = vt_add(point, vt_inv(cy->origin));
 			vec = vt_mul_sc(cy->orientation, vt_mul_dot(vec, cy->orientation));
 			if (vt_magnitude(vec) > cy->half_height)
@@ -109,7 +107,7 @@ t_x	rt_cylinder_intersection(t_ray ray, t_cylinder *cy, double limit)
 	t = rt_get_quadratic_root(r, &x.is_flip_side, limit);
 	if (isnan(t))
 		return (x);
-	x = rt__finite_cylinder(ray, cy, r, t);
+	x = rt__finite_cylinder(x, r, t);
 	x.color = cy->color;
 	return (x);
 }
