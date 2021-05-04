@@ -25,7 +25,7 @@ t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
 	else if (camera->horizontal_angle > acos(-1) * 5. / 6.)
 		local_ray = rt_init_ray_on_sphere(u, v, camera);
 	else
-		local_ray = rt_init_ray_on_plane(u, v, camera, scene);
+		local_ray = rt_init_ray_on_plane_non_equal_angles(u, v, camera, scene);
 	global_ray.origin = camera->origin;
 	global_ray.orientation = vt_init(
 			camera->x_ornt.x * local_ray.x + camera->y_ornt.x * local_ray.y

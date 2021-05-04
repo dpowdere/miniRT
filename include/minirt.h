@@ -80,7 +80,9 @@ void		rt_init_camera_viewports(t_scene *scene);
 t_image		*rt_init_image(t_scene *scene);
 t_scene		rt_init_scene(int save);
 t_vector	rt_init_ray_on_cylinder(int u, int v, t_camera *camera);
-t_vector	rt_init_ray_on_plane(
+t_vector	rt_init_ray_on_plane_equal_angles(
+				int u, int v, t_camera *camera, t_scene *scene);
+t_vector	rt_init_ray_on_plane_non_equal_angles(
 				int u, int v, t_camera *camera, t_scene *scene);
 t_vector	rt_init_ray_on_sphere(int u, int v, t_camera *camera);
 void		rt_load_scene(const char *pathname, t_scene *scene);
