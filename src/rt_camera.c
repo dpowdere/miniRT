@@ -40,6 +40,8 @@ t_camera	*rt_init_camera(t_config_line *c)
 	camera->viewport = NULL;
 	camera->width = NAN;
 	camera->height = NAN;
+	camera->horizontal_angle = NAN;
+	camera->vertical_angle = NAN;
 	camera->horizontal_start = NAN;
 	camera->vertical_start = NAN;
 	camera->pixel_size = NAN;
@@ -81,13 +83,15 @@ void	rt_init_camera_viewports(t_scene *scene)
 	{
 		camera = elem->content;
 		camera->viewport = rt_init_image(scene);
-		camera->width = vt_rad(camera->view_angle);
-		camera->pixel_size = camera->width / scene->width;
-		camera->height = camera->pixel_size * scene->height;
+		camera->horizontal_angle = vt_rad(camera->view_angle);
+		camera->pixel_size = camera->horizontal_angle / scene->width;
+		camera->vertical_angle = camera->pixel_size * scene->height;
 		camera->horizontal_start = acos(-1)
-			- (acos(-1) - camera->width + camera->pixel_size) / 2.;
+			- (acos(-1) - camera->horizontal_angle + camera->pixel_size) / 2.;
 		camera->vertical_start = \
-			(acos(-1) - camera->height + camera->pixel_size) / 2.;
+			(acos(-1) - camera->vertical_angle + camera->pixel_size) / 2.;
+		camera->width = tan(camera->horizontal_angle / 2.) * 2.;
+		camera->height = camera->width / scene->width * scene->height;
 		elem = elem->next;
 	}
 	scene->active_camera = scene->cameras;

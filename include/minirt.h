@@ -79,6 +79,10 @@ t_color		rt_init_color(int red, int green, int blue);
 void		rt_init_camera_viewports(t_scene *scene);
 t_image		*rt_init_image(t_scene *scene);
 t_scene		rt_init_scene(int save);
+t_vector	rt_init_ray_on_cylinder(int u, int v, t_camera *camera);
+t_vector	rt_init_ray_on_plane(
+                int u, int v, t_camera *camera, t_scene *scene);
+t_vector	rt_init_ray_on_sphere(int u, int v, t_camera *camera);
 void		rt_load_scene(const char *pathname, t_scene *scene);
 void		rt_put_pixel(t_image *img, int x, int y, int color);
 void		rt_render_scene(t_scene *scene);

@@ -27,6 +27,7 @@ SRCS := \
 	rt_quadratic.c \
 	rt_render.c \
 	rt_scene.c \
+	rt_screen.c \
 	rt_vectors1.c \
 	rt_vectors2.c \
 	rt_vectors3.c \

@@ -15,17 +15,17 @@
 
 #include "minirt.h"
 
-t_ray	rt_init_ray(int u, int v, t_camera *camera)
+t_ray	rt_init_ray(int u, int v, t_camera *camera, t_scene *scene)
 {
-	const double	h_angle = camera->pixel_size * u - camera->width / 2;
-	const double	v_angle = camera->pixel_size * v - camera->height / 2;
 	t_vector		local_ray;
 	t_ray			global_ray;
 
-	local_ray = vt_init(
-			sin(h_angle) * cos(v_angle),
-			-sin(v_angle),
-			cos(h_angle) * cos(v_angle));
+	if (camera->vertical_angle > acos(-1) * 5. / 6.)
+		local_ray = rt_init_ray_on_cylinder(u, v, camera);
+	else if (camera->horizontal_angle > acos(-1) * 5. / 6.)
+		local_ray = rt_init_ray_on_sphere(u, v, camera);
+	else
+		local_ray = rt_init_ray_on_plane(u, v, camera, scene);
 	global_ray.origin = camera->origin;
 	global_ray.orientation = vt_init(
 			camera->x_ornt.x * local_ray.x + camera->y_ornt.x * local_ray.y
@@ -44,7 +44,7 @@ t_color	rt_trace_ray(int u, int v, t_camera *camera, t_scene *scene)
 	t_x		nearest_xx;
 	t_list	*elem;
 
-	ray = rt_init_ray(u, v, camera);
+	ray = rt_init_ray(u, v, camera, scene);
 	nearest_xx = rt_get_no_intersection(ray, NULL);
 	elem = scene->objects;
 	while (elem)

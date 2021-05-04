@@ -76,6 +76,8 @@ typedef struct s_camera
 	double		view_angle;
 	double		width;
 	double		height;
+	double		horizontal_angle;
+	double		vertical_angle;
 	double		horizontal_start;
 	double		vertical_start;
 	double		pixel_size;
