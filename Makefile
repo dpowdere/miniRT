@@ -82,13 +82,21 @@ CPPFLAGS	=	-MMD -MP -MT $@ -I$(INCDIR) -I$(LIBX) -I$(LIBFT)
 CFLAGS		:=	-Wall -Wextra -Werror -c
 LDFLAGS		:=	-L$(LIBX) -L$(LIBFT)
 LDLIBS		:=	-lm -lft -lmlx
+
 ifdef ON_LINUX
   LDLIBS	+=	-lXext -lX11
 endif
+
 ifdef DEBUG
   CPPFLAGS += -DDEBUG=1
   CFLAGS += -g3
   LDFLAGS += -g3
+endif
+
+ifdef RT_CONFIG_NO_LIGHT_ATTENUATION
+  ifneq ($(RT_CONFIG_NO_LIGHT_ATTENUATION), 0)
+    CPPFLAGS += -DRT_CONFIG_NO_LIGHT_ATTENUATION=1
+  endif
 endif
 
 OPEN := open

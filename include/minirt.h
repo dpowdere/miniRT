@@ -39,6 +39,10 @@
 #  define ON_LINUX	0
 # endif
 
+# ifndef RT_CONFIG_NO_LIGHT_ATTENUATION
+#  define RT_CONFIG_NO_LIGHT_ATTENUATION	0
+# endif
+
 typedef struct s_scene
 {
 	void		*mlx;

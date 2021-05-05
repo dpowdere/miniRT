@@ -30,15 +30,19 @@
 t_color	rt_get_point_illumination(t_x x, t_light *light)
 {
 	const t_vector	light_source = vt_add(light->origin, vt_inv(x.point));
-	const t_scalar	light_distance = vt_magnitude(light_source) * POWER_COEF;
 	double			factor;
+	t_scalar		distance_from_light;
 	t_color			color;
 
 	factor = vt_cos_angle(x.normal, light_source);
 	if (factor < EPS)
 		return (rt_init_color(0, 0, 0));
 	factor *= light->intensity;
-	factor /= light_distance * light_distance;
+	if (!RT_CONFIG_NO_LIGHT_ATTENUATION)
+	{
+		distance_from_light = vt_magnitude(light_source) * POWER_COEF;
+		factor /= distance_from_light * distance_from_light;
+	}
 	color = rt_color_merge(x.color, light->color);
 	color = rt_color_brightness(color, factor);
 	return (color);
