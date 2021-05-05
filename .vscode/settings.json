@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.h": "c"
+	},
+	"files.exclude": {
+		".Makestub*": true,
+		".tmp": true,
+		".vscode": true,
+		"assets/.stash": true,
+		"miniRT*": true
+	}
+}
