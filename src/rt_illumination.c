@@ -55,8 +55,8 @@ int	rt_is_point_shaded(t_x x, t_light *light, t_scene *scene)
 	t_x		shadow_x;
 
 	elem = scene->objects;
-	shadow_ray.origin = x.point;
-	shadow_ray.orientation = vt_add(light->origin, vt_inv(x.point));
+	shadow_ray.origin = vt_add(x.point, vt_mul_sc(x.normal, 1e-5));
+	shadow_ray.orientation = vt_add(light->origin, vt_inv(shadow_ray.origin));
 	if (vt_cos_angle(x.normal, shadow_ray.orientation) < EPS)
 		return (TRUE);
 	while (elem)
